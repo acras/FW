@@ -302,6 +302,7 @@ inherited osCustomMainForm: TosCustomMainForm
       TitleFont.Style = []
       TitleLines = 1
       TitleButtons = True
+      OnCalcCellColors = GridCalcCellColors
       OnTitleButtonClick = GridTitleButtonClick
       OnDblClick = GridDblClick
       OnKeyDown = GridKeyDown

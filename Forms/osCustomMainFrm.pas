@@ -191,6 +191,9 @@ type
     procedure TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;
       Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;
       var PaintImages, DefaultDraw: Boolean);
+    procedure GridCalcCellColors(Sender: TObject; Field: TField;
+      State: TGridDrawState; Highlight: Boolean; AFont: TFont;
+      ABrush: TBrush);
   private
     FNewFilter: boolean;
     FUserName: string;
@@ -239,6 +242,7 @@ type
     FCurrentTemplate: TMemoryStream;
     FCurrentResource: TosAppResource;
     FSuperUserName: string;
+    FModifiedList: TStringList;
     procedure ResourceClick( Sender: TObject );
     procedure replaceReportSQLPrint;
     procedure CheckMultiSelection;
@@ -291,6 +295,7 @@ begin
   FSelectedList := TStringListExt.Create;
   FCurrentResource := nil;
   FCurrentTemplate := TMemoryStream.Create;
+  FModifiedList := TStringList.Create;
 
   if Login then
   begin
@@ -363,8 +368,13 @@ begin
     Form.Edit('ID', iID);
     if Form.IsModified then
     begin
-      ExecLastFilter;
-      FilterDataset.Locate('ID', iID, []);
+      FModifiedList.Add(FilterDatasource.DataSet.fieldByName('id').AsString);
+      FModifiedList.savetofile('c:\momo.cds');
+      if false then //TODO: trocar pela lógica de forçar a reexecução de filtro
+      begin
+        ExecLastFilter;
+        FilterDataset.Locate('ID', iID, []);
+      end;
     end;
   end;
 end;
@@ -510,6 +520,7 @@ end;
 procedure TosCustomMainForm.FilterActionExecute(Sender: TObject);
 begin
   inherited;
+  FModifiedList.Clear;
   if Assigned(FCurrentResource) then
   begin
     Screen.Cursor := crHourglass;
@@ -539,6 +550,7 @@ end;
 
 procedure TosCustomMainForm.ExecLastFilter;
 begin
+  FModifiedList.clear;
   Screen.Cursor := crHourglass;
   try
     FilterDataset.Close;
@@ -613,6 +625,7 @@ end;
 destructor TosCustomMainForm.Destroy;
 begin
   FSelectedList.Free;
+  FModifiedList.Free;
   inherited;
 end;
 
@@ -719,6 +732,7 @@ procedure TosCustomMainForm.ResourceClick(Sender: TObject);
 var
   NewResource: TosAppResource;
 begin
+  FModifiedList.Clear;
   FNewFilter := false;
   NewResource := TosAppResource(Manager.Resources.FindItemID(TOutlookButton(Sender).Tag));
   if FCurrentResource <> NewResource then
@@ -1554,11 +1568,14 @@ begin
       Form.Edit('ID', iID);
       if Form.IsModified then
       begin
-        ExecLastFilter;
-        FilterDataset.Locate('ID', iID, []);
+        FModifiedList.Add(FilterDatasource.DataSet.fieldByName('id').AsString);
+        if false then //TODO considerar o forçar reexecutar filtro
+        begin
+          ExecLastFilter;
+          FilterDataset.Locate('ID', iID, []); //TODO: localizar o próximo ID
+        end;
       end;
-      if FIDField.AsInteger = iID then
-        FilterDataset.Next;
+      FilterDataset.Next;
     end;
   end;
 end;
@@ -1683,6 +1700,20 @@ begin
     Bottom := Bottom+10;
   end;
 end;
+
+procedure TosCustomMainForm.GridCalcCellColors(Sender: TObject;
+  Field: TField; State: TGridDrawState; Highlight: Boolean; AFont: TFont;
+  ABrush: TBrush);
+var
+  dummy: integer;
+  id: integer;
+begin
+  inherited;
+  id := field.DataSet.fieldByName('id').AsInteger;
+  if FModifiedList.IndexOf(IntToStr(id)) <> -1  then
+    AFont.Style := [fsItalic, fsBold];
+end;
+
 
 initialization
   ShortDateFormat := 'dd/mm/yyyy';
