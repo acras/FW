@@ -78,7 +78,7 @@ type
     FFormMode: TFormMode;
     FExternalCDS: TosClientDataset;
     FIsModified: boolean;
-    procedure MasterDatasetAfterEdit(DataSet: TDataSet);
+    procedure MasterDatasetAfterEdit(DataSet: TDataSet); virtual;
     procedure CheckMasterDataset;
     procedure Loaded; override;
     procedure ParseParams(PParams: TParams; const KeyFields: string; const KeyValues: Variant);
