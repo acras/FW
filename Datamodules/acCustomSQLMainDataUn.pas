@@ -82,6 +82,7 @@ type
     procedure Commit;
     procedure Rollback;
     function GetNewID(nomeGenerator: String = ''): integer;
+    function GetGeneratorValue(nomeGenerator: String): integer;
     procedure GetUserInfo(apelido: string);
 
     procedure LoadRefreshTables;
@@ -428,9 +429,13 @@ begin
   end else
   begin
     qryAux := GeTosSQLDataset;
-    qryAux.CommandText := 'select gen_id('+nomeGenerator+', 1) from RDB$DATABASE';
-    qryAux.Open;
-    result := qryAux.Fields[0].AsInteger;
+    try
+      qryAux.CommandText := 'select gen_id('+nomeGenerator+', 1) from RDB$DATABASE';
+      qryAux.Open;
+      result := qryAux.Fields[0].AsInteger;
+    finally
+      FreeAndNil(qryAux);
+    end;
   end;
 end;
 
@@ -643,6 +648,21 @@ begin
       result := query.Fields[0].Value;
   finally
     FreeAndNil(query);
+  end;
+end;
+
+function TacCustomSQLMainData.GetGeneratorValue(
+  nomeGenerator: String): integer;
+var
+  qryAux: TosSQLDataSet;
+begin
+  qryAux := GeTosSQLDataset;
+  try
+    qryAux.CommandText := 'select gen_id('+nomeGenerator+', 1) from RDB$DATABASE';
+    qryAux.Open;
+    result := qryAux.fields[0].AsInteger;
+  finally
+    FreeAndNil(qryAux);
   end;
 end;
 

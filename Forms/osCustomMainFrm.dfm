@@ -1,6 +1,6 @@
 inherited osCustomMainForm: TosCustomMainForm
   Left = 0
-  Top = 87
+  Top = 55
   Width = 1024
   Height = 683
   ActiveControl = ResourcePanel

@@ -5,9 +5,9 @@ unit UtilsUnit;
 interface
 
 uses
-  IBServices, INIFiles, SysUtils, Forms, AbZipper, Windows, StrUtils, Controls,
+  IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
-  Math;
+  Math, JvToolEdit, Wwdbgrid;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -25,12 +25,33 @@ procedure desHabilitaComponentes(comps: array of TComponent);
 procedure setHabilitaDBEdit(edt: TDBEdit; enabled: boolean);
 procedure setHabilitawwComboBox(comboBox: TwwDBComboBox; enabled: boolean);
 procedure setHabilitawwDateTimePicker(dateTimePicker: TwwDBDateTimePicker; enabled: boolean);
+procedure setHabilitaJvDirectoryEdit(edtd: TJvDirectoryEdit; enabled: boolean);
 function roundToCurr(val: double): double;
+procedure setHabilitaDBCheckBox(edtd: TDBCheckBox; enabled: boolean);
+procedure setHabilitaDBMemo(comp: TDBMemo; enabled: boolean);
+procedure setHabilitawwDBGrid(grd: TwwDBGrid; enabled: boolean);
+procedure ListFileDir(Path: string; FileList: TStrings);
+
 
 implementation
 
 uses DateUtils, Variants;
 
+procedure ListFileDir(Path: string; FileList: TStrings);
+var
+  SR: TSearchRec;
+begin
+  if FindFirst(Path + '\*.xml', faAnyFile, SR) = 0 then
+  begin
+    repeat
+      if (SR.Attr <> faDirectory) then
+      begin
+        FileList.Add(SR.Name);
+      end;
+    until FindNext(SR) <> 0;
+    FindClose(SR);
+  end;
+end;
 
 function isDigitOrControl(Key: char): boolean;
 var
@@ -212,6 +233,59 @@ begin
   end;
 end;
 
+procedure setHabilitaJvDirectoryEdit(edtd: TJvDirectoryEdit; enabled: boolean);
+begin
+  if enabled then
+  begin
+    edtd.ReadOnly := false;
+    edtd.Color := clWhite;
+  end
+  else
+  begin
+    edtd.ReadOnly := true;
+    edtd.Color := clBtnFace;
+  end;
+end;
+
+procedure setHabilitaDBCheckBox(edtd: TDBCheckBox; enabled: boolean);
+begin
+  if enabled then
+  begin
+    edtd.ReadOnly := false;
+  end
+  else
+  begin
+    edtd.ReadOnly := true;
+  end;
+end;
+
+procedure setHabilitawwDBGrid(grd: TwwDBGrid; enabled: boolean);
+begin
+  if enabled then
+  begin
+    grd.ReadOnly := false;
+  end
+  else
+  begin
+    grd.ReadOnly := true;
+  end;
+end;
+
+
+procedure setHabilitaDBMemo(comp: TDBMemo; enabled: boolean);
+begin
+  if enabled then
+  begin
+    comp.enabled := true;
+    comp.Color := clWhite;
+  end
+  else
+  begin
+    comp.enabled := false;
+    comp.Color := clBtnFace;
+  end;
+end;
+
 procedure setHabilitaComponente(comp: TComponent; enabled: boolean);
 begin
   if comp is TosComboSearch then
@@ -222,6 +296,14 @@ begin
     setHabilitawwComboBox((comp as TwwDBComboBox), enabled);
   if comp is TwwDBDateTimePicker then
     setHabilitawwDateTimePicker((comp as TwwDBDateTimePicker), enabled);
+  if comp is TJvDirectoryEdit then
+    setHabilitaJvDirectoryEdit((comp as TJvDirectoryEdit), enabled);
+  if comp is TDBCheckBox then
+    setHabilitadbCheckBox((comp as TDBCheckBox), enabled);
+  if comp is TDBMemo then
+    setHabilitaDBMemo((comp as TDBMemo), enabled);
+  if comp is TwwDBGrid then
+    setHabilitawwDBGrid((comp as twwDBGrid), enabled);
 end;
 
 procedure habilitaComponentes(comps: varArrayOfcomps);
