@@ -335,12 +335,12 @@ begin
     qry.SQL.Text := 'SELECT NAME FROM XFILTERDEF';
     qry.Open;
     qry.First;
-    while not qry.Eof do
-    begin
-      vViews := FilterDataset.DataRequest('_CMD=GET_VIEWS UID=  CLASSNAME=' + qry.FieldByName('NAME').AsString);
-      FFilterDepot.addFilter(qry.FieldByName('NAME').AsString, vViews);
-      qry.Next;
-    end;
+    //while not qry.Eof do
+    //begin
+      //vViews := FilterDataset.DataRequest('_CMD=GET_VIEWS UID=  CLASSNAME=' + qry.FieldByName('NAME').AsString);
+      //FFilterDepot.addFilter(qry.FieldByName('NAME').AsString, vViews);
+      //qry.Next;
+    //end;
   finally
     FreeAndNil(qry);
     MainData.FilterQuery.SQLConnection := MainData.SQLConnection;

@@ -1,7 +1,7 @@
 inherited osCustomMainForm: TosCustomMainForm
-  Left = 98
-  Top = 4
-  Width = 1182
+  Left = 0
+  Top = 87
+  Width = 1024
   Height = 683
   ActiveControl = ResourcePanel
   Caption = 'osCustomMainForm'
@@ -12,7 +12,7 @@ inherited osCustomMainForm: TosCustomMainForm
   object ControlBar: TControlBar [0]
     Left = 0
     Top = 0
-    Width = 1166
+    Width = 1008
     Height = 37
     Align = alTop
     AutoDrag = False
@@ -178,7 +178,7 @@ inherited osCustomMainForm: TosCustomMainForm
   object StatusBar: TStatusBar [1]
     Left = 0
     Top = 608
-    Width = 1166
+    Width = 1008
     Height = 19
     Panels = <
       item
@@ -243,7 +243,7 @@ inherited osCustomMainForm: TosCustomMainForm
   object Panel2: TPanel [3]
     Left = 281
     Top = 37
-    Width = 885
+    Width = 727
     Height = 571
     Align = alClient
     BevelOuter = bvNone
@@ -251,12 +251,12 @@ inherited osCustomMainForm: TosCustomMainForm
     object WebBrowser: TWebBrowser
       Left = 0
       Top = 33
-      Width = 885
+      Width = 727
       Height = 538
       Align = alClient
       TabOrder = 2
       ControlData = {
-        4C000000785B00009B3700000000000000000000000000000000000000000000
+        4C000000234B00009B3700000000000000000000000000000000000000000000
         000000004C000000000000000000000001000000E0D057007335CF11AE690800
         2B2E126208000000000000004C0000000114020000000000C000000000000046
         8000000000000000000000000000000000000000000000000000000000000000
@@ -265,7 +265,7 @@ inherited osCustomMainForm: TosCustomMainForm
     object ResourcePanel: TPanel
       Left = 0
       Top = 0
-      Width = 885
+      Width = 727
       Height = 33
       Align = alTop
       Alignment = taLeftJustify
@@ -2042,7 +2042,7 @@ inherited osCustomMainForm: TosCustomMainForm
     AutoStop = False
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'Letter'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.mmMarginBottom = 6350
     PrinterSetup.mmMarginLeft = 6350

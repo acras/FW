@@ -43,7 +43,7 @@ var
 
 implementation
 
-uses EstruturaContabilDataUn, SQLMainData, osFrm;
+uses SQLMainData, osFrm;
 
 {$R *.DFM}
 
