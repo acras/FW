@@ -33,7 +33,6 @@ inherited EstruturaContabilEditForm: TEstruturaContabilEditForm
     Aggregates = <>
     FetchOnDemand = False
     Params = <>
-    BeforePost = MasterClientDataSetBeforePost
     DataProvider = ParametroSistemaData.MasterProvider
     BizDatamoduleName = 'BizFilterDef'
     Left = 408

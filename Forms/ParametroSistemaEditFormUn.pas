@@ -28,8 +28,6 @@ type
     MasterClientDataSetMENSAGEMORCAMENTO: TStringField;
     MasterClientDataSetMENSAGEMLOCACAO: TStringField;
     MasterClientDataSetNOMELOCATARIO: TStringField;
-
-    procedure MasterClientDataSetBeforePost(DataSet: TDataSet);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -46,12 +44,6 @@ implementation
 uses SQLMainData, osFrm;
 
 {$R *.DFM}
-
-procedure TEstruturaContabilEditForm.MasterClientDataSetBeforePost(DataSet: TDataSet);
-begin
-  inherited;
-  EstruturaContabilData.Validate(DataSet);
-end;
 
 procedure TEstruturaContabilEditForm.FormShow(Sender: TObject);
 begin
