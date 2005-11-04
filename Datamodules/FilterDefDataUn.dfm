@@ -1,0 +1,51 @@
+object FilterDefData: TFilterDefData
+  OldCreateOrder = False
+  Left = 294
+  Top = 211
+  Height = 257
+  Width = 499
+  object MasterDatasource: TDataSource
+    DataSet = MasterDataset
+    Left = 68
+    Top = 92
+  end
+  object MasterProvider: TosSQLDataSetProvider
+    DataSet = MasterDataset
+    Options = [poNoReset]
+    Left = 180
+    Top = 24
+  end
+  object MasterDataset: TosSQLDataSet
+    CommandText = 
+      'SELECT'#13#10'  IDXFilterDef,'#13#10'  Name,'#13#10'  FilterType'#13#10'FROM'#13#10'  XFilterD' +
+      'ef'#13#10'WHERE'#13#10'  IDXFilterDef = :ID'#13#10
+    MaxBlobSize = 32
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID'
+        ParamType = ptInput
+      end>
+    SQLConnection = MainData.SQLConnection
+    Left = 56
+    Top = 20
+  end
+  object FilterDefDetailDataset: TosSQLDataSet
+    CommandText = 
+      'SELECT'#13#10'  IDXFilterDefDetail,'#13#10'  IDXFilterDef,'#13#10'  Number,'#13#10'  Des' +
+      'cription,'#13#10'  QueryText,'#13#10'  AttributeList,'#13#10'  ExpressionList,'#13#10'  ' +
+      'ConstraintList,'#13#10'  OrderList,'#13#10'  AccessLevel'#13#10'FROM'#13#10'  XFilterDef' +
+      'Detail'#13#10'WHERE'#13#10'  IDXFilterDef = :IDXFilterDef'#13#10
+    DataSource = MasterDatasource
+    MaxBlobSize = 32
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'IDXFilterDef'
+        ParamType = ptInput
+      end>
+    SQLConnection = MainData.SQLConnection
+    Left = 188
+    Top = 92
+  end
+end
