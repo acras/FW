@@ -14,7 +14,7 @@ uses
   osUtils, OleCtrls, SHDocVw, ppTmplat, osSQLDataSet, dbTables,
   SqlExpr, DBXpress, DBLocal, {DBLocalS,} daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
-  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, ReportUn;
+  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn;
 
 type
   TDatamoduleClass = class of TDatamodule;
@@ -218,7 +218,7 @@ type
     function CreateCurrentForm: TForm;
     function CreateCurrentEditForm: TosCustomEditForm;
     function CreateCurrentDatamodule: TDatamodule;
-    function CreateCurrentReport: TReport;
+    function CreateCurrentReport: TacCustomReport;
 
     function Login: boolean;
     procedure Logout;
@@ -752,7 +752,7 @@ end;
 
 procedure TosCustomMainForm.PrintActionExecute(Sender: TObject);
 var
-  Report : TReport;
+  Report : TacCustomReport;
 begin
   inherited;
   // Because the report is not often printed, the object can be created on the
@@ -768,7 +768,7 @@ begin
     Assert(False, 'The report wasn''t created');
 end;
 
-function TosCustomMainForm.CreateCurrentReport: TReport;
+function TosCustomMainForm.CreateCurrentReport: TacCustomReport;
 begin
   if (Assigned(FCurrentResource)) and
     (FCurrentResource.ResType in [rtEdit, rtReport]) and
@@ -1385,7 +1385,7 @@ begin
   if strSQL <> '' then
     report.PrintToDevices;
   if FCurrentDatamodule <> nil then
-    TReport(FCurrentDataModule).Print(0);
+    TacCustomReport(FCurrentDataModule).Print(0);
 end;
 
 procedure TosCustomMainForm.checkOperations;

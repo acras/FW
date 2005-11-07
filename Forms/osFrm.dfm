@@ -1,6 +1,6 @@
 object osForm: TosForm
-  Left = 623
-  Top = 422
+  Left = 442
+  Top = 294
   Width = 401
   Height = 278
   Caption = 'osForm'

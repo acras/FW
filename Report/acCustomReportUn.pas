@@ -1,4 +1,4 @@
-unit ReportUn;
+unit acCustomReportUn;
 
 interface
 
@@ -32,14 +32,13 @@ type
                    rfGIF, rfHTML, rfJPEG, rfPrinter, rfReportText, rfRTF,
                    rfText, rfWindowsMetafile, rfXHTML);
 
-  TReport = class(TDataModule)
+  TacCustomReport = class(TDataModule)
     FilterDatasource: TDataSource;
     FilterDataset: TosClientDataset;
     Report: TppReport;
     Detail: TppDetailBand;
     raCodeModule1: TraCodeModule;
     procedure DataModuleCreate(Sender: TObject);
-    procedure ReportBeforePrint(Sender: TObject);
     procedure ReportPreviewFormCreate(Sender: TObject);
   private
     FPrintToFile: boolean;
@@ -64,10 +63,10 @@ type
     procedure SetOutputFile(FileName: string; Format: TReportFormat = rfPrinter);
   end;
 
-  TReportClass = class of TReport;
+  TReportClass = class of TacCustomReport;
 
 var
-  Report: TReport;
+  acCustomReport: TacCustomReport;
 
 
 implementation
@@ -76,12 +75,12 @@ uses SQLMainData, osReportUtils, RelatorioDataUn, Dialogs;
 
 {$R *.dfm}
 
-procedure TReport.linkEvents;
+procedure TacCustomReport.linkEvents;
 begin
 //
 end;
 
-procedure TReport.Print(const PID: integer);
+procedure TacCustomReport.Print(const PID: integer);
 var
   stream: TMemoryStream;
   idTemplate: integer;
@@ -152,13 +151,13 @@ begin
   end;
 end;
 
-procedure TReport.DataModuleCreate(Sender: TObject);
+procedure TacCustomReport.DataModuleCreate(Sender: TObject);
 begin
   adendos := TAdendos.Create;
   FPrintToFile := False;
 end;
 
-function TReport.getPipeline(name: String): TppDataPipeline;
+function TacCustomReport.getPipeline(name: String): TppDataPipeline;
 var
   aSQL: TDaSQL;
   lDataModule: TdaDataModule;
@@ -192,7 +191,7 @@ begin
   result := nil;
 end;
 
-procedure TReport.replaceReportSQLAddWhere(report: TppReport; template: TMemoryStream;
+procedure TacCustomReport.replaceReportSQLAddWhere(report: TppReport; template: TMemoryStream;
   id: integer);
 var
   aSQL: TDaSQL;
@@ -251,12 +250,12 @@ begin
     end;
 end;
 
-function TReport.replaceId(str: string; id:integer): string;
+function TacCustomReport.replaceId(str: string; id:integer): string;
 begin
   result := StringReplace(str,'\id',IntToStr(id),[rfReplaceAll, rfIgnoreCase]);
 end;
 
-function TReport.replaceParamId(str: string; id:integer): string;
+function TacCustomReport.replaceParamId(str: string; id:integer): string;
 begin
   result := StringReplace(str,'-1',IntToStr(id),[rfReplaceAll, rfIgnoreCase]);
 end;
@@ -289,16 +288,16 @@ begin
   end;
 end;
 
-procedure TReport.ajustarAdendos;
+procedure TacCustomReport.ajustarAdendos;
 begin
 end;
 
-function TReport.getTemplate(id: integer; stream: TMemoryStream): boolean;
+function TacCustomReport.getTemplate(id: integer; stream: TMemoryStream): boolean;
 begin
   result := false;
 end;
 
-function TReport.findComponentUserName(name: String): TComponent;
+function TacCustomReport.findComponentUserName(name: String): TComponent;
 var
   i: integer;
   PropInfo: PPropInfo;
@@ -314,16 +313,7 @@ begin
 end;
 
 
-procedure TReport.ReportBeforePrint(Sender: TObject);
-var
-  mmo: TppMemo;
-begin
-  mmo := TppMemo(FindComponentUserName('mmmoFilter'));
-  if mmo <> nil then
-    mmo.Lines.LoadFromFile('c:\ultimoFiltro.txt');
-end;
-
-procedure TReport.SetOutputFile(FileName: string; Format: TReportFormat);
+procedure TacCustomReport.SetOutputFile(FileName: string; Format: TReportFormat);
 begin
   with Report do
   begin
@@ -385,12 +375,12 @@ begin
 end;
 
 
-function TReport.casosEspeciais(valorOriginal: string): string;
+function TacCustomReport.casosEspeciais(valorOriginal: string): string;
 begin
   result := valorOriginal;
 end;
 
-procedure TReport.ReportPreviewFormCreate(Sender: TObject);
+procedure TacCustomReport.ReportPreviewFormCreate(Sender: TObject);
 begin
   //
 end;

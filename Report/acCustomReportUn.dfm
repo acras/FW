@@ -1,4 +1,4 @@
-object Report: TReport
+object acCustomReport: TacCustomReport
   OldCreateOrder = False
   OnCreate = DataModuleCreate
   Left = 259
