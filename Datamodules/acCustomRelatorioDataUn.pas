@@ -1,13 +1,13 @@
-unit RelatorioDataUn;
+unit acCustomRelatorioDataUn;
 
 interface
 
 uses
   SysUtils, Classes, FMTBcd, Provider, osSQLDataSetProvider, DB, SqlExpr, osUtils,
-  osCustomDataSetProvider, osSQLDataSet, osSqlQuery;
+  osCustomDataSetProvider, osSQLDataSet, osSqlQuery, acCustomReportUn;
 
 type
-  TRelatorioData = class(TDataModule)
+  TacCustomRelatorioData = class(TDataModule)
     MasterDataSet: TosSQLDataset;
     MasterProvider: TosSQLDataSetProvider;
     MasterDataSetIDRELATORIO: TIntegerField;
@@ -28,12 +28,13 @@ type
   public
     procedure Validate(PDataSet: TDataSet);
     class function getTitulo(IdRelatorio: integer): string;
-    class function isChangeable(className: string): boolean;
-    class function getTemplateIDForUser(className: string; preview: boolean): integer;
+    class function isChangeable(className: string): boolean; virtual;
+    class function getTemplateConfigForUser(className: string;
+      var configImpressao: TConfigImpressao): integer; virtual;
   end;
 
 var
-  RelatorioData: TRelatorioData;
+  acCustomRelatorioData: TacCustomRelatorioData;
 
 implementation
 
@@ -41,14 +42,16 @@ uses osErrorHandler, SQLMainData, osLogin, osReportUtils;
 
 {$R *.dfm}
 
-class function TRelatorioData.getTemplateIDForUser(
-  className: string; preview: boolean): integer;
-var
+class function TacCustomRelatorioData.getTemplateConfigForUser(
+  className: string; var configImpressao: TConfigImpressao): integer;
+{var
   qry: TosSQLQuery;
   nomeField: string;
-  loginInfo: TLoginUsuario;
+  loginInfo: TLoginUsuario;}
 begin
-  className := UpperCase(className);
+  result := -1;
+  //todo o código foi comentado para implementar o novo esquema de herança
+{  className := UpperCase(className);
   nomeField := '';
   if (classname = 'TPROTOCOLOREPORT') then
     nomeField := 'IdRelatorioProtocolo';
@@ -90,21 +93,15 @@ begin
     finally
       FreeAndNil(qry);
     end;
-  end;
+  end;}
 end;
 
-class function TRelatorioData.isChangeable(className: string): boolean;
+class function TacCustomRelatorioData.isChangeable(className: string): boolean;
 begin
-  classname := UpperCase(className);
-  result := (classname = 'TPROTOCOLOREPORT') OR
-            (classname = 'TFICHAPACIENTEREPORT') OR
-            (classname = 'TMAPALOTEREPORT') OR
-            (classname = 'TLAUDOREPORT') OR
-            (classname = 'TETIQUETAAMOSTRAREPORT') OR
-            (classname = 'TORCAMENTOREPORT');
+  result := false;
 end;
 
-class function TRelatorioData.getTitulo(IdRelatorio: integer): string;
+class function TacCustomRelatorioData.getTitulo(IdRelatorio: integer): string;
 var
   qry: TosSQLQuery;
 begin
@@ -121,7 +118,7 @@ begin
   end;
 end;
 
-procedure TRelatorioData.Validate(PDataSet: TDataSet);
+procedure TacCustomRelatorioData.Validate(PDataSet: TDataSet);
 begin
   with PDataSet, HError do
   begin
@@ -137,7 +134,5 @@ begin
   end;
 end;
 
-initialization
-  OSRegisterClass(TRelatorioData);
 
 end.

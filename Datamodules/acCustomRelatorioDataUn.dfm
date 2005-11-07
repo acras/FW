@@ -1,11 +1,10 @@
-object RelatorioData: TRelatorioData
+object acCustomRelatorioData: TacCustomRelatorioData
   OldCreateOrder = False
   Left = 472
   Top = 341
   Height = 182
   Width = 238
   object MasterDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'SELECT'#13#10'  IDRelatorio,'#13#10'  IDTipoRelatorio,'#13#10'  ITEM_ID,'#13#10'  Titulo' +
       ','#13#10'  Descricao,'#13#10'  ClasseImpressora,'#13#10'  ClasseRelatorio,'#13#10'  Comp' +
@@ -19,6 +18,7 @@ object RelatorioData: TRelatorioData
         Name = 'ID'
         ParamType = ptInput
       end>
+    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 24
     object MasterDataSetIDRELATORIO: TIntegerField
@@ -85,7 +85,6 @@ object RelatorioData: TRelatorioData
   end
   object MasterProvider: TosSQLDataSetProvider
     DataSet = MasterDataSet
-    Constraints = True
     Options = [poIncFieldProps, poNoReset]
     Left = 136
     Top = 24

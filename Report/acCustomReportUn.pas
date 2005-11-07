@@ -13,6 +13,11 @@ uses
 type
   TTipoAdendo = (taWHERE, taORDER);
 
+  TConfigImpressao = record
+    nomeImpressora: string;
+    preview: boolean;
+  end;
+
   TAdendo = record
     tipo: TTipoAdendo;
     Pipeline: String;
@@ -85,16 +90,16 @@ var
   stream: TMemoryStream;
   idTemplate: integer;
   encontrou: boolean;
-  preview: boolean;
+  config: TConfigImpressao;
 begin
   beforePrint := Report.BeforePrint;
   stream := TMemoryStream.Create;
-  preview := true;
+  config.preview := true;
   try
     encontrou := false;
     if TRelatorioData.isChangeable(ClassName) then
     begin
-      idTemplate := TRelatorioData.getTemplateIDForUser(ClassName, preview);
+      idTemplate := TRelatorioData.getTemplateConfigForUser(ClassName, config);
       if idTemplate <> -1 then
       begin
         if getTemplateByID(idTemplate, stream) then
@@ -126,7 +131,7 @@ begin
 
 {$IFDEF DESENV}
 //    preview := true;
-//comentado a pedido de maringá para que respeite a config 
+//comentado a pedido de maringá para que respeite a config
 {$ENDIF}
 
     if FPrintToFile then
@@ -136,7 +141,7 @@ begin
       report.TextFileName := FTextFileName;
       report.ShowPrintDialog := false;
     end
-    else if preview then
+    else if config.preview then
     begin
       report.DeviceType := 'Screen';
     end
@@ -145,6 +150,7 @@ begin
       report.ShowPrintDialog := false;
       report.DeviceType := 'Printer';
     end;
+    report.PrinterSetup.PrinterName := config.nomeImpressora;
     Report.Print;
   finally
     FreeAndNil(stream);
