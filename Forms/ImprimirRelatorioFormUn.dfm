@@ -1,6 +1,5 @@
 inherited ImprimirRelatorioForm: TImprimirRelatorioForm
-  Left = 463
-  Top = 232
+  Top = 230
   Caption = 'ImprimirRelatorioForm'
   PixelsPerInch = 96
   TextHeight = 13
@@ -45,6 +44,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     PrinterSetup.mmPaperHeight = 297000
     PrinterSetup.mmPaperWidth = 210000
     PrinterSetup.PaperSize = 9
+    Units = utMillimeters
     DeviceType = 'Screen'
     OnPreviewFormCreate = reportPreviewFormCreate
     OutlineSettings.CreateNode = True

@@ -16,6 +16,13 @@ type
   TConfigImpressao = record
     nomeImpressora: string;
     preview: boolean;
+    orientation: integer; //1=retrato 2=paisagem
+    larguraPapel: double;
+    alturaPapel: double;
+    margemSuperior: double;
+    margemInferior: double;
+    margemEsquerda: double;
+    margemDireita: double;
   end;
 
   TAdendo = record
@@ -23,6 +30,8 @@ type
     Pipeline: String;
     sentenca: String;
   end;
+
+
 
   TAdendos = class
     private
@@ -92,6 +101,13 @@ var
   encontrou: boolean;
   config: TConfigImpressao;
 begin
+  config.orientation := -1;
+  config.larguraPapel := -1;
+  config.alturaPapel := -1;
+  config.margemSuperior := -1;
+  config.margemInferior := -1;
+  config.margemEsquerda := -1;
+  config.margemDireita := -1;
   beforePrint := Report.BeforePrint;
   stream := TMemoryStream.Create;
   config.preview := true;
@@ -151,6 +167,24 @@ begin
       report.DeviceType := 'Printer';
     end;
     report.PrinterSetup.PrinterName := config.nomeImpressora;
+    if config.orientation = 1 then
+      report.PrinterSetup.Orientation := poPortrait;
+    if config.orientation = 2 then
+      report.PrinterSetup.Orientation := poLandscape;
+
+    Report.Units := utMillimeters;
+    if config.alturaPapel <> -1 then
+      Report.PrinterSetup.PaperHeight := config.alturaPapel;
+    if config.larguraPapel <> -1 then
+      Report.PrinterSetup.PaperWidth := config.larguraPapel;
+    if config.margemInferior <> -1 then
+      Report.PrinterSetup.MarginBottom := config.margemInferior;
+    if config.margemEsquerda <> -1 then
+      Report.PrinterSetup.MarginLeft := config.margemEsquerda;
+    if config.margemDireita <> -1 then
+      Report.PrinterSetup.MarginRight := config.margemDireita;
+    if config.margemSuperior <> -1 then
+      Report.PrinterSetup.MarginTop := config.margemSuperior;
     Report.Print;
   finally
     FreeAndNil(stream);

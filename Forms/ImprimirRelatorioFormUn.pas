@@ -7,7 +7,8 @@ uses
   Dialogs, osCustomEditFrm, Menus, ImgList, DB, ActnList, osActionList,
   Buttons, ExtCtrls, osUtils, DBClient, osClientDataset, StdCtrls, Mask,
   wwdbedit, Wwdotdot, Wwdbcomb, osComboFilter, osSQLQuery, ppReport,
-  ppComm, ppRelatv, ppProd, ppClass, osCustomSearchFrm;
+  ppComm, ppRelatv, ppProd, ppClass, osCustomSearchFrm, ppMemo, TypInfo,
+  printers, ppTypes;
 
 type
   TImprimirRelatorioForm = class(TosCustomEditForm)
@@ -16,8 +17,10 @@ type
     FilterDataSet: TosClientDataset;
     ComboFilter: TosComboFilter;
     procedure ReportPreviewFormCreate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     procedure ImprimirRelatorioComFiltro(idRelatorio: integer);
+    function findComponentUserName(name: String): TComponent;
 
     { Private declarations }
   public
@@ -29,7 +32,8 @@ var
 
 implementation
 
-uses osReportUtils, SQLMainData;
+uses osReportUtils, SQLMainData, osFrm, ParametroSistemaDataUn,
+  acCustomReportUn;
 
 {$R *.dfm}
 
@@ -48,13 +52,30 @@ var
   qry: TosSQLQuery;
   templateName, FilterName: string;
   srchForm: TCustomSearchForm;
+  sl: TStringList;
+  config: TConfigImpressao;
 begin
+  config.orientation := -1;
+  config.larguraPapel := -1;
+  config.alturaPapel := -1;
+  config.margemSuperior := -1;
+  config.margemInferior := -1;
+  config.margemEsquerda := -1;
+  config.margemDireita := -1;
   //buscar informações no catálogo de relatórios
   qry := MainData.GetQuery;
   try
     qry.sql.Text := 'SELECT ' +
                     ' RB.Name as TemplateName, '+
-                    ' F.Name as NomeFiltro' +
+                    ' F.Name as NomeFiltro, ' +
+                    ' R.ClasseImpressora, ' +
+                    ' R.MargemSuperior, ' +
+                    ' R.MargemInferior, ' +
+                    ' R.MargemEsquerda, ' +
+                    ' R.MargemDireita, ' +
+                    ' R.AlturaPapel, ' +
+                    ' R.LarguraPapel, ' +
+                    ' R.Orientation ' +
                     ' FROM Relatorio R ' +
                     ' LEFT JOIN XFilterDef F ' +
                     '   ON F.IDXFilterDef=R.IDXFilterDef ' +
@@ -64,7 +85,21 @@ begin
     qry.Open;
     templateName := qry.FieldByName('TemplateName').AsString;
     FilterName := qry.FieldByName('NomeFiltro').AsString;
-
+    config.nomeImpressora := ParametroSistemaData.getNomeImpressoraClasse(qry.FieldByName('ClasseImpressora').AsString);
+    if not qry.fieldByName('orientation').IsNull then
+      config.orientation := qry.fieldByName('orientation').AsInteger;
+    if not qry.fieldByName('larguraPapel').IsNull then
+      config.larguraPapel := qry.fieldByName('larguraPapel').AsInteger;
+    if not qry.fieldByName('alturaPapel').IsNull then
+      config.alturaPapel := qry.fieldByName('alturaPapel').AsInteger;
+    if not qry.fieldByName('margemSuperior').IsNull then
+      config.margemSuperior := qry.fieldByName('margemSuperior').AsInteger;
+    if not qry.fieldByName('margemInferior').IsNull then
+      config.margemInferior := qry.fieldByName('margemInferior').AsInteger;
+    if not qry.fieldByName('margemEsquerda').IsNull then
+      config.margemEsquerda := qry.fieldByName('margemEsquerda').AsInteger;
+    if not qry.fieldByName('margemDireita').IsNull then
+      config.margemDireita := qry.fieldByName('margemDireita').AsInteger;
   finally
     MainData.FreeQuery(qry);
   end;
@@ -81,6 +116,8 @@ begin
       srchForm.DataProvider := MainData.prvFilter;
       Execute('',3,toRetornarQuery);
       replaceReportSQL(report, stream, sqlResult.GetText);
+      sl := TStringList.Create;
+      getUserFills(sl);
       free;
     end;
 //    with ComboFilter do
@@ -94,6 +131,28 @@ begin
   else
     Report.Template.LoadFromStream(stream);
 
+
+  report.Units := utMillimeters;
+  report.PrinterSetup.PrinterName :=
+    config.nomeImpressora;
+  if config.orientation = 1 then
+    report.PrinterSetup.Orientation := poPortrait
+  else
+    report.PrinterSetup.Orientation := poLandscape;
+
+  if config.alturaPapel <> -1 then
+    Report.PrinterSetup.PaperHeight := config.alturaPapel;
+  if config.larguraPapel <> -1 then
+    Report.PrinterSetup.PaperWidth := config.larguraPapel;
+  if config.margemInferior <> -1 then
+    Report.PrinterSetup.MarginBottom := config.margemInferior;
+  if config.margemEsquerda <> -1 then
+    Report.PrinterSetup.MarginLeft := config.margemEsquerda;
+  if config.margemDireita <> -1 then
+    Report.PrinterSetup.MarginRight := config.margemDireita;
+  if config.margemSuperior <> -1 then
+    Report.PrinterSetup.MarginTop := config.margemSuperior;
+
   report.Print;
 end;
 
@@ -101,7 +160,27 @@ procedure TImprimirRelatorioForm.ReportPreviewFormCreate(Sender: TObject);
 begin
   inherited;
   report.PreviewForm.WindowState := wsMaximized;
-//  Report.PreviewForm.
+end;
+
+function TImprimirRelatorioForm.findComponentUserName(name: String): TComponent;
+var
+  i: integer;
+  PropInfo: PPropInfo;
+begin
+  result := nil;
+  for i := 0 to ComponentCount-1 do
+  begin
+    PropInfo := GetPropInfo(components[i], 'userName');
+    if Assigned(propInfo) then
+      if UpperCase(GetStrProp(Components[i], 'userName'))  = UpperCase(name)then
+        result := Components[i];
+  end;
+end;
+
+procedure TImprimirRelatorioForm.FormCreate(Sender: TObject);
+begin
+  inherited;
+  Operacoes := Operacoes-[oInserir,oExcluir,oVisualizar];
 end;
 
 initialization
