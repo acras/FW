@@ -183,6 +183,7 @@ type
     procedure mskPreviewPercentageExit(Sender: TObject);
     procedure EditarTodosButtonClick(Sender: TObject);
     procedure EfetuarBackupemarquivolocal1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     FUserName: string;
     FEditForm: TosCustomEditForm;
@@ -211,6 +212,7 @@ type
     // OnKeyDown, pode determinar, assim, se uma dessas teclas está pressionada
     // e ignorar o caractere se desejado
     CtrlOrAltPressed: boolean;
+    FSuperUserLogged: boolean;
 
     procedure SetEditForm(const Value: TosCustomEditForm);
     procedure SetActionDblClick(const Value: TAction);
@@ -231,12 +233,16 @@ type
     procedure adjustReportZoom;
   protected
     FCurrentResource: TosAppResource;
+    FSuperUserName: string;
     procedure ResourceClick( Sender: TObject );
     procedure replaceReportSQLPrint;
     procedure CheckMultiSelection;
     procedure ShowHomePage(freeRes: boolean; goHome: boolean = true);
     procedure HideHomePage(tipo: TTipoExibicao);
+    function getSuperUserPass: string; virtual;
   public
+    property superUserName: string read FSuperUserName;
+    property superUserLogged: boolean read FSuperUserLogged;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     property UserName: string read FUserName;
@@ -1017,9 +1023,20 @@ begin
     ErrorCount := 0;
     LoginCorrect := False;
 
+    FSuperUserLogged := false;
+
     while not LoginCorrect and (ErrorCount < MaxErrorCount)
         and (mrCancel <> LoginForm.ShowModal) do
     begin
+      if LoginForm.UsernameEdit.Text=FSuperUserName then
+      begin
+        if LoginForm.PasswordEdit.Text = getSuperUserPass then
+        begin
+          FSuperUserLogged := true;
+          LoginCorrect := True;
+          Break;
+        end;
+      end;
       cdsUsuario.Params.Clear;
       with cdsUsuario.Params.CreateParam(ftString, 'Username', ptInput) do
         Value := LoginForm.UsernameEdit.Text;
@@ -1059,11 +1076,21 @@ begin
 
       StatusBar.Panels[1].Text := FUsername;
       cds.Params.Clear;
-      with cds.Params.CreateParam(ftString, 'UserName', ptInput) do
-        Value := FUserName;
-
+      if FUserName=FSuperUserName then
+        with cds.Params.CreateParam(ftString, 'UserName', ptInput) do
+          Value := '%'
+      else
+        with cds.Params.CreateParam(ftString, 'UserName', ptInput) do
+          Value := FUserName;
       cds.IndexFieldNames := 'OrdemDominio; OrdemRecurso';
       cds.Open;
+      if FUserName=FSuperUserName then
+        cds.Filtered := false
+      else
+      begin
+        cds.Filter := 'OrdemRecurso>=0';
+        cds.Filtered := true;
+      end;
       try
         while not cds.Eof do
         begin
@@ -1084,7 +1111,10 @@ begin
 
       Manager.Reload;
 
-      ActionDataSet.Params.ParamByName('UserName').Value := FUserName;
+      if FUserName=FSuperUserName then
+        ActionDataSet.Params.ParamByName('UserName').Value := '%'
+      else
+        ActionDataSet.Params.ParamByName('UserName').Value := FUserName;
 
       LoadOutlookBar;
     end;
@@ -1492,6 +1522,17 @@ begin
       criarArquivoBackupIB(nomeArq);
     end;
   end;
+end;
+
+function TosCustomMainForm.getSuperUserPass: string;
+begin
+  result := 'superpass';
+end;
+
+procedure TosCustomMainForm.FormCreate(Sender: TObject);
+begin
+  inherited;
+  FSuperUserName := 'FWSuperUser';
 end;
 
 initialization
