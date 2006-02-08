@@ -192,7 +192,6 @@ type
     FCurrentEditForm: TosCustomEditForm;
     FCurrentTemplate: TMemoryStream;
     FCurrentForm: TForm;
-    FCurrentDatamodule: TDatamodule;
     FIDField: TField;
     FSelectionField: TField;
 
@@ -241,6 +240,7 @@ type
     procedure HideHomePage(tipo: TTipoExibicao);
     function getSuperUserPass: string; virtual;
   public
+    FCurrentDatamodule: TDatamodule;
     property superUserName: string read FSuperUserName;
     property superUserLogged: boolean read FSuperUserLogged;
     constructor Create(AOwner: TComponent); override;
