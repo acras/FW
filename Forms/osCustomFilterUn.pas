@@ -12,9 +12,10 @@ type
     { Private declarations }
   protected
     SQLBase: string;
+    exprList: TStrings;
   public
     { Public declarations }
-    function execute(SQLBase: String): boolean;
+    function execute(SQLBase: String; exprList: TStrings): boolean;
     function getQuery: string; virtual; abstract;
   end;
 
@@ -28,10 +29,11 @@ implementation
 
 { TosCustomFilter }
 
-function TosCustomFilter.execute(SQLBase: String): boolean;
+function TosCustomFilter.execute(SQLBase: String; exprList: TStrings): boolean;
 begin
   Result := false;
   self.SQLBase := SQLBase;
+  self.exprList := exprList;
   showModal;
 end;
 

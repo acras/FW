@@ -8,7 +8,7 @@ uses
   Buttons, ExtCtrls, osUtils, DBClient, osClientDataset, StdCtrls, Mask,
   wwdbedit, Wwdotdot, Wwdbcomb, osComboFilter, osSQLQuery, ppReport,
   ppComm, ppRelatv, ppProd, ppClass, osCustomSearchFrm, ppMemo, TypInfo,
-  printers, ppTypes;
+  printers, ppTypes, PsRBExport_Main, PsRBExport_Excel;
 
 type
   TImprimirRelatorioForm = class(TosCustomEditForm)
@@ -52,8 +52,8 @@ var
   qry: TosSQLQuery;
   templateName, FilterName: string;
   srchForm: TCustomSearchForm;
-  sl: TStringList;
   config: TConfigImpressao;
+  sql: string;
 begin
   config.orientation := -1;
   config.larguraPapel := -1;
@@ -108,17 +108,26 @@ begin
 
   if FilterName <> '' then
   begin
-    srchForm := TCustomSearchForm.Create(application);
-
-    with srchForm do
+    //if pra testar os esquemas e pá
+    if true then
     begin
-      FilterDefName := filterName;
-      srchForm.DataProvider := MainData.prvFilter;
-      Execute('',3,toRetornarQuery);
-      replaceReportSQL(report, stream, sqlResult.GetText);
-      sl := TStringList.Create;
-      getUserFills(sl);
-      free;
+      ComboFilter.FilterDefName := FilterName;
+      ComboFilter.GetViews();
+      sql := ComboFilter.ExecuteFilter();
+      replaceReportSQL(report, stream, sql);
+    end
+    else
+    begin
+      srchForm := TCustomSearchForm.Create(application);
+
+      with srchForm do
+      begin
+        FilterDefName := filterName;
+        srchForm.DataProvider := MainData.prvFilter;
+        Execute('',3,toRetornarQuery);
+        replaceReportSQL(report, stream, sqlResult.GetText);
+        free;
+      end;
     end;
 //    with ComboFilter do
 //    begin
@@ -133,11 +142,12 @@ begin
 
 
   report.Units := utMillimeters;
-  report.PrinterSetup.PrinterName :=
-    config.nomeImpressora;
+  if config.nomeImpressora<>'' then
+    report.PrinterSetup.PrinterName :=
+      config.nomeImpressora;
   if config.orientation = 1 then
-    report.PrinterSetup.Orientation := poPortrait
-  else
+    report.PrinterSetup.Orientation := poPortrait;
+  if config.orientation = 2 then
     report.PrinterSetup.Orientation := poLandscape;
 
   if config.alturaPapel <> -1 then

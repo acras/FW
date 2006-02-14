@@ -8,7 +8,7 @@ uses
   osCustomDataSetProvider, osSQLDataSetProvider, SqlExpr, osSQLDataSet,
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
-  daDataModule, daQueryDataView, TypInfo, ppChrtUI, Printers;
+  daDataModule, daQueryDataView, TypInfo, ppChrtUI, Printers, PsRBRoutines ;
 
 type
   TTipoAdendo = (taWHERE, taORDER);
@@ -166,17 +166,27 @@ begin
       report.ShowPrintDialog := false;
       report.DeviceType := 'Printer';
     end;
-    report.PrinterSetup.PrinterName := config.nomeImpressora;
+    if config.nomeImpressora<>'' then
+      report.PrinterSetup.PrinterName := config.nomeImpressora;
     if config.orientation = 1 then
       report.PrinterSetup.Orientation := poPortrait;
     if config.orientation = 2 then
       report.PrinterSetup.Orientation := poLandscape;
 
+
     Report.Units := utMillimeters;
-    if config.alturaPapel <> -1 then
-      Report.PrinterSetup.PaperHeight := config.alturaPapel;
-    if config.larguraPapel <> -1 then
-      Report.PrinterSetup.PaperWidth := config.larguraPapel;
+    if (config.alturaPapel <> -1) OR (config.larguraPapel <> -1) then
+    begin
+      report.PrinterSetup.PaperName := 'mycustom'+IntToStr(random(1000));
+      if config.alturaPapel <> -1 then
+        Report.PrinterSetup.PaperHeight := config.alturaPapel
+      else
+        Report.PrinterSetup.PaperHeight := Report.PrinterSetup.PaperHeight;
+      if config.larguraPapel <> -1 then
+        Report.PrinterSetup.PaperWidth := config.larguraPapel
+      else
+        Report.PrinterSetup.PaperWidth := Report.PrinterSetup.PaperWidth;
+    end;
     if config.margemInferior <> -1 then
       Report.PrinterSetup.MarginBottom := config.margemInferior;
     if config.margemEsquerda <> -1 then
@@ -185,7 +195,13 @@ begin
       Report.PrinterSetup.MarginRight := config.margemDireita;
     if config.margemSuperior <> -1 then
       Report.PrinterSetup.MarginTop := config.margemSuperior;
-    Report.Print;
+
+    
+    // se é PDF exporta manualmente, senão usa o device
+    if FDeviceType = 'Adobe Acrobat Document' then
+      ExportToPDF(report, FTextFileName)
+    else
+      Report.Print;
   finally
     FreeAndNil(stream);
   end;

@@ -1,8 +1,8 @@
 object acCustomReport: TacCustomReport
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 259
-  Top = 181
+  Left = 260
+  Top = 182
   Height = 208
   Width = 206
   object FilterDatasource: TDataSource

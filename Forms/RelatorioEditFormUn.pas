@@ -7,7 +7,8 @@ uses
   DBCtrls, Menus, ImgList, Controls, Classes,
   ComCtrls, ToolWin, Buttons, ExtCtrls, ActnList, osActionList,
   wwdbdatetimepicker, wwdbedit, Wwdotdot, Wwdbcomb, osComboSearch, osLogin,
-  ppComm, ppRelatv, ppProd, ppClass, ppReport, osComboFilter;
+  ppComm, ppRelatv, ppProd, ppClass, ppReport, osComboFilter,
+  PsRBExport_Main, PsRBExport_HTML;
 
 type
 
@@ -65,6 +66,7 @@ type
     Label7: TLabel;
     ClasseCombo: TwwDBComboBox;
     RelatorioClientDataSetNomeTipoRelatorio: TStringField;
+    PsRBExportHTML1: TPsRBExportHTML;
 
     procedure RelatorioClientDataSetBeforePost(DataSet: TDataSet);
     procedure FormShow(Sender: TObject);
@@ -147,6 +149,12 @@ begin
   end
   else
     Report.Template.LoadFromStream(stream);
+
+        report.AllowPrintToFile := True;
+  Report.DeviceType := 'HTML Document';
+  report.TextFileName := 'c:\peralta\index.html';
+      report.ShowPrintDialog := false;
+
 
   report.Print;
 end;

@@ -1,6 +1,6 @@
 inherited osCustomMainForm: TosCustomMainForm
-  Left = 148
-  Top = 138
+  Left = 3
+  Top = 3
   Width = 798
   Height = 534
   ActiveControl = ResourcePanel
@@ -323,6 +323,7 @@ inherited osCustomMainForm: TosCustomMainForm
       Height = 292
       Align = alClient
       BevelOuter = bvNone
+      Color = clBtnShadow
       PageColor = clWindow
       Report = Report
       ZoomPercentage = 100
@@ -1759,7 +1760,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 896
     Top = 112
-    Version = '9.01'
+    Version = '9.03'
     mmColumnWidth = 0
     DataPipelineName = 'ppDBPipeline'
     object ppHeaderBand: TppHeaderBand
@@ -1923,7 +1924,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 353
     Top = 362
-    Version = '9.01'
+    Version = '9.03'
     mmColumnWidth = 0
     object ppHeaderBand1: TppHeaderBand
       mmBottomOffset = 0

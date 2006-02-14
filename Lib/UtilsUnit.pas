@@ -47,7 +47,6 @@ end;
 
 procedure criarArquivoBackupIB(nomeArq: string);
 var
-  ini: TIniFile;
   IBBackup: TIBBackupService;
   zipper: TABZipper;
 begin

@@ -1487,7 +1487,7 @@ begin
   begin
     Form.PararButton.Visible := true;
     Form.continue := true;
-    FilterDataset.First;
+    //FilterDataset.First;
     while (not(FilterDataset.Eof)) and (Form.Continue) do
     begin
       iID := FIDField.AsInteger;

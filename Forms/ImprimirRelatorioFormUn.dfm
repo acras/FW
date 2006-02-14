@@ -55,7 +55,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     TextSearchSettings.Enabled = False
     Left = 200
     Top = 104
-    Version = '9.01'
+    Version = '9.03'
     mmColumnWidth = 0
   end
   object FilterDataSet: TosClientDataset
