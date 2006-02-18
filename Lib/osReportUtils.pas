@@ -372,6 +372,7 @@ var
   dataNascimento, dataCalculo1, dataCalculo2: TDateTime;
   difDias: integer;
   iTemp: integer;
+  strMes: string;
 begin
   numAnos := getAnos;
   difMeses := getMeses mod 12;
@@ -391,12 +392,17 @@ begin
     if difMeses>1 then
       result := intToStr(difMeses) + ' meses'
     else
-      result := intToStr(difMeses) + ' mês';
+      if difMeses>0 then
+        result := intToStr(difMeses) + ' mês';
     if numDias>0 then
+    begin
+      if difMeses>0 then
+        result := result + ' e ';
       if numDias>1 then
-        result := result + ' e ' + IntToStr(numDias) + ' dias'
+        result := result + IntToStr(numDias) + ' dias'
       else
-        result := result + ' e ' + IntToStr(numDias) + ' dia';
+        result := result + IntToStr(numDias) + ' dia';
+    end;
   end;
   if (Fdias>=limiarMeses) AND (Fdias<limiarAnos) then
   begin
