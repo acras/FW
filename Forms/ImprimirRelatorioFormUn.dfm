@@ -51,6 +51,8 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     OutlineSettings.CreatePageNodes = True
     OutlineSettings.Enabled = False
     OutlineSettings.Visible = False
+    PreviewFormSettings.WindowState = wsMaximized
+    PreviewFormSettings.ZoomSetting = zsPageWidth
     TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = False
     Left = 200

@@ -564,7 +564,7 @@ inherited RelatorioEditForm: TRelatorioEditForm
     TextSearchSettings.Enabled = False
     Left = 356
     Top = 68
-    Version = '9.01'
+    Version = '9.03'
     mmColumnWidth = 0
   end
   object FilterDataset: TosClientDataset

@@ -150,11 +150,6 @@ begin
   else
     Report.Template.LoadFromStream(stream);
 
-        report.AllowPrintToFile := True;
-  Report.DeviceType := 'HTML Document';
-  report.TextFileName := 'c:\peralta\index.html';
-      report.ShowPrintDialog := false;
-
 
   report.Print;
 end;
