@@ -218,10 +218,20 @@ begin
     end;
 end;
 
+{-------------------------------------------------------------------------
+ Objetivo   > Esta função foi criada para que se ache componentes renomeados
+                pelo delphi. Por exemplo Pipeline vira Pipeline1
+ Parâmetros > str: a string a ser alterada
+ Retorno    >
+ Criação    >
+ Observações> Comentário inicializado em 07/03/2006 por Ricardo N. Acras
+ Atualização> 07/03/2006 - Inserido inicialização do index
+ ------------------------------------------------------------------------}
 function tiraNumerosDoFinal(str: String): string;
 var
   i, index: integer;
 begin
+  index := 0;
   for i := length(str) downto 0 do
   begin
     if not((Ord(str[i])>=48) AND (Ord(str[i])<=57)) then

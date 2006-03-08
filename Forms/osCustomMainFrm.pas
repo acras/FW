@@ -720,7 +720,6 @@ begin
   end;
 
   PrintAction.Enabled := (FCurrentResource.ReportClassName <> '');
-  
 end;
 
 procedure TosCustomMainForm.SetEditForm(const Value: TosCustomEditForm);

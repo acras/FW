@@ -10,6 +10,9 @@ inherited UsuarioEditForm: TUsuarioEditForm
   ClientHeight = 364
   ClientWidth = 374
   OnClose = FormClose
+  DesignSize = (
+    374
+    364)
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -260,4 +263,3 @@ inherited UsuarioEditForm: TUsuarioEditForm
     end
   end
 end
->>>>>>> 1.4
