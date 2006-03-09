@@ -58,7 +58,7 @@ var
 implementation
 
 uses UsuarioDataUn, MudarSenhaFormUn, AdministracaoLookupDataUn, osMD5,
-  RelatorioDataUn, UsuarioCohibaDataUn;
+  RelatorioDataUn;
 
 {$R *.DFM}
 
