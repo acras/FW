@@ -108,7 +108,6 @@ begin
 
   if FilterName <> '' then
   begin
-    //if pra testar os esquemas e pá
     if true then
     begin
       ComboFilter.FilterDefName := FilterName;

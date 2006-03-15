@@ -1,8 +1,8 @@
 object acCustomReport: TacCustomReport
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 260
-  Top = 182
+  Left = 261
+  Top = 183
   Height = 208
   Width = 206
   object FilterDatasource: TDataSource
@@ -45,7 +45,7 @@ object acCustomReport: TacCustomReport
     TextSearchSettings.Enabled = False
     Left = 128
     Top = 96
-    Version = '9.01'
+    Version = '9.03'
     mmColumnWidth = 188914
     object Detail: TppDetailBand
       PrintHeight = phDynamic
