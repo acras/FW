@@ -12,9 +12,10 @@ uses
   ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, ppBands, ppCache, ppVar, ppCtrls,
   ppProd, ppPrnabl, osActionList, osClientDataset, osMD5,
   osUtils, OleCtrls, SHDocVw, ppTmplat, osSQLDataSet, dbTables,
-  SqlExpr, DBXpress, DBLocal, {DBLocalS,} daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
+  SqlExpr, DBXpress, DBLocal, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
-  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn;
+  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
+  ppWWRichEd;
 
 type
   TDatamoduleClass = class of TDatamodule;
@@ -668,6 +669,14 @@ begin
 //  FShowQuery := actShowQuery.Checked;
 end;
 
+{-------------------------------------------------------------------------
+ Objetivo   > Tratamento do momento do click em um recurso 
+ Parâmetros > Conforme documentação
+ Retorno    >
+ Criação    >
+ Observações> Documentação iniciada em 17/03/2006 por Ricardo N. Acras
+ Atualização>
+ ------------------------------------------------------------------------}
 procedure TosCustomMainForm.ResourceClick(Sender: TObject);
 var
   NewResource: TosAppResource;

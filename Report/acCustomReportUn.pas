@@ -94,13 +94,30 @@ begin
 //
 end;
 
+{-------------------------------------------------------------------------
+ Objetivo   > Imprimir o relatório. Buscar o template, fazer os tratamentos
+                necessários e imprimir conforme as configurações da classe.
+ Parâmetros > Conforme documentação
+ Retorno    >
+ Criação    >
+ Observações> Documentação iniciada em 21/03/2006 por Ricardo N. Acras
+ Atualização> *21.03.2006 - Ricardo N. Acras
+                Adicionado código para manter a configuração de
+                ShowCancelDialog pois quando um template é carregado esta
+                configuração é perdida. Deve valer sempre a config da classe
+                e não a do template.
+ ------------------------------------------------------------------------}
 procedure TacCustomReport.Print(const PID: integer);
 var
   stream: TMemoryStream;
   idTemplate: integer;
   encontrou: boolean;
+  showCancelDialog: boolean;
   config: TConfigImpressao;
 begin
+  //armazenar configurações do report para restaurar depois
+  showCancelDialog := report.ShowCancelDialog;
+
   config.orientation := -1;
   config.larguraPapel := -1;
   config.alturaPapel := -1;
@@ -196,7 +213,9 @@ begin
     if config.margemSuperior <> -1 then
       Report.PrinterSetup.MarginTop := config.margemSuperior;
 
-    
+    //restaurar as configurações antes de imprimir
+    report.ShowCancelDialog := showCancelDialog;  
+
     // se é PDF exporta manualmente, senão usa o device
     if FDeviceType = 'Adobe Acrobat Document' then
       ExportToPDF(report, FTextFileName)
