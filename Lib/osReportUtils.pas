@@ -30,6 +30,8 @@ uses Classes, SQLMainData, osSQLDataSet, SysUtils, DB, ppReport, daDataModule,
   function getIdadeDias(idade: string): integer;
   function getTemplateByName(name: string; stream: TStream): boolean;
   function getTemplateByID(id: integer; stream: TStream): boolean;
+  function getTemplateIDByName(name: string): integer;
+
   procedure replaceReportSQL(report: TppReport; template: TMemoryStream; strSQL: String);
   procedure replaceReportSQLAddWhere(report: TppReport; template: TMemoryStream;
     strWHERE: String);
@@ -71,6 +73,30 @@ begin
     FreeAndNil(query);
   end;
 end;
+
+function getTemplateIDByName(name: string): integer;
+var
+  query: TosSQLDataset;
+begin
+  name := UpperCase(Name);
+  query := TosSQLDataSet.Create(nil);
+  try
+    query.SQLConnection := MainData.SQLConnection;
+    query.CommandText := 'SELECT ' +
+                         '  ITEM_ID '+
+                         'FROM ' +
+                         '  RB_Item '+
+                         'WHERE ' +
+                         '  UPPER(name) like UPPER(' + quotedStr(name) + ')';
+    query.Open;
+    result := -1;
+    if not query.eof then
+      result := query.fields[0].asInteger;
+  finally
+    FreeAndNil(query);
+  end;
+end;
+
 
 function getTemplateById(id: integer; stream: TStream): boolean;
 var

@@ -8,7 +8,8 @@ uses
   osCustomDataSetProvider, osSQLDataSetProvider, SqlExpr, osSQLDataSet,
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
-  daDataModule, daQueryDataView, TypInfo, ppChrtUI, Printers, PsRBRoutines ;
+  daDataModule, daQueryDataView, TypInfo, ppChrtUI, Printers, PsRBRoutines,
+  ppPDFDevice;
 
 type
   TTipoAdendo = (taWHERE, taORDER);
@@ -44,7 +45,7 @@ type
 
   TReportFormat = (rfAcrobat, rfArchive, rfBitmap, rfMetafile, rfExcel,
                    rfGIF, rfHTML, rfJPEG, rfPrinter, rfReportText, rfRTF,
-                   rfText, rfWindowsMetafile, rfXHTML);
+                   rfText, rfWindowsMetafile, rfXHTML, rfPDF);
 
   TacCustomReport = class(TDataModule)
     FilterDatasource: TDataSource;
@@ -214,7 +215,7 @@ begin
       Report.PrinterSetup.MarginTop := config.margemSuperior;
 
     //restaurar as configurações antes de imprimir
-    report.ShowCancelDialog := showCancelDialog;  
+    report.ShowCancelDialog := showCancelDialog;
 
     // se é PDF exporta manualmente, senão usa o device
     if FDeviceType = 'Adobe Acrobat Document' then
@@ -396,6 +397,8 @@ begin
     FTextFileName := FileName;
     TextFileName := FileName;
     case Format of
+      rfPDF:
+        DeviceType := dtPDF;
       rfAcrobat:
         DeviceType := 'Adobe Acrobat Document';
 

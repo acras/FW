@@ -8,7 +8,7 @@ uses
   Buttons, ExtCtrls, osUtils, DBClient, osClientDataset, StdCtrls, Mask,
   wwdbedit, Wwdotdot, Wwdbcomb, osComboFilter, osSQLQuery, ppReport,
   ppComm, ppRelatv, ppProd, ppClass, osCustomSearchFrm, ppMemo, TypInfo,
-  printers, ppTypes, PsRBExport_Main, PsRBExport_Excel;
+  printers, ppTypes, PsRBExport_Main, PsRBExport_Excel, ppDB;
 
 type
   TImprimirRelatorioForm = class(TosCustomEditForm)
@@ -19,8 +19,12 @@ type
     procedure ReportPreviewFormCreate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
+  protected
     procedure ImprimirRelatorioComFiltro(idRelatorio: integer);
     function findComponentUserName(name: String): TComponent;
+    procedure ImprimirTemplate(templateName: string);
+    procedure afterLoadStream; virtual;
+    function findPipeline(name: string): TppDataPipeline;
 
     { Private declarations }
   public
@@ -33,7 +37,7 @@ var
 implementation
 
 uses osReportUtils, SQLMainData, osFrm, ParametroSistemaDataUn,
-  acCustomReportUn;
+  acCustomReportUn, ReportUn;
 
 {$R *.dfm}
 
@@ -165,6 +169,43 @@ begin
   report.Print;
 end;
 
+{-------------------------------------------------------------------------
+ Objetivo   > Imprimir um template 
+ Parâmetros > templateName: nome do template a ser impresso
+ Retorno    >
+ Criação    > 24.03.2006 - Ricardo N. Acras
+ Observações>
+ Atualização>
+ ------------------------------------------------------------------------}
+procedure TImprimirRelatorioForm.ImprimirTemplate(templateName: string);
+var
+  stream: TMemoryStream;
+begin
+  //buscar informações no catálogo de relatórios
+  stream := TMemoryStream.Create;
+  getTemplateByName(TemplateName, stream);
+  Report.Template.LoadFromStream(stream);
+  afterLoadStream;
+  report.Print;
+end;
+
+function TImprimirRelatorioForm.findPipeline(name: string): TppDataPipeline;
+var
+  i,j: integer;
+begin
+  result := nil;
+  for i := 1 to ComponentCount-1 do
+  begin
+    if (Components[i] is TdaDataView) then
+    begin
+      for j := 0 to TdaDataView(Components[i]).DataPipelineCount-1 do
+        if upperCase(name)=UpperCase(TdaDataView(Components[i]).DataPipelines[j].UserName) then
+          result := TdaDataView(Components[i]).DataPipelines[j];
+    end;
+  end;
+end;
+
+
 procedure TImprimirRelatorioForm.ReportPreviewFormCreate(Sender: TObject);
 begin
   inherited;
@@ -190,6 +231,11 @@ procedure TImprimirRelatorioForm.FormCreate(Sender: TObject);
 begin
   inherited;
   Operacoes := Operacoes-[oInserir,oExcluir,oVisualizar];
+end;
+
+procedure TImprimirRelatorioForm.afterLoadStream;
+begin
+//
 end;
 
 initialization
