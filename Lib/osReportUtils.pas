@@ -60,7 +60,7 @@ begin
     query.CommandText := 'SELECT ' +
                          '  template '+
                          'FROM ' +
-                         '  RB_Item '+
+                         '  RB_ITEM '+
                          'WHERE ' +
                          '  UPPER(name) like UPPER(' + quotedStr(name) + ')';
     query.Open;

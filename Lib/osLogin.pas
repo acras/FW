@@ -143,7 +143,7 @@ begin
         and (mrCancel <> LoginForm.ShowModal) do
     begin
       query.SQLConnection := MainData.SQLConnection;
-      query.CommandText := 'SELECT idusuario, apelido, nome, senha, status FROM usuario' +
+      query.CommandText := 'SELECT idusuario, apelido, nome, senha, status FROM USUARIO' +
                            ' WHERE apelido=' + quotedStr(LoginForm.UsernameEdit.Text);
       query.Open;
       try
