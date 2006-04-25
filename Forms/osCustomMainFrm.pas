@@ -685,6 +685,7 @@ begin
   if FCurrentResource <> NewResource then
   begin
     FCurrentResource := NewResource;
+    Manager.currentResource := FCurrentResource;
     // Libera o datamodule associado
     FCurrentDatamodule.Free;
     FCurrentDatamodule := CreateCurrentDatamodule;
@@ -1009,6 +1010,7 @@ var
   cds: TosClientDataSet;
   ErrorCount: integer;
   LoginCorrect: boolean;
+  vViews: variant;
 begin
   FUserName := GetSystemUserName;
 
@@ -1102,6 +1104,8 @@ begin
       try
         while not cds.Eof do
         begin
+          if cds.FieldByName('FilterDefName').AsString<>'' then
+            vViews := FilterDataset.DataRequest('_CMD=GET_VIEWS UID=  CLASSNAME=' + cds.FieldByName('FilterDefName').AsString);
           Manager.AddResource(cds.FieldByName('Nome').AsString,
                               cds.FieldByName('Descricao').AsString,
                               cds.FieldByName('FilterDefName').AsString,
@@ -1110,7 +1114,8 @@ begin
                               cds.FieldByName('ReportClassName').AsString,
                               cds.FieldByName('NomeDominio').AsString,
                               cds.FieldByName('IndiceImagem').AsInteger,
-                              cds.FieldByName('IDTipoRecurso').AsInteger);
+                              cds.FieldByName('IDTipoRecurso').AsInteger,
+                              vViews);
           cds.Next;
         end;
       finally

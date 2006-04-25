@@ -57,7 +57,6 @@ inherited GrupoEditForm: TGrupoEditForm
     ActivePage = TabSheet1
     Align = alBottom
     Anchors = [akLeft, akTop, akRight, akBottom]
-    TabIndex = 1
     TabOrder = 3
     object ParticipantesTabSheet: TTabSheet
       Caption = '&Participantes'
