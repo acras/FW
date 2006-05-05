@@ -109,7 +109,7 @@ begin
     query.CommandText := 'SELECT ' +
                          '  template '+
                          'FROM ' +
-                         '  RB_Item '+
+                         '  RB_ITEM '+
                          'WHERE ' +
                          '  ITEM_ID = ' + intToStr(id);
     query.Open;
