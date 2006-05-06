@@ -14,8 +14,8 @@ uses
   osUtils, OleCtrls, SHDocVw, ppTmplat, osSQLDataSet, dbTables,
   SqlExpr, DBXpress, DBLocal, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
-  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
-  ppWWRichEd;
+  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn;
+  //ppWWRichEd;
 
 type
   TDatamoduleClass = class of TDatamodule;

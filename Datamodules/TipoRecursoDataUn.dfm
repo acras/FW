@@ -5,7 +5,6 @@ object TipoRecursoData: TTipoRecursoData
   Height = 150
   Width = 249
   object MasterDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'SELECT'#13#10'  IdTipoRecurso,'#13#10'  Descricao'#13#10'FROM '#13#10'  TipoRecurso'#13#10'WHE' +
       'RE'#13#10'  IDTipoRecurso = :ID'#13#10
@@ -16,6 +15,7 @@ object TipoRecursoData: TTipoRecursoData
         Name = 'ID'
         ParamType = ptInput
       end>
+    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 20
     object MasterDataSetIDTIPORECURSO: TIntegerField
@@ -33,7 +33,6 @@ object TipoRecursoData: TTipoRecursoData
   end
   object MasterProvider: TosSQLDataSetProvider
     DataSet = MasterDataSet
-    Constraints = True
     Options = [poNoReset]
     Left = 156
     Top = 20

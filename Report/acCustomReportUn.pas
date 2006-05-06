@@ -51,8 +51,6 @@ type
     FilterDatasource: TDataSource;
     FilterDataset: TosClientDataset;
     Report: TppReport;
-    Detail: TppDetailBand;
-    raCodeModule1: TraCodeModule;
     procedure DataModuleCreate(Sender: TObject);
     procedure ReportPreviewFormCreate(Sender: TObject);
   private
