@@ -14,12 +14,27 @@ uses
   osUtils, OleCtrls, SHDocVw, ppTmplat, osSQLDataSet, dbTables,
   SqlExpr, DBXpress, DBLocal, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
-  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn;
+  osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
+  osSQLQuery;
   //ppWWRichEd;
 
 type
   TDatamoduleClass = class of TDatamodule;
   TTipoExibicao = (teGrid, teRelat);
+
+  TFilterInfo = class
+    name: string;
+    views: variant;
+  end;
+  TFilterDepot = class
+    private
+      filters: TList;
+    public
+      constructor Create;
+      destructor Destroy;
+      procedure addFilter(name: string; views: variant);
+      function findFilter(name: string): variant;
+  end;
 
   TosCustomMainForm = class(TosForm)
     MainMenu: TMainMenu;
@@ -242,6 +257,7 @@ type
     function getSuperUserPass: string; virtual;
   public
     FCurrentDatamodule: TDatamodule;
+    FFilterDepot: TFilterDepot;
     property superUserName: string read FSuperUserName;
     property superUserLogged: boolean read FSuperUserLogged;
     constructor Create(AOwner: TComponent); override;
@@ -274,6 +290,8 @@ constructor TosCustomMainForm.Create(AOwner: TComponent);
 var
   sName : string;
   i : integer;
+  qry: TosSQLQuery;
+  vViews: variant;
 begin
   inherited;
   FActionDblClick := EditAction;
@@ -307,9 +325,33 @@ begin
         sName := Names[i];
         SQLConnection.Params.Values[sName] := Values[sName];
       end;
+      if SQLConnection.Params.Values['DataBaseMeta']<>'' then
+        SQLConnection.Params.Values['Database'] :=
+          SQLConnection.Params.Values['DatabaseMeta'];
     finally
       Free;
     end;
+  end;
+
+  //TTMCI
+  //para buscar os metadados dos filtros usar o SQLConnection de metadados
+  MainData.FilterQuery.SQLConnection := MainData.SQLConnectionMeta;
+  FFilterDepot := TFilterDepot.Create;
+  qry := MainData.GetQuery;
+  try
+    qry.SQLConnection := MainData.SQLConnectionMeta;
+    qry.SQL.Text := 'SELECT NAME FROM XFILTERDEF';
+    qry.Open;
+    qry.First;
+    while not qry.Eof do
+    begin
+      vViews := FilterDataset.DataRequest('_CMD=GET_VIEWS UID=  CLASSNAME=' + qry.FieldByName('NAME').AsString);
+      FFilterDepot.addFilter(qry.FieldByName('NAME').AsString, vViews);
+      qry.Next;
+    end;
+  finally
+    FreeAndNil(qry);
+    MainData.FilterQuery.SQLConnection := MainData.SQLConnection;
   end;
 end;
 
@@ -482,7 +524,9 @@ begin
       if FCurrentResource.ResType = rtReport then
         ReplaceReportSQLPrint
       else
+      begin
         ConsultaCombo.ExecuteFilter;
+      end;
 
       FIDField := FilterDataset.Fields.FindField('ID');
       CheckMultiSelection;
@@ -1104,8 +1148,6 @@ begin
       try
         while not cds.Eof do
         begin
-          if cds.FieldByName('FilterDefName').AsString<>'' then
-            vViews := FilterDataset.DataRequest('_CMD=GET_VIEWS UID=  CLASSNAME=' + cds.FieldByName('FilterDefName').AsString);
           Manager.AddResource(cds.FieldByName('Nome').AsString,
                               cds.FieldByName('Descricao').AsString,
                               cds.FieldByName('FilterDefName').AsString,
@@ -1114,8 +1156,7 @@ begin
                               cds.FieldByName('ReportClassName').AsString,
                               cds.FieldByName('NomeDominio').AsString,
                               cds.FieldByName('IndiceImagem').AsInteger,
-                              cds.FieldByName('IDTipoRecurso').AsInteger,
-                              vViews);
+                              cds.FieldByName('IDTipoRecurso').AsInteger);
           cds.Next;
         end;
       finally
@@ -1546,6 +1587,41 @@ procedure TosCustomMainForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FSuperUserName := 'FWSuperUser';
+end;
+
+{ TFilterDepot }
+
+procedure TFilterDepot.addFilter(name: string; views: variant);
+var
+  filter: TFilterInfo;
+begin
+  filter := TFilterInfo.Create;
+  filter.name := name;
+  filter.views := views;
+  filters.Add(filter);
+end;
+
+constructor TFilterDepot.Create;
+begin
+  filters := TList.Create;
+end;
+
+destructor TFilterDepot.Destroy;
+begin
+  FreeAndNil(filters);
+end;
+
+function TFilterDepot.findFilter(name: string): variant;
+var
+  i: integer;
+  filter: TFilterInfo;
+begin
+  for i := 0 to filters.Count-1 do
+  begin
+    if UpperCase(TFilterInfo(filters.Items[i]).name)=
+      UpperCase(name) then
+      result := TFilterInfo(filters.Items[i]).views;
+  end;
 end;
 
 initialization

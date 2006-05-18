@@ -56,7 +56,7 @@ begin
   result := false;
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnection;
+    query.SQLConnection := MainData.SQLConnectionMeta;
     query.CommandText := 'SELECT ' +
                          '  template '+
                          'FROM ' +

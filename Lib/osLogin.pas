@@ -47,7 +47,7 @@ var
 begin
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnection;
+    query.SQLConnection := MainData.SQLConnectionMeta;
     query.commandText := 'SELECT IDUsuario, Apelido, Nome, Status FROM Usuario ' +
                          ' where UPPER(Apelido)= ' + QuotedStr(UpperCase(MainData.ApelidoUsuario));
     query.Open;
