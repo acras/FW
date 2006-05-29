@@ -219,7 +219,7 @@ begin
                  dt_CalcRect or dt_WordBreak or dt_ExpandTabs );
   if H < 20 then
     H := 20;
-  Height := H + 6;
+  Height := H + 15;
 end;
 
 procedure TosErrorHandlerForm.FormCreate(Sender: TObject);
