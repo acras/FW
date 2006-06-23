@@ -50,6 +50,16 @@ begin
   result := true;
 end;
 
+{-------------------------------------------------------------------------
+ Objetivo   > 
+ Parâmetros > Conforme documentação
+ Retorno    >
+ Criação    >
+ Observações> Documentação iniciada em 20.06.2006 por Ricardo N. Acras
+ Atualização> 20.06.2006 Ricardo N. Acras
+                Melhorias na forma de execução dos filtros. Inserida decisão
+                  se mostra o form com as restrições ao usuário ou não.
+ ------------------------------------------------------------------------}
 procedure TImprimirRelatorioForm.ImprimirRelatorioComFiltro(idRelatorio: integer);
 var
   stream: TMemoryStream;
@@ -112,10 +122,11 @@ begin
 
   if FilterName <> '' then
   begin
-    if true then
+    ComboFilter.ClearViews;
+    ComboFilter.FilterDefName := FilterName;
+    ComboFilter.GetViews();
+    if ComboFilter.defTemRestricaoUsuario(0) OR ComboFilter.isDefCustomFilter(0) then
     begin
-      ComboFilter.FilterDefName := FilterName;
-      ComboFilter.GetViews();
       sql := ComboFilter.ExecuteFilter();
       replaceReportSQL(report, stream, sql);
     end
@@ -132,13 +143,6 @@ begin
         free;
       end;
     end;
-//    with ComboFilter do
-//    begin
-//      ClearViews;
-//      FilterDefName := FilterName;
-//      GetViews;
-//      replaceReportSQL(report, stream, getSQLFilter(dummy));
-//    end;
   end
   else
     Report.Template.LoadFromStream(stream);
