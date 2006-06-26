@@ -15,26 +15,13 @@ uses
   SqlExpr, DBXpress, DBLocal, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
-  osSQLQuery;
+  osSQLQuery, acFilterController;
   //ppWWRichEd;
 
 type
   TDatamoduleClass = class of TDatamodule;
   TTipoExibicao = (teGrid, teRelat);
 
-  TFilterInfo = class
-    name: string;
-    views: variant;
-  end;
-  TFilterDepot = class
-    private
-      filters: TList;
-    public
-      constructor Create;
-      destructor Destroy;
-      procedure addFilter(name: string; views: variant);
-      function findFilter(name: string): variant;
-  end;
 
   TosCustomMainForm = class(TosForm)
     MainMenu: TMainMenu;
@@ -154,6 +141,7 @@ type
     Backup1: TMenuItem;
     EfetuarBackupemarquivolocal1: TMenuItem;
     SaveBackupDialog: TSaveDialog;
+    FFilterDepot: TacFilterController;
     procedure EditActionExecute(Sender: TObject);
     procedure ViewActionExecute(Sender: TObject);
     procedure NewActionExecute(Sender: TObject);
@@ -257,7 +245,6 @@ type
     function getSuperUserPass: string; virtual;
   public
     FCurrentDatamodule: TDatamodule;
-    FFilterDepot: TFilterDepot;
     property superUserName: string read FSuperUserName;
     property superUserLogged: boolean read FSuperUserLogged;
     constructor Create(AOwner: TComponent); override;
@@ -336,7 +323,6 @@ begin
   //TTMCI
   //para buscar os metadados dos filtros usar o SQLConnection de metadados
   MainData.FilterQuery.SQLConnection := MainData.SQLConnectionMeta;
-  FFilterDepot := TFilterDepot.Create;
   qry := MainData.GetQuery;
   try
     qry.SQLConnection := MainData.SQLConnectionMeta;
@@ -1587,42 +1573,10 @@ procedure TosCustomMainForm.FormCreate(Sender: TObject);
 begin
   inherited;
   FSuperUserName := 'FWSuperUser';
+
+   StatusBar.Panels[2].Text := MainData.Profile;
 end;
 
-{ TFilterDepot }
-
-procedure TFilterDepot.addFilter(name: string; views: variant);
-var
-  filter: TFilterInfo;
-begin
-  filter := TFilterInfo.Create;
-  filter.name := name;
-  filter.views := views;
-  filters.Add(filter);
-end;
-
-constructor TFilterDepot.Create;
-begin
-  filters := TList.Create;
-end;
-
-destructor TFilterDepot.Destroy;
-begin
-  FreeAndNil(filters);
-end;
-
-function TFilterDepot.findFilter(name: string): variant;
-var
-  i: integer;
-  filter: TFilterInfo;
-begin
-  for i := 0 to filters.Count-1 do
-  begin
-    if UpperCase(TFilterInfo(filters.Items[i]).name)=
-      UpperCase(name) then
-      result := TFilterInfo(filters.Items[i]).views;
-  end;
-end;
 
 initialization
   ShortDateFormat := 'dd/mm/yyyy';

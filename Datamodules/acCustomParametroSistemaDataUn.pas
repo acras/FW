@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses SQLMainData, osErrorHandler, osCIC;
+uses acCustomSQLMainDataUn, osErrorHandler, osCIC, SQLMainData;
 
 {$R *.dfm}
 

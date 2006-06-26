@@ -125,7 +125,7 @@ begin
     ComboFilter.ClearViews;
     ComboFilter.FilterDefName := FilterName;
     ComboFilter.GetViews();
-    if ComboFilter.defTemRestricaoUsuario(0) OR ComboFilter.isDefCustomFilter(0) then
+    if not ComboFilter.defTemRestricaoUsuario(0) OR ComboFilter.isDefCustomFilter(0) then
     begin
       sql := ComboFilter.ExecuteFilter();
       replaceReportSQL(report, stream, sql);

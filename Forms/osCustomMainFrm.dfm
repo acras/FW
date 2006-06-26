@@ -190,6 +190,9 @@ inherited osCustomMainForm: TosCustomMainForm
         Width = 150
       end
       item
+        Width = 300
+      end
+      item
         Width = 50
       end>
   end
@@ -2985,5 +2988,9 @@ inherited osCustomMainForm: TosCustomMainForm
     Filter = 'Arquivos de Backup|*.bkp'
     Left = 488
     Top = 72
+  end
+  object FFilterDepot: TacFilterController
+    Left = 600
+    Top = 125
   end
 end
