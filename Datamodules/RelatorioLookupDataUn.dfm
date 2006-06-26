@@ -21,18 +21,17 @@ inherited RelatorioLookupData: TRelatorioLookupData
     end
   end
   object TipoRelatorioLookupDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'SELECT'#13#10'  IDTipoRelatorio,'#13#10'  Nome'#13#10'FROM'#13#10'  TipoRelatorio'#13#10'ORDER' +
       ' BY'#13#10'  Nome'#13#10
     MaxBlobSize = 32
     Params = <>
+    SQLConnection = MainData.SQLConnection
     Left = 68
     Top = 40
   end
   object TipoRelatorioLookupProvider: TosSQLDataSetProvider
     DataSet = TipoRelatorioLookupDataSet
-    Constraints = True
     Options = [poNoReset]
     Left = 228
     Top = 40
@@ -74,7 +73,6 @@ inherited RelatorioLookupData: TRelatorioLookupData
     end
   end
   object TemplateLookupDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'SELECT'#13#10'  Name as Nome,'#13#10'  ITEM_ID'#13#10'FROM '#13#10'  RB_ITEM'#13#10'WHERE'#13#10'  I' +
       'TEM_ID = :ITEM_ID'
@@ -85,6 +83,7 @@ inherited RelatorioLookupData: TRelatorioLookupData
         Name = 'ITEM_ID'
         ParamType = ptInput
       end>
+    SQLConnection = MainData.SQLConnection
     Left = 68
     Top = 108
     object TemplateLookupDataSetNOME: TStringField
@@ -98,7 +97,6 @@ inherited RelatorioLookupData: TRelatorioLookupData
   end
   object TemplateLookupProvider: TosSQLDataSetProvider
     DataSet = TemplateLookupDataSet
-    Constraints = True
     Options = [poIncFieldProps, poNoReset]
     Left = 228
     Top = 108
@@ -140,7 +138,6 @@ inherited RelatorioLookupData: TRelatorioLookupData
     end
   end
   object FilterDefLookupDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'select '#13#10'  IDXFILTERDEF,'#13#10'  NAME '#13#10'from '#13#10'  XFILTERDEF'#13#10'WHERE'#13#10' ' +
       ' IDXFILTERDEF = :IDXFILTERDEF'
@@ -151,6 +148,7 @@ inherited RelatorioLookupData: TRelatorioLookupData
         Name = 'IDXFILTERDEF'
         ParamType = ptInput
       end>
+    SQLConnection = MainData.SQLConnection
     Left = 68
     Top = 172
     object FilterDefLookupDataSetNAME: TStringField
@@ -164,7 +162,6 @@ inherited RelatorioLookupData: TRelatorioLookupData
   end
   object FilterDefLookupProvider: TosSQLDataSetProvider
     DataSet = FilterDefLookupDataSet
-    Constraints = True
     Options = [poIncFieldProps, poNoReset]
     Left = 228
     Top = 172

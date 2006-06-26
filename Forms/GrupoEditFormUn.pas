@@ -8,7 +8,7 @@ uses
   StdCtrls, Mask, DBCtrls, Grids, DBGrids, ComCtrls,
   wwdbedit, Wwdotdot, Wwdbcomb, Menus, ImgList,
   osActionList, ToolWin, Buttons, ExtCtrls, osComboSearch, Wwdbigrd,
-  Wwdbgrid, osUtils, Variants, CheckLst, osDBDualTree;
+  Wwdbgrid, osUtils, Variants, CheckLst, osDBDualTree, acCustomSQLMainDataUn;
 
 type
   TRefInt = class(TObject)

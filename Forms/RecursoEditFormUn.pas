@@ -8,7 +8,7 @@ uses
   StdCtrls, Mask, DBCtrls, Grids, DBGrids, ComCtrls,
   wwdbedit, Wwdotdot, Wwdbcomb, Menus, ImgList,
   osActionList, ToolWin, Buttons, ExtCtrls, osComboSearch, osUtils,
-  Wwdbigrd, Wwdbgrid, DBTables, Wwdbspin, DBActns;
+  Wwdbigrd, Wwdbgrid, DBTables, Wwdbspin, DBActns, acCustomSQLMainDataUn;
 
 type
   TRecursoEditForm = class(TosCustomEditForm)

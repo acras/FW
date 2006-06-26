@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, Classes, DB, DBClient, osClientDataset, osLookupDataUn, FMTBcd,
   Provider, osCustomDataSetProvider, osSQLDataSetProvider, SqlExpr,
-  osSQLDataSet;
+  osSQLDataSet, acCustomSQLMainDataUn;
 
 type
   TRelatorioLookupData = class(TosLookupData)

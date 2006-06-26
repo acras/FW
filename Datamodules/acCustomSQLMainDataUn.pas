@@ -7,6 +7,23 @@ uses
   osSQLConnection, Provider, osCustomDataSetProvider, osSQLDataSetProvider,
   DBTables, osClientDataSet, Contnrs, osSQLQuery, Forms, Types, Variants;
 
+const
+
+// Nomes das Tabelas a serem atualizadas (refresh) na aplicação Cliente
+// para fornecer dados para Lookup
+
+  tnUsuario             = 'Usuario';
+  tnRecurso             = 'Recurso';
+  tnAcao                = 'Acao';
+  tnDominio             = 'Dominio';
+  tnTipoRecurso         = 'TipoRecurso';
+  tnCargo               = 'Cargo';
+  tnGrupo               = 'Grupo';
+  tnTipoRelatorio       = 'TipoRelatorio';
+  tnParametroSistema    = 'ParametroSistema';
+  tnTipo                = 'Tipo';
+  tnEmpresa             = 'Empresa';
+
 type
   TRefreshTable = class(TObject)
   private

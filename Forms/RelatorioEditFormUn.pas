@@ -8,7 +8,7 @@ uses
   ComCtrls, ToolWin, Buttons, ExtCtrls, ActnList, osActionList,
   wwdbdatetimepicker, wwdbedit, Wwdotdot, Wwdbcomb, osComboSearch, osLogin,
   ppComm, ppRelatv, ppProd, ppClass, ppReport, osComboFilter,
-  PsRBExport_Main, PsRBExport_HTML;
+  PsRBExport_Main, PsRBExport_HTML, acCustomSQLMainDataUn;
 
 type
 

@@ -119,7 +119,6 @@ inherited RecursoEditForm: TRecursoEditForm
     Width = 461
     Height = 209
     ActivePage = ClassesTabSheet
-    TabIndex = 0
     TabOrder = 7
     object ClassesTabSheet: TTabSheet
       Caption = '&Classes'
@@ -229,10 +228,10 @@ inherited RecursoEditForm: TRecursoEditForm
     Top = 84
     Width = 53
     Height = 21
-    Increment = 1
-    MaxValue = 1000
-    MinValue = 1
-    Value = 1
+    Increment = 1.000000000000000000
+    MaxValue = 1000.000000000000000000
+    MinValue = 1.000000000000000000
+    Value = 1.000000000000000000
     DataField = 'NUMORDEM'
     DataSource = MasterDataSource
     TabOrder = 5

@@ -8,7 +8,7 @@ uses
   StdCtrls, Mask, DBCtrls, Grids, DBGrids, ComCtrls,
   wwdbedit, Wwdotdot, Wwdbcomb, Menus, ImgList,
   osActionList, ToolWin, Buttons, ExtCtrls, osComboSearch, osUtils, Variants,
-  osDBDualTree, SQLMainData, osComboFilter;
+  osDBDualTree, SQLMainData, osComboFilter, acCustomSQLMainDataUn;
 
 type
   TUsuarioEditForm = class(TosCustomEditForm)

@@ -5,7 +5,7 @@ interface
 uses
   osCustomEditFrm, DB, DBClient, osClientDataset, StdCtrls, Mask,
   DBCtrls, Menus, ImgList, Controls, Classes, ActnList, osActionList,
-  ComCtrls, ToolWin, Buttons, ExtCtrls, wwdbedit, Wwdotdot, Wwdbcomb;
+  ComCtrls, ToolWin, Buttons, ExtCtrls, wwdbedit, Wwdotdot, Wwdbcomb, acCustomSQLMainDataUn;
 
 type
 
