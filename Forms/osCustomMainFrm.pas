@@ -1574,7 +1574,7 @@ begin
   inherited;
   FSuperUserName := 'FWSuperUser';
 
-   StatusBar.Panels[2].Text := MainData.Profile;
+  StatusBar.Panels[2].Text := MainData.Profile;
 end;
 
 
