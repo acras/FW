@@ -46,6 +46,7 @@ type
     SQLConnectionMeta: TosSQLConnection;
     procedure DataModuleCreate(Sender: TObject);
   private
+    BD: string;
     FQueryList: TObjectList;
     FIDHighValue: integer;
     FIDLowValue: integer;
@@ -176,10 +177,21 @@ begin
   inherited;
 end;
 
-constructor TacCustomSQLMainData.Create(AOwner: TComponent; BD: String);
+{-------------------------------------------------------------------------
+ Objetivo   > 
+ Parâmetros > Conforme documentação
+ Retorno    >
+ Criação    > 19.07.2006 - Ricardo N. Acras
+ Observações>
+ Atualização>
+ ------------------------------------------------------------------------}
+constructor TacCustomSQLMainData.Create(AOwner: TComponent; bd: string);
 begin
-  inherited create(AOwner);
-  //
+  inherited Create(AOwner);
+  self.BD := bd;
+  FQueryList := TObjectList.Create(True); // OwnsObjects = True
+  FIDHighValue := -1;
+  FRefreshTableList := TObjectList.Create(True); // OwnsObjects = True
 end;
 
 {-------------------------------------------------------------------------
@@ -313,7 +325,9 @@ end;
  Retorno    >
  Criação    > 23.06.2006 - Ricardo N. Acras
  Observações>
- Atualização>
+ Atualização> 19.07.2006 - Ricardo N. Acras
+                Atualizado para respeitar a configuração caso um BD tenha
+                sido passado na criação.
  ------------------------------------------------------------------------}
 procedure TacCustomSQLMainData.DataModuleCreate(Sender: TObject);
 var
@@ -325,7 +339,24 @@ begin
   with TStringList.Create do
   begin
     try
-      LoadFromFile(selectParamsFileName);
+      if bd='' then
+        LoadFromFile(selectParamsFileName)
+      else
+      begin
+        add('BlobSize=-1');
+        add('CommitRetain=False');
+        add('Database=' + BD);
+        add('DriverName=Interbase');
+        add('ErrorResourceFile=');
+        add('LocaleCode=0000');
+        add('Password=masterkey');
+        add('RoleName=RoleName');
+        add('ServerCharSet=');
+        add('SQLDialect=2');
+        add('Interbase TransIsolation=ReadCommited');
+        add('User_Name=SYSDBA');
+        add('WaitOnLocks=True');
+      end;
       for i := 0 to Count - 1 do
       begin
         sName := Names[i];
@@ -450,7 +481,7 @@ begin
         'FROM ' +
         'Usuario ' +
         'WHERE ' +
-        'Apelido = :Apelido';
+        'upper(Apelido) = upper(:Apelido)';
       ParamByName('Apelido').AsString := apelido;
       Open;
       FNomeUsuario := Fields[0].AsString;
