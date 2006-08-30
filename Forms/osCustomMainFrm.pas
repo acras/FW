@@ -15,7 +15,7 @@ uses
   SqlExpr, DBXpress, DBLocal, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
-  osSQLQuery, acFilterController;
+  osSQLQuery, acFilterController, CommCtrl;
   //ppWWRichEd;
 
 type
@@ -142,6 +142,7 @@ type
     EfetuarBackupemarquivolocal1: TMenuItem;
     SaveBackupDialog: TSaveDialog;
     FFilterDepot: TacFilterController;
+    TreeView1: TTreeView;
     procedure EditActionExecute(Sender: TObject);
     procedure ViewActionExecute(Sender: TObject);
     procedure NewActionExecute(Sender: TObject);
@@ -188,6 +189,10 @@ type
     procedure EditarTodosButtonClick(Sender: TObject);
     procedure EfetuarBackupemarquivolocal1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure TreeView1Change(Sender: TObject; Node: TTreeNode);
+    procedure TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;
+      Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;
+      var PaintImages, DefaultDraw: Boolean);
   private
     FUserName: string;
     FEditForm: TosCustomEditForm;
@@ -234,6 +239,7 @@ type
     procedure ControlActions(enabled: boolean);
 
     procedure adjustReportZoom;
+    procedure SetNodeState(node: TTreeNode; Flags: Integer);
   protected
     FCurrentResource: TosAppResource;
     FSuperUserName: string;
@@ -265,7 +271,7 @@ var
 implementation
 
 uses SQLMainData, FilterDefEditFormUn, RecursoDataUn, LoginFormUn, SplashFormUn,
-  osReportUtils, UtilsUnit;
+  osReportUtils, UtilsUnit, Types;
 
 {$R *.DFM}
 
@@ -1214,6 +1220,7 @@ var
   i: integer;
   sDomain: string;
   Button: TOutlookButton;
+  noPai, no: TTreeNode;
 begin
   sDomain := '';
   for i:=0 to Manager.Resources.Count - 1 do
@@ -1224,15 +1231,20 @@ begin
       begin
         sDomain := DomainName;
         OutlookBar.CreateHeader(sDomain);
+        noPai := TreeView1.Items.Add(nil, sDomain);
       end;
       // Cria o botão
       Button := OutlookBar.ActiveHeader.CreateButton(Name);
+      no := TreeView1.Items.AddChild(noPai, name);
       Button.ImageIndex := ImageIndex;
+      no.ImageIndex := ImageIndex;
+      no.SelectedIndex := Manager.Resources[i].ID;
       Button.Font.Color := clWhite;
       Button.LargeImages := BarLargeImages;
       Button.SmallImages := BarSmallImages;
       Button.OnClick := ResourceClick;
       Button.Tag := Manager.Resources[i].ID;
+      SetNodeState(no, TVIS_BOLD)
     end;
   end;
   OutlookBar.ActiveHeader := OutlookBar.GetHeaderByIndex(0);
@@ -1577,6 +1589,94 @@ begin
   StatusBar.Panels[2].Text := MainData.Profile;
 end;
 
+
+procedure TosCustomMainForm.TreeView1Change(Sender: TObject;
+  Node: TTreeNode);
+var
+  NewResource: TosAppResource;
+begin
+  inherited;
+  //se o nó escolhido não contiver pai ele é referente a um domínio
+  if node.Parent=nil then
+    exit;
+
+  NewResource := TosAppResource(Manager.Resources.FindItemID(node.SelectedIndex));
+  if FCurrentResource <> NewResource then
+  begin
+    FCurrentResource := NewResource;
+    Manager.currentResource := FCurrentResource;
+    // Libera o datamodule associado
+    FCurrentDatamodule.Free;
+    FCurrentDatamodule := CreateCurrentDatamodule;
+
+    // Libera o form corrente
+    if Assigned(FCurrentEditForm) then
+      FreeAndNil(FCurrentEditForm);
+    if Assigned(FCurrentForm) then
+      FreeAndNil(FCurrentForm);
+
+    // Limpa o Template corrente
+    FCurrentTemplate.Clear;
+
+    if FCurrentResource.ResType = rtReport then
+    begin
+      getReportByResource(FCurrentResource.Name, FCurrentTemplate);
+    end
+    else if FCurrentResource.ResType = rtEdit then
+    begin
+      FActionDblClick := EditAction;
+      FCurrentEditForm := CreateCurrentEditForm;
+      if Assigned(FCurrentEditForm) and Assigned(FCurrentDatamodule) then
+        FCurrentEditForm.Datamodule := FCurrentDatamodule;
+    end
+    else if FCurrentResource.ResType = rtOther then
+      FCurrentForm := CreateCurrentForm;
+
+    OnSelectResourceAction.Execute;
+  end;
+
+  if FCurrentResource.ResType = rtOther then
+  begin
+    Screen.Cursor := crHourglass;
+    try
+      CheckActionsExecute(self);
+      if FCurrentForm is TosCustomEditForm then
+        (FCurrentForm as TosCustomEditForm).VisibleButtons := [vbSalvarFechar];
+      FCurrentForm.ShowModal;
+    finally
+      Screen.Cursor := crDefault;
+    end;
+  end;
+
+  PrintAction.Enabled := (FCurrentResource.ReportClassName <> '');
+end;
+
+procedure TosCustomMainForm.SetNodeState(node: TTreeNode; Flags: Integer);
+var tvi: TTVItemEx;
+begin
+{  FillChar(tvi, SizeOf(tvi), 0);
+  tvi.hItem := node.ItemID;
+  tvi.Mask := TVIF_STATE;
+  tvi.StateMask := TVIS_BOLD or TVIS_CUT;
+  tvi.State := Flags;
+  TreeView_SetItemA(node.Handle, tvi);
+{  if node.Text = 'Orçamento' then
+    TreeView_SetItemHeight(node.Handle, 30)
+  else
+    TreeView_SetItemHeight(node.Handle, 15);}
+end;
+
+
+procedure TosCustomMainForm.TreeView1AdvancedCustomDrawItem(
+  Sender: TCustomTreeView; Node: TTreeNode; State: TCustomDrawState;
+  Stage: TCustomDrawStage; var PaintImages, DefaultDraw: Boolean);
+begin
+  inherited;
+  with Node.DisplayRect(true) do
+  begin
+    Bottom := Bottom+10;
+  end;
+end;
 
 initialization
   ShortDateFormat := 'dd/mm/yyyy';

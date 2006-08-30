@@ -1,6 +1,6 @@
 inherited osCustomEditForm: TosCustomEditForm
-  Left = 381
-  Top = 257
+  Left = 382
+  Top = 258
   Width = 502
   Height = 335
   Caption = 'osCustomEditForm'
