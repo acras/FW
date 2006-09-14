@@ -1,6 +1,6 @@
 inherited ImprimirRelatorioForm: TImprimirRelatorioForm
-  Left = 478
-  Top = 322
+  Left = 426
+  Top = 295
   Caption = 'ImprimirRelatorioForm'
   PixelsPerInch = 96
   TextHeight = 13
@@ -46,7 +46,9 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     PrinterSetup.mmPaperWidth = 210000
     PrinterSetup.PaperSize = 9
     Units = utMillimeters
-    DeviceType = 'Screen'
+    AllowPrintToArchive = True
+    ArchiveFileName = 'c:\horasmarecl.pdf'
+    DeviceType = 'Adobe Acrobat Document'
     OnPreviewFormCreate = reportPreviewFormCreate
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
