@@ -199,7 +199,6 @@ type
     FActionDblClick: TAction;
     FSelectedList: TStringListExt;
     FCurrentEditForm: TosCustomEditForm;
-    FCurrentTemplate: TMemoryStream;
     FCurrentForm: TForm;
     FIDField: TField;
     FSelectionField: TField;
@@ -241,12 +240,13 @@ type
     procedure adjustReportZoom;
     procedure SetNodeState(node: TTreeNode; Flags: Integer);
   protected
+    FCurrentTemplate: TMemoryStream;
     FCurrentResource: TosAppResource;
     FSuperUserName: string;
     procedure ResourceClick( Sender: TObject );
     procedure replaceReportSQLPrint;
     procedure CheckMultiSelection;
-    procedure ShowHomePage(freeRes: boolean; goHome: boolean = true);
+    procedure ShowHomePage(freeRes: boolean; goHome: boolean = true);  dynamic;
     procedure HideHomePage(tipo: TTipoExibicao);
     function getSuperUserPass: string; virtual;
   public
