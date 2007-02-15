@@ -1,8 +1,8 @@
 object acCustomParametroSistemaData: TacCustomParametroSistemaData
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 532
-  Top = 268
+  Left = 641
+  Top = 357
   Height = 326
   Width = 383
   object MasterDataSet: TosSQLDataSet

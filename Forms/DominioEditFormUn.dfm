@@ -1,6 +1,6 @@
 inherited DominioEditForm: TDominioEditForm
-  Left = 476
-  Top = 272
+  Left = 461
+  Top = 250
   VertScrollBar.Range = 0
   ActiveControl = DescricaoEdit
   BorderIcons = [biSystemMenu, biMinimize]

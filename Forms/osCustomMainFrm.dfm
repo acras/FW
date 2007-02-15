@@ -1,7 +1,7 @@
 inherited osCustomMainForm: TosCustomMainForm
-  Left = 140
-  Top = 130
-  Width = 798
+  Left = 138
+  Top = 181
+  Width = 886
   Height = 534
   ActiveControl = ResourcePanel
   Caption = 'osCustomMainForm'
@@ -13,7 +13,7 @@ inherited osCustomMainForm: TosCustomMainForm
   object ControlBar: TControlBar [0]
     Left = 0
     Top = 0
-    Width = 790
+    Width = 878
     Height = 37
     Align = alTop
     AutoDrag = False
@@ -178,8 +178,8 @@ inherited osCustomMainForm: TosCustomMainForm
   end
   object StatusBar: TStatusBar [1]
     Left = 0
-    Top = 461
-    Width = 790
+    Top = 469
+    Width = 878
     Height = 19
     Panels = <
       item
@@ -200,7 +200,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Left = 0
     Top = 37
     Width = 120
-    Height = 424
+    Height = 432
     Caption = 'mxOutlookBar'
     Align = alLeft
     BorderStyle = bsSingle
@@ -244,20 +244,20 @@ inherited osCustomMainForm: TosCustomMainForm
   object Panel2: TPanel [3]
     Left = 281
     Top = 37
-    Width = 509
-    Height = 424
+    Width = 597
+    Height = 432
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 3
     object WebBrowser: TWebBrowser
       Left = 0
       Top = 33
-      Width = 509
-      Height = 391
+      Width = 597
+      Height = 399
       Align = alClient
       TabOrder = 2
       ControlData = {
-        4C0000009B340000692800000000000000000000000000000000000000000000
+        4C000000B43D00003D2900000000000000000000000000000000000000000000
         000000004C000000000000000000000001000000E0D057007335CF11AE690800
         2B2E126208000000000000004C0000000114020000000000C000000000000046
         8000000000000000000000000000000000000000000000000000000000000000
@@ -266,7 +266,7 @@ inherited osCustomMainForm: TosCustomMainForm
     object ResourcePanel: TPanel
       Left = 0
       Top = 0
-      Width = 509
+      Width = 597
       Height = 33
       Align = alTop
       Alignment = taLeftJustify
@@ -767,7 +767,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Left = 120
     Top = 37
     Width = 161
-    Height = 424
+    Height = 432
     Align = alLeft
     Color = clBtnFace
     HotTrack = True
@@ -2060,7 +2060,7 @@ inherited osCustomMainForm: TosCustomMainForm
     AutoStop = False
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.mmMarginBottom = 6350
     PrinterSetup.mmMarginLeft = 6350

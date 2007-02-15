@@ -472,7 +472,8 @@ begin
   ComponentNotFound := False;
   ComponentIsNotAction := False;
 
-  DataSetIsEmpty := FilterDataset.Eof;
+  if FilterDataset.active then
+    DataSetIsEmpty := FilterDataset.RecordCount = 0;
 
   ActionDataSet.Open;
 

@@ -169,7 +169,8 @@ begin
     Report.PrinterSetup.MarginRight := config.margemDireita;
   if config.margemSuperior <> -1 then
     Report.PrinterSetup.MarginTop := config.margemSuperior;
-
+ 
+//      ExportToPDF(report, 'c:\hosa.pdf');
 
   report.Print;
 

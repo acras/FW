@@ -1,6 +1,6 @@
 inherited osCustomEditForm: TosCustomEditForm
-  Left = 382
-  Top = 258
+  Left = 522
+  Top = 380
   Width = 502
   Height = 335
   Caption = 'osCustomEditForm'
@@ -158,6 +158,7 @@ inherited osCustomEditForm: TosCustomEditForm
     end
   end
   object MasterDataSource: TDataSource [2]
+    OnDataChange = MasterDataSourceDataChange
     Left = 248
     Top = 40
   end

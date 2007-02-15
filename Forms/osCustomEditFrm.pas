@@ -63,6 +63,7 @@ type
     procedure DeleteActionExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PararButtonClick(Sender: TObject);
+    procedure MasterDataSourceDataChange(Sender: TObject; Field: TField);
   private
     FDatamodule: TDatamodule;
     FInitialControl: TWinControl;
@@ -221,7 +222,8 @@ begin
 
   viewMode := FormMode=fmView;
   novo1.Enabled := (oInserir in Operacoes) and (not viewMode);
-  saveNewAction.Enabled := false;
+  saveNewAction.Enabled := (oInserir in Operacoes) and (not viewMode);
+  CancelUpdatesAction.Enabled := false;
 end;
 
 procedure TosCustomEditForm.ControlButtons;
@@ -378,6 +380,7 @@ procedure TosCustomEditForm.CancelUpdatesActionExecute(Sender: TObject);
 begin
   inherited;
   FMasterDataset.CancelUpdates;
+  CancelUpdatesAction.Enabled := false;
 end;
 
 procedure TosCustomEditForm.ChangeColor(PReadOnly: boolean);
@@ -499,6 +502,13 @@ begin
   inherited;
   continue := FAlse;
   CloseActionExecute(PararButton);
+end;
+
+procedure TosCustomEditForm.MasterDataSourceDataChange(Sender: TObject;
+  Field: TField);
+begin
+  inherited;
+  CancelUpdatesAction.Enabled := true;
 end;
 
 end.
