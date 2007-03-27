@@ -1,6 +1,6 @@
 object RecursoData: TRecursoData
   OldCreateOrder = False
-  Left = 899
+  Left = 719
   Top = 140
   Height = 491
   Width = 305
