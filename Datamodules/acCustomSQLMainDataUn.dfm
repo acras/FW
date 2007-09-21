@@ -6,7 +6,6 @@ object acCustomSQLMainData: TacCustomSQLMainData
   Height = 365
   Width = 631
   object spGetNewSequence: TStoredProc
-    DatabaseName = 'db'
     StoredProcName = 'dbo.cc_GetNewSequence'
     Left = 100
     Top = 200

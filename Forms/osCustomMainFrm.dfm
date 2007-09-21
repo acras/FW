@@ -1912,6 +1912,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Template.Format = ftASCII
     Units = utMillimeters
     DeviceType = 'Screen'
+    EmailSettings.ReportFormat = 'PDF'
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
     OutlineSettings.Enabled = False
@@ -1920,7 +1921,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 896
     Top = 112
-    Version = '9.03'
+    Version = '10.06'
     mmColumnWidth = 0
     DataPipelineName = 'ppDBPipeline'
     object ppHeaderBand: TppHeaderBand
@@ -2074,6 +2075,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Template.DatabaseSettings.TemplateField = 'Template'
     Template.SaveTo = stDatabase
     DeviceType = 'Screen'
+    EmailSettings.ReportFormat = 'PDF'
     OnPreviewFormCreate = ReportPreviewFormCreate
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
@@ -2084,7 +2086,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 353
     Top = 362
-    Version = '9.03'
+    Version = '10.06'
     mmColumnWidth = 0
     object ppHeaderBand1: TppHeaderBand
       mmBottomOffset = 0

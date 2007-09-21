@@ -54,7 +54,7 @@ inherited GrupoEditForm: TGrupoEditForm
     Top = 96
     Width = 441
     Height = 262
-    ActivePage = TabSheet1
+    ActivePage = ParticipantesTabSheet
     Align = alBottom
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 3

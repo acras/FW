@@ -229,7 +229,6 @@ type
     function CreateCurrentDatamodule: TDatamodule;
     function CreateCurrentReport: TacCustomReport;
 
-    function Login: boolean;
     procedure Logout;
 
     procedure LoadOutlookBar;
@@ -249,6 +248,7 @@ type
     procedure ShowHomePage(freeRes: boolean; goHome: boolean = true);  dynamic;
     procedure HideHomePage(tipo: TTipoExibicao);
     function getSuperUserPass: string; virtual;
+    function Login: boolean; dynamic;
   public
     FCurrentDatamodule: TDatamodule;
     property superUserName: string read FSuperUserName;
@@ -738,7 +738,7 @@ begin
 
     if FCurrentResource.ResType = rtReport then
     begin
-      getReportByResource(FCurrentResource.Name, FCurrentTemplate);
+      getReportByResource(FCurrentResource.ResClassName, FCurrentTemplate);
     end
     else if FCurrentResource.ResType = rtEdit then
     begin

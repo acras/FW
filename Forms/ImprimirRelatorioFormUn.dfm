@@ -1,6 +1,4 @@
 inherited ImprimirRelatorioForm: TImprimirRelatorioForm
-  Left = 533
-  Top = 393
   Caption = 'ImprimirRelatorioForm'
   PixelsPerInch = 96
   TextHeight = 13

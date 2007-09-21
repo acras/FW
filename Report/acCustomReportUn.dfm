@@ -29,10 +29,10 @@ object acCustomReport: TacCustomReport
     PrinterSetup.mmMarginLeft = 14552
     PrinterSetup.mmMarginRight = 14552
     PrinterSetup.mmMarginTop = 14552
-    PrinterSetup.mmPaperHeight = 297128
-    PrinterSetup.mmPaperWidth = 210080
+    PrinterSetup.mmPaperHeight = 297000
+    PrinterSetup.mmPaperWidth = 210000
     PrinterSetup.PaperSize = 9
-    Units = utScreenPixels
+    Units = utMillimeters
     DeviceType = 'Screen'
     OnPreviewFormCreate = ReportPreviewFormCreate
     OutlineSettings.CreateNode = True

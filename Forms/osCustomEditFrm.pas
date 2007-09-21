@@ -224,6 +224,12 @@ begin
   novo1.Enabled := (oInserir in Operacoes) and (not viewMode);
   saveNewAction.Enabled := (oInserir in Operacoes) and (not viewMode);
   CancelUpdatesAction.Enabled := false;
+
+  if PararButton.Visible then
+  begin
+    NewAction.Enabled := false;
+    SaveNewAction.Enabled := false;
+  end;
 end;
 
 procedure TosCustomEditForm.ControlButtons;
@@ -374,6 +380,7 @@ begin
   OnCheckActionsAction.Execute;
   if Assigned(FInitialControl) then
     FInitialControl.SetFocus; // Retorna ao controle inicial
+  CancelUpdatesAction.Enabled := false;
 end;
 
 procedure TosCustomEditForm.CancelUpdatesActionExecute(Sender: TObject);
