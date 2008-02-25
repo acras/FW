@@ -1921,7 +1921,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 896
     Top = 112
-    Version = '10.06'
+    Version = '10.07'
     mmColumnWidth = 0
     DataPipelineName = 'ppDBPipeline'
     object ppHeaderBand: TppHeaderBand
@@ -2086,7 +2086,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 353
     Top = 362
-    Version = '10.06'
+    Version = '10.07'
     mmColumnWidth = 0
     object ppHeaderBand1: TppHeaderBand
       mmBottomOffset = 0

@@ -1,7 +1,7 @@
 object RecursoData: TRecursoData
   OldCreateOrder = False
-  Left = 719
-  Top = 140
+  Left = 720
+  Top = 141
   Height = 491
   Width = 305
   object MasterDataSet: TosSQLDataSet

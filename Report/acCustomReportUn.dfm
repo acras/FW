@@ -1,8 +1,8 @@
 object acCustomReport: TacCustomReport
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 410
-  Top = 327
+  Left = 804
+  Top = 676
   Height = 208
   Width = 206
   object FilterDatasource: TDataSource
@@ -34,6 +34,7 @@ object acCustomReport: TacCustomReport
     PrinterSetup.PaperSize = 9
     Units = utMillimeters
     DeviceType = 'Screen'
+    EmailSettings.ReportFormat = 'PDF'
     OnPreviewFormCreate = ReportPreviewFormCreate
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
@@ -45,7 +46,7 @@ object acCustomReport: TacCustomReport
     TextSearchSettings.Enabled = False
     Left = 128
     Top = 96
-    Version = '9.03'
+    Version = '10.07'
     mmColumnWidth = 188914
     object Detail: TppDetailBand
       PrintHeight = phDynamic
