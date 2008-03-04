@@ -1,6 +1,6 @@
 inherited osCustomEditForm: TosCustomEditForm
-  Left = 522
-  Top = 380
+  Left = 239
+  Top = 227
   Width = 502
   Height = 335
   Caption = 'osCustomEditForm'
@@ -12,7 +12,7 @@ inherited osCustomEditForm: TosCustomEditForm
   object MainControlBar: TControlBar [0]
     Left = 0
     Top = 0
-    Width = 494
+    Width = 486
     Height = 30
     Align = alTop
     AutoDrag = False

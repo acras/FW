@@ -37,7 +37,7 @@ implementation
 
 
 constructor TosForm.Create(AOwner: TComponent);
-begin
+begin                     
   inherited;
   //CheckDefaultParams; // Carrega os parâmetros empresa/estabelecimento se necessário
 end;

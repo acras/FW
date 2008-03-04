@@ -16,8 +16,8 @@ object EscolhaConexaoForm: TEscolhaConexaoForm
   object ListBox: TListBox
     Left = 0
     Top = 0
-    Width = 351
-    Height = 164
+    Width = 343
+    Height = 162
     Align = alClient
     ItemHeight = 13
     TabOrder = 0
@@ -25,8 +25,8 @@ object EscolhaConexaoForm: TEscolhaConexaoForm
   end
   object Panel1: TPanel
     Left = 0
-    Top = 164
-    Width = 351
+    Top = 162
+    Width = 343
     Height = 30
     Align = alBottom
     BevelOuter = bvNone

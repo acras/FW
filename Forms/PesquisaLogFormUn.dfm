@@ -5,13 +5,14 @@ inherited PesquisaLogForm: TPesquisaLogForm
   Height = 527
   Caption = 'Pesquisa no Log'
   Menu = MainMenu1
+  OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   object pnlFltro: TCollapsePanel [0]
     Left = 0
     Top = 0
-    Width = 567
-    Height = 241
+    Width = 559
+    Height = 15
     Align = alTop
     TabOrder = 0
     collapsed = False
@@ -69,6 +70,7 @@ inherited PesquisaLogForm: TPesquisaLogForm
       AllowClearKey = False
       DropDownCount = 8
       Enabled = False
+      HistoryList.FileName = 'LabMaster.ini.ini'
       ItemHeight = 0
       Items.Strings = (
         'um'#9'1'
@@ -98,6 +100,7 @@ inherited PesquisaLogForm: TPesquisaLogForm
       AllowClearKey = False
       DropDownCount = 8
       Enabled = False
+      HistoryList.FileName = 'LabMaster.ini.ini'
       ItemHeight = 0
       Items.Strings = (
         'um'#9'1'
@@ -142,16 +145,17 @@ inherited PesquisaLogForm: TPesquisaLogForm
   end
   object Panel1: TPanel [1]
     Left = 0
-    Top = 241
-    Width = 567
-    Height = 240
+    Top = 15
+    Width = 559
+    Height = 456
     Align = alClient
     TabOrder = 1
     object wwDBGrid1: TwwDBGrid
       Left = 1
       Top = 1
-      Width = 565
-      Height = 238
+      Width = 557
+      Height = 454
+      DisableThemes = False
       Selected.Strings = (
         'DATAHORA'#9'22'#9'Data e Hora'#9'F'#9
         'Usuario'#9'20'#9'Usuario'#9'F'#9

@@ -54,6 +54,7 @@ inherited CargoEditForm: TCargoEditForm
     DataField = 'AREAATUACAO'
     DataSource = MasterDataSource
     DropDownCount = 8
+    HistoryList.FileName = 'LabMaster.ini.ini'
     ItemHeight = 0
     Items.Strings = (
       'Atendimento'

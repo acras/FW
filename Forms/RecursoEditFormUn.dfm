@@ -199,6 +199,7 @@ inherited RecursoEditForm: TRecursoEditForm
         Top = 0
         Width = 453
         Height = 181
+        DisableThemes = False
         Selected.Strings = (
           'NOME'#9'15'#9'Nome'#9'F'
           'NOMECOMPONENTE'#9'20'#9'Componente'#9'F'

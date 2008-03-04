@@ -1,6 +1,6 @@
 object osForm: TosForm
-  Left = 623
-  Top = 437
+  Left = 320
+  Top = 282
   Width = 401
   Height = 278
   Caption = 'osForm'
@@ -11,7 +11,7 @@ object osForm: TosForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96

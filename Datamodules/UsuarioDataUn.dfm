@@ -5,7 +5,6 @@ object UsuarioData: TUsuarioData
   Height = 416
   Width = 325
   object MasterDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'SELECT'#13#10'  IDUsuario,'#13#10'  Nome,'#13#10'  IDCargo,'#13#10'  Apelido,'#13#10'  Senha,'#13 +
       #10'  Status'#13#10'FROM '#13#10'  USUARIO'#13#10'WHERE'#13#10'  IDUsuario=:ID'#13#10
@@ -16,6 +15,7 @@ object UsuarioData: TUsuarioData
         Name = 'ID'
         ParamType = ptInput
       end>
+    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 24
     object MasterDataSetIDUSUARIO: TIntegerField
@@ -52,7 +52,6 @@ object UsuarioData: TUsuarioData
   end
   object MasterProvider: TosSQLDataSetProvider
     DataSet = MasterDataSet
-    Constraints = True
     Options = [poIncFieldProps, poNoReset]
     Left = 256
     Top = 24
@@ -63,22 +62,20 @@ object UsuarioData: TUsuarioData
     Top = 24
   end
   object GrupoDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 'SELECT'#13#10'  IDGrupo,'#13#10'  Nome'#13#10'FROM'#13#10'  GRUPO'#13#10
     MaxBlobSize = 32
     Params = <>
+    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 224
   end
   object GrupoProvider: TosSQLDataSetProvider
     DataSet = GrupoDataSet
-    Constraints = True
     Options = [poNoReset]
     Left = 140
     Top = 224
   end
   object GrupoUsuarioDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'SELECT'#13#10'  *'#13#10'FROM'#13#10'  GRUPOUSUARIO'#13#10'WHERE'#13#10'  IDUSUARIO = :IDUsuar' +
       'io'#13#10
@@ -91,6 +88,7 @@ object UsuarioData: TUsuarioData
         ParamType = ptInput
         Size = 4
       end>
+    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 80
     object GrupoUsuarioDataSetIDGRUPOUSUARIO: TIntegerField

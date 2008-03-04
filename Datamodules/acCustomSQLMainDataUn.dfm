@@ -1,8 +1,8 @@
 object acCustomSQLMainData: TacCustomSQLMainData
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 393
-  Top = 350
+  Left = 137
+  Top = 198
   Height = 365
   Width = 631
   object spGetNewSequence: TStoredProc

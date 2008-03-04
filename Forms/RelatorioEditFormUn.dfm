@@ -109,6 +109,7 @@ inherited RelatorioEditForm: TRelatorioEditForm
         DataField = 'CLASSERELATORIO'
         DataSource = MasterDataSource
         DropDownCount = 8
+        HistoryList.FileName = 'LabMaster.ini.ini'
         ItemHeight = 0
         Items.Strings = (
           'Presta'#231#227'o de Contas'#9'TPrestacaoContas')
@@ -179,6 +180,7 @@ inherited RelatorioEditForm: TRelatorioEditForm
         MapList = False
         AllowClearKey = False
         DropDownCount = 8
+        HistoryList.FileName = 'LabMaster.ini.ini'
         ItemHeight = 0
         Sorted = False
         TabOrder = 2
@@ -236,6 +238,7 @@ inherited RelatorioEditForm: TRelatorioEditForm
           DataField = 'CLASSEIMPRESSORA'
           DataSource = MasterDataSource
           DropDownCount = 8
+          HistoryList.FileName = 'LabMaster.ini.ini'
           ItemHeight = 0
           Items.Strings = (
             'Laser'
@@ -555,6 +558,7 @@ inherited RelatorioEditForm: TRelatorioEditForm
     PrinterSetup.mmPaperWidth = 210000
     PrinterSetup.PaperSize = 9
     DeviceType = 'Screen'
+    EmailSettings.ReportFormat = 'PDF'
     OnPreviewFormCreate = ReportPreviewFormCreate
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
@@ -564,7 +568,7 @@ inherited RelatorioEditForm: TRelatorioEditForm
     TextSearchSettings.Enabled = False
     Left = 356
     Top = 68
-    Version = '9.03'
+    Version = '10.07'
     mmColumnWidth = 0
   end
   object FilterDataset: TosClientDataset

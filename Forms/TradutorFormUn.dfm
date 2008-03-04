@@ -251,11 +251,10 @@ object TradutorForm: TTradutorForm
     BtnOKCaption = '&OK'
     BtnCancelCaption = 'Cancelar'
     CheckBoxInGridStyle = cbStyleAuto
-    VersionInfoPower = '4000.0.4'
+    VersionInfoPower = '4000.T.B'
     FilterMemoSize = 65536
     IniFileName = 'LabMaster.ini'
     DialogFontStyle = []
-    RegistrationNo = 'IP4013487442'
     Connected = True
     Left = 12
     Top = 7

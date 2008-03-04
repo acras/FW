@@ -5,7 +5,6 @@ object LogData: TLogData
   Height = 189
   Width = 240
   object MasterDataSet: TosSQLDataSet
-    SQLConnection = MainData.SQLConnection
     CommandText = 
       'SELECT'#13#10'  IDLog,'#9#13#10'  IDRecurso,'#13#10'  IDUsuario,'#13#10'  DataHora,'#13#10'  De' +
       'scricao'#13#10'FROM '#13#10'  Log'#13#10'WHERE'#13#10'  IDLog= :ID'#13#10
@@ -17,6 +16,7 @@ object LogData: TLogData
         ParamType = ptInput
         Value = 0
       end>
+    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 24
     object MasterDataSetIDLOG: TIntegerField
@@ -46,7 +46,6 @@ object LogData: TLogData
   end
   object MasterProvider: TosSQLDataSetProvider
     DataSet = MasterDataSet
-    Constraints = True
     Options = [poIncFieldProps, poNoReset]
     Left = 136
     Top = 24

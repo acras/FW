@@ -10,7 +10,7 @@ inherited osDispatchForm: TosDispatchForm
   object MainControlBar: TControlBar [0]
     Left = 0
     Top = 0
-    Width = 419
+    Width = 411
     Height = 30
     Align = alTop
     AutoSize = True

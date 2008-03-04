@@ -100,6 +100,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
     DataField = 'FILTERTYPE'
     DataSource = MasterDataSource
     DropDownCount = 8
+    HistoryList.FileName = 'LabMaster.ini.ini'
     ItemHeight = 0
     Items.Strings = (
       'Edi'#231#227'o'#9'EDT'
@@ -467,6 +468,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
     PrinterSetup.mmPaperWidth = 210000
     PrinterSetup.PaperSize = 9
     DeviceType = 'Screen'
+    EmailSettings.ReportFormat = 'PDF'
     OnPreviewFormCreate = ReportPreviewFormCreate
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
@@ -476,7 +478,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
     TextSearchSettings.Enabled = False
     Left = 260
     Top = 464
-    Version = '9.01'
+    Version = '10.07'
     mmColumnWidth = 0
   end
 end

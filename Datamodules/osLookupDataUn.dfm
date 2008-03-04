@@ -1,7 +1,7 @@
 object osLookupData: TosLookupData
   OldCreateOrder = False
-  Left = 809
-  Top = 565
+  Left = 407
+  Top = 410
   Height = 150
   Width = 215
 end

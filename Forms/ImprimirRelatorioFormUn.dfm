@@ -12,6 +12,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     MapList = False
     AllowClearKey = False
     DropDownCount = 8
+    HistoryList.FileName = 'LabMaster.ini.ini'
     ItemHeight = 0
     Sorted = False
     TabOrder = 1
@@ -47,6 +48,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     AllowPrintToArchive = True
     ArchiveFileName = 'c:\horasmarecl.pdf'
     DeviceType = 'Adobe Acrobat Document'
+    EmailSettings.ReportFormat = 'PDF'
     OnPreviewFormCreate = reportPreviewFormCreate
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
@@ -58,7 +60,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     TextSearchSettings.Enabled = False
     Left = 200
     Top = 104
-    Version = '9.03'
+    Version = '10.07'
     mmColumnWidth = 0
   end
   object FilterDataSet: TosClientDataset
