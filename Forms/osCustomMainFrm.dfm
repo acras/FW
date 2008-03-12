@@ -1,8 +1,8 @@
 inherited osCustomMainForm: TosCustomMainForm
-  Left = 0
-  Top = 36
-  Width = 800
-  Height = 534
+  Left = 2
+  Top = 1
+  Width = 1182
+  Height = 683
   ActiveControl = ResourcePanel
   Caption = 'osCustomMainForm'
   Menu = MainMenu
@@ -12,7 +12,7 @@ inherited osCustomMainForm: TosCustomMainForm
   object ControlBar: TControlBar [0]
     Left = 0
     Top = 0
-    Width = 784
+    Width = 1166
     Height = 37
     Align = alTop
     AutoDrag = False
@@ -177,8 +177,8 @@ inherited osCustomMainForm: TosCustomMainForm
   end
   object StatusBar: TStatusBar [1]
     Left = 0
-    Top = 459
-    Width = 784
+    Top = 608
+    Width = 1166
     Height = 19
     Panels = <
       item
@@ -199,7 +199,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Left = 0
     Top = 37
     Width = 120
-    Height = 422
+    Height = 571
     Caption = 'mxOutlookBar'
     Align = alLeft
     BorderStyle = bsSingle
@@ -243,20 +243,20 @@ inherited osCustomMainForm: TosCustomMainForm
   object Panel2: TPanel [3]
     Left = 281
     Top = 37
-    Width = 503
-    Height = 422
+    Width = 885
+    Height = 571
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 3
     object WebBrowser: TWebBrowser
       Left = 0
       Top = 33
-      Width = 503
-      Height = 389
+      Width = 885
+      Height = 538
       Align = alClient
       TabOrder = 2
       ControlData = {
-        4C000000FD330000342800000000000000000000000000000000000000000000
+        4C000000785B00009B3700000000000000000000000000000000000000000000
         000000004C000000000000000000000001000000E0D057007335CF11AE690800
         2B2E126208000000000000004C0000000114020000000000C000000000000046
         8000000000000000000000000000000000000000000000000000000000000000
@@ -265,7 +265,7 @@ inherited osCustomMainForm: TosCustomMainForm
     object ResourcePanel: TPanel
       Left = 0
       Top = 0
-      Width = 503
+      Width = 885
       Height = 33
       Align = alTop
       Alignment = taLeftJustify
@@ -767,7 +767,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Left = 120
     Top = 37
     Width = 161
-    Height = 422
+    Height = 571
     Align = alLeft
     Color = clBtnFace
     HotTrack = True

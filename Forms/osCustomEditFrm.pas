@@ -11,7 +11,7 @@ uses
   osComboSearch, osDBDualTree, wwDBSpin, wwDBNavigator, wwDBcomb, wwDBlook, DBGrids;
 
 type
-  TFormMode      = (fmEdit, fmInsert, fmView);
+  TFormMode      = (fmEdit, fmInsert, fmView, fmDelete);
 
 // tags                     0              1          2          3       4
   TVisibleButton  = (vbSalvarFechar, vbImprimir, vbExcluir, vbFechar, vbParar);
@@ -91,7 +91,7 @@ type
     constructor Create(AOwner: TComponent); override;
     function Insert: boolean; virtual;
     function Edit(const KeyFields: string; const KeyValues: Variant): boolean; virtual;
-    function View(const KeyFields: string; const KeyValues: Variant; PClose: boolean = True): boolean; virtual;
+    function View(const KeyFields: string; const KeyValues: Variant; PClose: boolean = True; deleting: boolean = false): boolean; virtual;
     function Delete(const KeyFields: string; const KeyValues: Variant): boolean; virtual;
     property CurrentKeyValues: Variant read GetKeyValues;
     property FormMode: TFormMode read FFormMode write FFormMode;
@@ -158,11 +158,14 @@ begin
   end;
 end;
 
-function TosCustomEditForm.View(const KeyFields: string; const KeyValues: Variant; PClose: boolean): boolean;
+function TosCustomEditForm.View(const KeyFields: string; const KeyValues: Variant; PClose: boolean =true; deleting: boolean = false): boolean;
 begin
   try
     Screen.Cursor := crHourglass;
-    FFormMode := fmView;
+    if deleting then
+      fformMode := fmDelete
+    else
+      FFormMode := fmView;
     CheckMasterDataset;
 
     FMasterDataset.ReadOnly := True;
@@ -261,13 +264,13 @@ end;
 function TosCustomEditForm.Delete(const KeyFields: string; const KeyValues: Variant): boolean;
 begin
   try
-    Result := View(KeyFields, KeyValues, False);
+    Result := View(KeyFields, KeyValues, False, true);
     if Result then
     begin
       FMasterDataset.Delete;
       try
          FMasterDataset.ApplyUpdates(0);
-      except
+      except                       
         MessageDlg('nao deu', mtWarning, [mbOK], 0);
       end;
     end;

@@ -5,7 +5,8 @@ unit UtilsUnit;
 interface
 
 uses
-  IBServices, INIFiles, SysUtils, Forms, AbZipper, Windows, StrUtils, Controls;
+  IBServices, INIFiles, SysUtils, Forms, AbZipper, Windows, StrUtils, Controls,
+  osComboSearch, graphics;
 
 function isDigitOrControl(Key: char): boolean;
 function RemoveAcento(Str:String): String;
@@ -13,6 +14,7 @@ procedure criarArquivoBackupIB(nomeArq: string);
 function getSombraValue(Str:String): String;
 function TiraSimbolos(Str: String): String;
 function LastDayOfMonth(dia: TDate = 0): TDate;
+procedure setHabilitaComboSearch(cbo: TosComboSearch; enabled: boolean);
 
 implementation
 
@@ -140,6 +142,22 @@ begin
   result := encodedate(y, m, 1) - 1;
 end;
 
+procedure setHabilitaComboSearch(cbo: TosComboSearch; enabled: boolean);
+begin
+  if enabled then
+  begin
+    cbo.ReadOnly := false;
+    cbo.color := clWhite;
+    cbo.showButton := true;
+  end
+  else
+  begin
+    cbo.ReadOnly := true;
+    cbo.color := clBtnFace;
+    cbo.showButton := false;
+  end;
+  cbo.invalidate;
+end;
 
 
 

@@ -1,6 +1,6 @@
 object osWizForm: TosWizForm
-  Left = 288
-  Top = 174
+  Left = 290
+  Top = 185
   BorderStyle = bsDialog
   Caption = 'Assistente para'
   ClientHeight = 360
