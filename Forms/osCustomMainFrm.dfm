@@ -1,6 +1,6 @@
 inherited osCustomMainForm: TosCustomMainForm
-  Left = 2
-  Top = 1
+  Left = 98
+  Top = 4
   Width = 1182
   Height = 683
   ActiveControl = ResourcePanel
@@ -312,22 +312,22 @@ inherited osCustomMainForm: TosCustomMainForm
     end
   end
   object RelatPanel: TPanel [4]
-    Left = 122
-    Top = 100
-    Width = 414
-    Height = 351
+    Left = 333
+    Top = 140
+    Width = 473
+    Height = 389
     BevelInner = bvRaised
     BevelOuter = bvNone
     TabOrder = 4
     Visible = False
     object ReportViewer: TppViewer
       Left = 1
-      Top = 38
-      Width = 412
-      Height = 292
+      Top = 42
+      Width = 471
+      Height = 326
       Align = alClient
       BevelOuter = bvNone
-      Color = clBtnShadow
+      Color = clMenuBar
       PageColor = clWindow
       Report = Report
       ZoomPercentage = 100
@@ -336,16 +336,23 @@ inherited osCustomMainForm: TosCustomMainForm
       OnPrintStateChange = ReportViewerPrintStateChange
       OnStatusChange = ReportViewerStatusChange
     end
+    object pnlStatusBar: TPanel
+      Left = 1
+      Top = 368
+      Width = 471
+      Height = 20
+      Align = alBottom
+      Alignment = taLeftJustify
+      BevelOuter = bvLowered
+      TabOrder = 1
+    end
     object pnlPreviewBar: TPanel
       Left = 1
       Top = 1
-      Width = 412
-      Height = 37
+      Width = 471
+      Height = 41
       Align = alTop
-      BevelOuter = bvNone
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 1
+      TabOrder = 2
       object spbPreviewPrint: TSpeedButton
         Left = 4
         Top = 5
@@ -416,7 +423,7 @@ inherited osCustomMainForm: TosCustomMainForm
       object spbPreviewWhole: TSpeedButton
         Left = 38
         Top = 4
-        Width = 24
+        Width = 22
         Height = 24
         Hint = 'Whole Page'
         AllowAllUp = True
@@ -463,126 +470,10 @@ inherited osCustomMainForm: TosCustomMainForm
         ShowHint = True
         OnClick = spbPreviewWholeClick
       end
-      object spbPreviewFirst: TSpeedButton
-        Left = 120
-        Top = 4
-        Width = 24
-        Height = 24
-        Hint = 'First Page'
-        Flat = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        Glyph.Data = {
-          5A010000424D5A01000000000000760000002800000014000000130000000100
-          040000000000E400000000000000000000001000000010000000000000000000
-          80000080000000808000800000008000800080800000C0C0C000808080000000
-          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
-          7777777700007777777777777777777700007777777777777777777700007777
-          7777777777777777000077778877777778777777000077770077777780777777
-          0000777700777778007777770000777700777780007777770000777700777800
-          0077777700007777007780000077777700007777007778000077777700007777
-          0077778000777777000077770077777800777777000077770077777780777777
-          0000777788777777787777770000777777777777777777770000777777777777
-          777777770000777777777777777777770000777777777777777777770000}
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        OnClick = spbPreviewFirstClick
-      end
-      object spbPreviewPrior: TSpeedButton
-        Left = 144
-        Top = 4
-        Width = 24
-        Height = 24
-        Hint = 'Prior Page'
-        Flat = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        Glyph.Data = {
-          5A010000424D5A01000000000000760000002800000014000000130000000100
-          040000000000E400000000000000000000001000000010000000000000000000
-          80000080000000808000800000008000800080800000C0C0C000808080000000
-          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
-          7777777700007777777777777777777700007777777777777777777700007777
-          7777777777777777000077777777777877777777000077777777778077777777
-          0000777777777800777777770000777777778000777777770000777777780000
-          7777777700007777778000007777777700007777777800007777777700007777
-          7777800077777777000077777777780077777777000077777777778077777777
-          0000777777777778777777770000777777777777777777770000777777777777
-          777777770000777777777777777777770000777777777777777777770000}
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        OnClick = spbPreviewPriorClick
-      end
-      object spbPreviewNext: TSpeedButton
-        Left = 211
-        Top = 4
-        Width = 24
-        Height = 24
-        Hint = 'Next Page'
-        Flat = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        Glyph.Data = {
-          5A010000424D5A01000000000000760000002800000014000000130000000100
-          040000000000E400000000000000000000001000000010000000000000000000
-          80000080000000808000800000008000800080800000C0C0C000808080000000
-          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
-          7777777700007777777777777777777700007777777777777777777700007777
-          7777777777777777000077777778777777777777000077777770877777777777
-          0000777777700877777777770000777777700087777777770000777777700008
-          7777777700007777777000008777777700007777777000087777777700007777
-          7770008777777777000077777770087777777777000077777770877777777777
-          0000777777787777777777770000777777777777777777770000777777777777
-          777777770000777777777777777777770000777777777777777777770000}
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        OnClick = spbPreviewNextClick
-      end
-      object spbPreviewLast: TSpeedButton
-        Left = 235
-        Top = 4
-        Width = 24
-        Height = 24
-        Hint = 'Last Page'
-        Flat = True
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        Glyph.Data = {
-          5A010000424D5A01000000000000760000002800000014000000130000000100
-          040000000000E400000000000000000000001000000010000000000000000000
-          80000080000000808000800000008000800080800000C0C0C000808080000000
-          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
-          7777777700007777777777777777777700007777777777777777777700007777
-          7777777777777777000077777877777778877777000077777087777770077777
-          0000777770087777700777770000777770008777700777770000777770000877
-          7007777700007777700000877007777700007777700008777007777700007777
-          7000877770077777000077777008777770077777000077777087777770077777
-          0000777778777777788777770000777777777777777777770000777777777777
-          777777770000777777777777777777770000777777777777777777770000}
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        OnClick = spbPreviewLastClick
-      end
       object spbPreviewWidth: TSpeedButton
         Left = 62
         Top = 4
-        Width = 24
+        Width = 22
         Height = 24
         Hint = 'Page Width'
         AllowAllUp = True
@@ -631,7 +522,7 @@ inherited osCustomMainForm: TosCustomMainForm
       object spbPreview100Percent: TSpeedButton
         Left = 86
         Top = 4
-        Width = 24
+        Width = 22
         Height = 24
         Hint = '100 %'
         AllowAllUp = True
@@ -679,12 +570,156 @@ inherited osCustomMainForm: TosCustomMainForm
         ShowHint = True
         OnClick = spbPreview100PercentClick
       end
-      object Bevel1: TBevel
-        Left = 510
-        Top = 1
-        Width = 1
-        Height = 33
-        Style = bsRaised
+      object spbPreviewFirst: TSpeedButton
+        Left = 120
+        Top = 4
+        Width = 22
+        Height = 24
+        Hint = 'First Page'
+        Flat = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Glyph.Data = {
+          5A010000424D5A01000000000000760000002800000014000000130000000100
+          040000000000E400000000000000000000001000000010000000000000000000
+          80000080000000808000800000008000800080800000C0C0C000808080000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
+          7777777700007777777777777777777700007777777777777777777700007777
+          7777777777777777000077778877777778777777000077770077777780777777
+          0000777700777778007777770000777700777780007777770000777700777800
+          0077777700007777007780000077777700007777007778000077777700007777
+          0077778000777777000077770077777800777777000077770077777780777777
+          0000777788777777787777770000777777777777777777770000777777777777
+          777777770000777777777777777777770000777777777777777777770000}
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = spbPreviewFirstClick
+      end
+      object spbPreviewPrior: TSpeedButton
+        Left = 144
+        Top = 4
+        Width = 22
+        Height = 24
+        Hint = 'Prior Page'
+        Flat = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Glyph.Data = {
+          5A010000424D5A01000000000000760000002800000014000000130000000100
+          040000000000E400000000000000000000001000000010000000000000000000
+          80000080000000808000800000008000800080800000C0C0C000808080000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
+          7777777700007777777777777777777700007777777777777777777700007777
+          7777777777777777000077777777777877777777000077777777778077777777
+          0000777777777800777777770000777777778000777777770000777777780000
+          7777777700007777778000007777777700007777777800007777777700007777
+          7777800077777777000077777777780077777777000077777777778077777777
+          0000777777777778777777770000777777777777777777770000777777777777
+          777777770000777777777777777777770000777777777777777777770000}
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = spbPreviewPriorClick
+      end
+      object spbPreviewNext: TSpeedButton
+        Left = 211
+        Top = 4
+        Width = 23
+        Height = 24
+        Hint = 'Next Page'
+        Flat = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Glyph.Data = {
+          5A010000424D5A01000000000000760000002800000014000000130000000100
+          040000000000E400000000000000000000001000000010000000000000000000
+          80000080000000808000800000008000800080800000C0C0C000808080000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
+          7777777700007777777777777777777700007777777777777777777700007777
+          7777777777777777000077777778777777777777000077777770877777777777
+          0000777777700877777777770000777777700087777777770000777777700008
+          7777777700007777777000008777777700007777777000087777777700007777
+          7770008777777777000077777770087777777777000077777770877777777777
+          0000777777787777777777770000777777777777777777770000777777777777
+          777777770000777777777777777777770000777777777777777777770000}
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = spbPreviewNextClick
+      end
+      object spbPreviewLast: TSpeedButton
+        Left = 235
+        Top = 4
+        Width = 23
+        Height = 24
+        Hint = 'Last Page'
+        Flat = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Glyph.Data = {
+          5A010000424D5A01000000000000760000002800000014000000130000000100
+          040000000000E400000000000000000000001000000010000000000000000000
+          80000080000000808000800000008000800080800000C0C0C000808080000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00777777777777
+          7777777700007777777777777777777700007777777777777777777700007777
+          7777777777777777000077777877777778877777000077777087777770077777
+          0000777770087777700777770000777770008777700777770000777770000877
+          7007777700007777700000877007777700007777700008777007777700007777
+          7000877770077777000077777008777770077777000077777087777770077777
+          0000777778777777788777770000777777777777777777770000777777777777
+          777777770000777777777777777777770000777777777777777777770000}
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = spbPreviewLastClick
+      end
+      object spbPreviewCancel: TSpeedButton
+        Left = 403
+        Top = 4
+        Width = 47
+        Height = 24
+        Caption = 'Cancel'
+        Enabled = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object mskPreviewPage: TMaskEdit
+        Left = 170
+        Top = 6
+        Width = 36
+        Height = 21
+        TabStop = False
+        AutoSelect = False
+        EditMask = '99999;0; '
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        MaxLength = 5
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 0
+        OnKeyPress = mskPreviewPageKeyPress
       end
       object mskPreviewPercentage: TMaskEdit
         Left = 268
@@ -707,60 +742,6 @@ inherited osCustomMainForm: TosCustomMainForm
         OnExit = mskPreviewPercentageExit
         OnKeyPress = mskPreviewPercentageKeyPress
       end
-      object mskPreviewPage: TMaskEdit
-        Left = 170
-        Top = 6
-        Width = 37
-        Height = 21
-        TabStop = False
-        AutoSelect = False
-        EditMask = '99999;0; '
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -12
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        MaxLength = 5
-        ParentFont = False
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 0
-        OnKeyPress = mskPreviewPageKeyPress
-      end
-      object pnlCancelButton: TPanel
-        Left = 357
-        Top = 0
-        Width = 55
-        Height = 37
-        Align = alRight
-        BevelOuter = bvNone
-        TabOrder = 2
-        object spbPreviewCancel: TSpeedButton
-          Left = 3
-          Top = 4
-          Width = 47
-          Height = 24
-          Caption = 'Cancel'
-          Enabled = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -12
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          Visible = False
-        end
-      end
-    end
-    object pnlStatusBar: TPanel
-      Left = 1
-      Top = 330
-      Width = 412
-      Height = 20
-      Align = alBottom
-      Alignment = taLeftJustify
-      BevelOuter = bvLowered
-      TabOrder = 2
     end
   end
   object TreeView1: TTreeView [5]
