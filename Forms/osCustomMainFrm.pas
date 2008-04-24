@@ -192,6 +192,7 @@ type
       Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;
       var PaintImages, DefaultDraw: Boolean);
   private
+    FNewFilter: boolean;
     FUserName: string;
     FEditForm: TosCustomEditForm;
     FActionDblClick: TAction;
@@ -285,6 +286,7 @@ var
   vViews: variant;
 begin
   inherited;
+  FNewFilter := true;
   FActionDblClick := EditAction;
   FSelectedList := TStringListExt.Create;
   FCurrentResource := nil;
@@ -540,7 +542,8 @@ begin
   Screen.Cursor := crHourglass;
   try
     FilterDataset.Close;
-    ConsultaCombo.ExecuteFilter(False);
+    ConsultaCombo.ExecuteFilter(FNewFilter);
+    FNewFilter := false;
     FIDField := FilterDataset.Fields.FindField('ID');
     CheckMultiSelection;
   finally
@@ -716,6 +719,7 @@ procedure TosCustomMainForm.ResourceClick(Sender: TObject);
 var
   NewResource: TosAppResource;
 begin
+  FNewFilter := false;
   NewResource := TosAppResource(Manager.Resources.FindItemID(TOutlookButton(Sender).Tag));
   if FCurrentResource <> NewResource then
   begin

@@ -69,6 +69,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
 
   private
     FErrorBmp: TBitmap;
@@ -417,6 +419,13 @@ begin
   {$ENDIF}
 end;
 
+
+procedure TosErrorHandlerForm.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if ((ssAlt in Shift) and (Key = VK_F4)) then
+    Key := 0; 
+end;
 
 initialization
   HError := TosErrorHandlerForm.Create(Application);

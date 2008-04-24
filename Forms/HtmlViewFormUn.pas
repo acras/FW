@@ -33,14 +33,6 @@ type
     N6: TMenuItem;
     Undo1: TMenuItem;
     FileNew: TAction;
-    ControlBar: TControlBar;
-    MainToolbar: TToolBar;
-    OpenButton: TToolButton;
-    ToolButton11: TToolButton;
-    CutButton: TToolButton;
-    CopyButton: TToolButton;
-    ToolButton4: TToolButton;
-    FindButton: TToolButton;
     WebBrowser: TWebBrowser;
     procedure FileSaveAndExitExecute(Sender: TObject);
 

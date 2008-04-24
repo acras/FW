@@ -712,7 +712,6 @@ object SplashForm: TSplashForm
     Width = 320
     Height = 16
     Anchors = [akRight, akBottom]
-    Min = 0
     Max = 80
     TabOrder = 0
   end

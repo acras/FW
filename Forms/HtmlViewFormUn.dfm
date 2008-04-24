@@ -9,84 +9,15 @@ inherited HtmlViewForm: THtmlViewForm
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
-  object ControlBar: TControlBar [0]
+  object WebBrowser: TWebBrowser [0]
     Left = 0
     Top = 0
-    Width = 671
-    Height = 29
-    Align = alTop
-    AutoDrag = False
-    DragKind = dkDock
-    TabOrder = 0
-    object MainToolbar: TToolBar
-      Left = 11
-      Top = 2
-      Width = 118
-      Height = 22
-      AutoSize = True
-      EdgeBorders = []
-      EdgeInner = esNone
-      EdgeOuter = esNone
-      Flat = True
-      Images = ImageList
-      TabOrder = 0
-      object OpenButton: TToolButton
-        Left = 0
-        Top = 0
-        Action = FileOpen
-        ParentShowHint = False
-        ShowHint = True
-      end
-      object ToolButton11: TToolButton
-        Left = 23
-        Top = 0
-        Width = 8
-        Caption = 'ToolButton11'
-        ImageIndex = 1
-        Style = tbsSeparator
-      end
-      object CutButton: TToolButton
-        Left = 31
-        Top = 0
-        Hint = 'Cut|Cuts the selection and puts it on the Clipboard'
-        Caption = '&Recortar'
-        ImageIndex = 4
-        ParentShowHint = False
-        ShowHint = True
-      end
-      object CopyButton: TToolButton
-        Left = 54
-        Top = 0
-        Hint = 'Copy|Copies the selection and puts it on the Clipboard'
-        Caption = 'C&opiar'
-        ImageIndex = 3
-        ParentShowHint = False
-        ShowHint = True
-      end
-      object ToolButton4: TToolButton
-        Left = 77
-        Top = 0
-        Width = 8
-        Caption = 'ToolButton4'
-        ImageIndex = 9
-        Style = tbsSeparator
-      end
-      object FindButton: TToolButton
-        Left = 85
-        Top = 0
-        Action = SearchFind
-      end
-    end
-  end
-  object WebBrowser: TWebBrowser [1]
-    Left = 0
-    Top = 29
-    Width = 671
-    Height = 402
+    Width = 663
+    Height = 421
     Align = alClient
-    TabOrder = 1
+    TabOrder = 0
     ControlData = {
-      4C0000005A4500008C2900000000000000000000000000000000000000000000
+      4C00000086440000832B00000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126208000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000

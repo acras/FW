@@ -21,8 +21,7 @@ type
 
 implementation
 
-uses osLookupDataUn, AdministracaoLookupDataUn, RelatorioLookupDataUn,
-  EmpresaLookupDataUn, ProdutoLookupDataUn;
+uses osLookupDataUn, AdministracaoLookupDataUn, RelatorioLookupDataUn;
 
 {$R *.dfm}
 
@@ -34,8 +33,8 @@ var
   i : integer;
 begin
   dm[1] := AdministracaoLookupData;
-  dm[2] := EmpresaLookupData;
-  dm[3] := ProdutoLookupData;
+//  dm[2] := EmpresaLookupData;
+//  dm[3] := ProdutoLookupData;
 
   with TSplashForm.Create(Application) do
   begin

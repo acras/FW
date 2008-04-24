@@ -93,6 +93,8 @@ type
     procedure RefreshTable(PTableName: string);
     procedure RefreshTables(PTablesNames: array of string); overload;
     function GeTosSQLDataset: TosSQLDataset;
+
+    function getSQLResult(sqlText: string): variant;
   end;
 
 var
@@ -625,6 +627,23 @@ begin
       Close;
       Open;
     end;
+end;
+
+function TacCustomSQLMainData.getSQLResult(sqlText: string): variant;
+var
+  query: TosSQLQuery;
+begin
+  query := GetQuery;
+  try
+    query.SQL.Text := sqlText;
+    query.Open;
+    if query.Eof then
+      result := null
+    else
+      result := query.Fields[0].Value;
+  finally
+    FreeAndNil(query);
+  end;
 end;
 
 end.
