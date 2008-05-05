@@ -1599,6 +1599,7 @@ var
   NewResource: TosAppResource;
 begin
   inherited;
+  FNewFilter := true;
   //se o nó escolhido não contiver pai ele é referente a um domínio
   if node.Parent=nil then
     exit;

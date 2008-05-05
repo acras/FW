@@ -8,7 +8,7 @@ uses
   osCustomDataSetProvider, osSQLDataSetProvider, SqlExpr, osSQLDataSet,
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
-  daDataModule, daQueryDataView, TypInfo, ppChrtUI, Printers, PsRBRoutines,
+  daDataModule, daQueryDataView, TypInfo, Printers, PsRBRoutines,
   ppPDFDevice;
 
 type
