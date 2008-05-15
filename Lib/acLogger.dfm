@@ -2,8 +2,8 @@ object logger: Tlogger
   OldCreateOrder = False
   Left = 380
   Top = 288
-  Height = 150
-  Width = 215
+  Height = 175
+  Width = 249
   object MasterDataSet: TosSQLDataSet
     CommandText = 
       'SELECT'#13#10'  IDLog,'#9#13#10'  IDRegistro,'#13#10'  IDUsuario,'#13#10'  DataHora,'#13#10'  C' +

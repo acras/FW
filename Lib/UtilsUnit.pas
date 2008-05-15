@@ -6,7 +6,10 @@ interface
 
 uses
   IBServices, INIFiles, SysUtils, Forms, AbZipper, Windows, StrUtils, Controls,
-  osComboSearch, graphics;
+  osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb;
+
+type
+  varArrayOfcomps = array of TComponent;
 
 function isDigitOrControl(Key: char): boolean;
 function RemoveAcento(Str:String): String;
@@ -15,10 +18,16 @@ function getSombraValue(Str:String): String;
 function TiraSimbolos(Str: String): String;
 function LastDayOfMonth(dia: TDate = 0): TDate;
 procedure setHabilitaComboSearch(cbo: TosComboSearch; enabled: boolean);
+procedure setHabilitaComponente(comp: TComponent; enabled: boolean);
+procedure habilitaComponentes(comps: varArrayOfcomps);
+procedure desHabilitaComponentes(comps: array of TComponent);
+procedure setHabilitaDBEdit(edt: TDBEdit; enabled: boolean);
+procedure setHabilitawwComboBox(comboBox: TwwDBComboBox; enabled: boolean);
+procedure setHabilitawwDateTimePicker(dateTimePicker: TwwDBDateTimePicker; enabled: boolean);
 
 implementation
 
-uses DateUtils;
+uses DateUtils, Variants;
 
 
 function isDigitOrControl(Key: char): boolean;
@@ -159,6 +168,75 @@ begin
   cbo.invalidate;
 end;
 
+procedure setHabilitaDBEdit(edt: TDBEdit; enabled: boolean);
+begin
+  if enabled then
+  begin
+    edt.ReadOnly := false;
+    edt.color := clWhite;
+  end
+  else
+  begin
+    edt.ReadOnly := true;
+    edt.color := clBtnFace;
+  end;
+end;
+
+procedure setHabilitawwComboBox(comboBox: TwwDBComboBox; enabled: boolean);
+begin
+  if enabled then
+  begin
+    comboBox.ReadOnly := false;
+    comboBox.Color := clWhite;
+  end
+  else
+  begin
+    comboBox.ReadOnly := true;
+    comboBox.Color := clBtnFace;
+  end;
+end;
+
+procedure setHabilitawwDateTimePicker(dateTimePicker: TwwDBDateTimePicker; enabled: boolean);
+begin
+  if enabled then
+  begin
+    dateTimePicker.ReadOnly := false;
+    dateTimePicker.Color := clWhite;
+  end
+  else
+  begin
+    dateTimePicker.ReadOnly := true;
+    dateTimePicker.Color := clBtnFace;
+  end;
+end;
+
+procedure setHabilitaComponente(comp: TComponent; enabled: boolean);
+begin
+  if comp is TosComboSearch then
+    setHabilitaComboSearch((comp as TosComboSearch), enabled);
+  if comp is TDBEdit then
+    setHabilitaDBEdit((comp as TDBEdit), enabled);
+  if comp is TwwDBComboBox then
+    setHabilitawwComboBox((comp as TwwDBComboBox), enabled);
+  if comp is TwwDBDateTimePicker then
+    setHabilitawwDateTimePicker((comp as TwwDBDateTimePicker), enabled);
+end;
+
+procedure habilitaComponentes(comps: varArrayOfcomps);
+var
+  i: integer;
+begin
+  for i := low(comps) to high(comps) do
+    setHabilitaComponente(comps[i], true);
+end;
+
+procedure desHabilitaComponentes(comps: array of TComponent);
+var
+  i: integer;
+begin
+  for i := low(comps) to high(comps) do
+    setHabilitaComponente(comps[i], false);
+end;
 
 
 
