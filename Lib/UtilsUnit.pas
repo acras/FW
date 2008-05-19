@@ -6,7 +6,8 @@ interface
 
 uses
   IBServices, INIFiles, SysUtils, Forms, AbZipper, Windows, StrUtils, Controls,
-  osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb;
+  osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
+  Math;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -24,6 +25,7 @@ procedure desHabilitaComponentes(comps: array of TComponent);
 procedure setHabilitaDBEdit(edt: TDBEdit; enabled: boolean);
 procedure setHabilitawwComboBox(comboBox: TwwDBComboBox; enabled: boolean);
 procedure setHabilitawwDateTimePicker(dateTimePicker: TwwDBDateTimePicker; enabled: boolean);
+function roundToCurr(val: double): double;
 
 implementation
 
@@ -236,6 +238,11 @@ var
 begin
   for i := low(comps) to high(comps) do
     setHabilitaComponente(comps[i], false);
+end;
+
+function roundToCurr(val: double): double;
+begin
+  result := roundTo(val, -2);
 end;
 
 
