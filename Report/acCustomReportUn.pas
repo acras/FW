@@ -60,7 +60,6 @@ type
     procedure replaceReportSQLAddWhere(report: TppReport;
       template: TMemoryStream; id:integer);
     function replaceId(str: string; id: integer): string;
-    function replaceParamId(str: string; id: integer): string;
   protected
     beforePrint: TNotifyEvent;
     adendos: TAdendos;
@@ -68,6 +67,7 @@ type
     procedure linkEvents; virtual;
     function casosEspeciais(valorOriginal: string): string; virtual;
     procedure ajustarAdendos; virtual;
+    function replaceParamId(str: string; id: integer): string; virtual;
   public
     { Public declarations }
     procedure Print(const PID: integer); virtual;
