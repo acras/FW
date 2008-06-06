@@ -197,8 +197,6 @@ type
     FEditForm: TosCustomEditForm;
     FActionDblClick: TAction;
     FSelectedList: TStringListExt;
-    FCurrentEditForm: TosCustomEditForm;
-    FCurrentForm: TForm;
     FIDField: TField;
     FSelectionField: TField;
 
@@ -249,7 +247,9 @@ type
     function getSuperUserPass: string; virtual;
     function Login: boolean; dynamic;
   public
+    FCurrentEditForm: TosCustomEditForm;
     FCurrentDatamodule: TDatamodule;
+    FCurrentForm: TForm;
     property superUserName: string read FSuperUserName;
     property superUserLogged: boolean read FSuperUserLogged;
     constructor Create(AOwner: TComponent); override;
@@ -1184,6 +1184,8 @@ begin
 
   for i := 0 to OutlookBar.GetHeaderCount - 1 do
     OutlookBar.DeleteHeader(0);
+
+  TreeView1.Items.Clear;
 
   StatusBar.Panels[0].Text := '';
   StatusBar.Panels[1].Text := '';
