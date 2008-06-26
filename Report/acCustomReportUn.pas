@@ -9,7 +9,7 @@ uses
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
   daDataModule, daQueryDataView, TypInfo, Printers, PsRBRoutines,
-  ppPDFDevice;
+  ppPDFDevice, ppPrintr;
 
 type
   TTipoAdendo = (taWHERE, taORDER);
@@ -60,6 +60,7 @@ type
     procedure replaceReportSQLAddWhere(report: TppReport;
       template: TMemoryStream; id:integer);
     function replaceId(str: string; id: integer): string;
+    function getPaperName(printerName: String): String;
   protected
     beforePrint: TNotifyEvent;
     adendos: TAdendos;
@@ -193,7 +194,7 @@ begin
     Report.Units := utMillimeters;
     if (config.alturaPapel <> -1) OR (config.larguraPapel <> -1) then
     begin
-      report.PrinterSetup.PaperName := 'mycustom'+IntToStr(random(1000));
+      report.PrinterSetup.PaperName := getPaperName(config.nomeImpressora);
       if config.alturaPapel <> -1 then
         Report.PrinterSetup.PaperHeight := config.alturaPapel
       else
@@ -459,6 +460,18 @@ end;
 procedure TacCustomReport.ReportPreviewFormCreate(Sender: TObject);
 begin
   //
+end;
+
+function TacCustomReport.getPaperName(printerName: String): String;
+var lPrinter: TppPrinter;
+begin
+  lPrinter := TppPrinter.Create;
+  lPrinter.PrinterName := printerName;
+
+  Result := lPrinter.PrinterSetup.PaperName;
+
+  lPrinter.Free;
+
 end;
 
 end.
