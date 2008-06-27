@@ -192,9 +192,9 @@ begin
 
 
     Report.Units := utMillimeters;
+    report.PrinterSetup.PaperName := getPaperName(config.nomeImpressora);
     if (config.alturaPapel <> -1) OR (config.larguraPapel <> -1) then
     begin
-      report.PrinterSetup.PaperName := getPaperName(config.nomeImpressora);
       if config.alturaPapel <> -1 then
         Report.PrinterSetup.PaperHeight := config.alturaPapel
       else
