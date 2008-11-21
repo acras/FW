@@ -82,7 +82,7 @@ type
     procedure CheckMasterDataset;
     procedure Loaded; override;
     procedure ParseParams(PParams: TParams; const KeyFields: string; const KeyValues: Variant);
-    procedure CheckChanges;
+    procedure CheckChanges; virtual;
     procedure ChangeColor(PReadOnly: boolean);
     procedure ReconcileError(DataSet: TCustomClientDataSet; E: EReconcileError;
                              UpdateKind: TUpdateKind; var Action: TReconcileAction);
