@@ -624,8 +624,8 @@ end;
 
 destructor TosCustomMainForm.Destroy;
 begin
-  FSelectedList.Free;
-  FModifiedList.Free;
+  FreeAndNil(FSelectedList);
+  FreeAndNil(FModifiedList);
   inherited;
 end;
 

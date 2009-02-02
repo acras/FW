@@ -45,7 +45,7 @@ type
     SQLMonitor: TSQLMonitor;
     SQLConnectionMeta: TosSQLConnection;
     procedure DataModuleCreate(Sender: TObject);
-  private
+  protected
     BD: string;
     FQueryList: TObjectList;
     FIDHighValue: integer;
@@ -95,7 +95,8 @@ type
     procedure RefreshTables(PTablesNames: array of string); overload;
     function GeTosSQLDataset: TosSQLDataset;
 
-    function getSQLResult(sqlText: string): variant;
+    function getSQLResult(sqlText: string;
+      connection: TosSQLConnection = nil): variant;
   end;
 
 var
@@ -634,12 +635,15 @@ begin
     end;
 end;
 
-function TacCustomSQLMainData.getSQLResult(sqlText: string): variant;
+function TacCustomSQLMainData.getSQLResult(sqlText: string;
+  connection: TosSQLConnection = nil): variant;
 var
   query: TosSQLQuery;
 begin
   query := GetQuery;
   try
+    if connection <> nil then
+      query.SQLConnection := connection;
     query.SQL.Text := sqlText;
     query.Open;
     if query.Eof then

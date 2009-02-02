@@ -71,6 +71,7 @@ type
     function replaceParamId(str: string; id: integer): string; virtual;
   public
     { Public declarations }
+    forcePrintWithoutDialog: boolean;
     procedure Print(const PID: integer); virtual;
     function getPipeline(name: String): TppDataPipeline;
     function findComponentUserName(name: String): TComponent;
@@ -216,6 +217,13 @@ begin
     //restaurar as configurações antes de imprimir
     report.ShowCancelDialog := showCancelDialog;
 
+    if forcePrintWithoutDialog then
+    begin
+      report.ShowCancelDialog := false;;
+      report.ShowPrintDialog := false;
+      report.DeviceType := 'Printer';
+    end;
+
     // se é PDF exporta manualmente, senão usa o device
     if FDeviceType = 'Adobe Acrobat Document' then
       ExportToPDF(report, FTextFileName)
@@ -230,6 +238,7 @@ procedure TacCustomReport.DataModuleCreate(Sender: TObject);
 begin
   adendos := TAdendos.Create;
   FPrintToFile := False;
+  forcePrintWithoutDialog := false;
 end;
 
 function TacCustomReport.getPipeline(name: String): TppDataPipeline;
@@ -326,6 +335,8 @@ begin
 end;
 
 function TacCustomReport.replaceId(str: string; id:integer): string;
+var
+  pos1, pos2, pos3: integer;
 begin
   result := StringReplace(str,'\id',IntToStr(id),[rfReplaceAll, rfIgnoreCase]);
 end;
