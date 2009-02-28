@@ -15,7 +15,7 @@ uses
   SqlExpr, DBXpress, DBLocal, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
-  osSQLQuery, acFilterController, CommCtrl;
+  osSQLQuery, acFilterController, CommCtrl, clipbrd;
   //ppWWRichEd;
 
 type
@@ -202,6 +202,7 @@ type
     FSelectedList: TStringListExt;
     FIDField: TField;
     FSelectionField: TField;
+    lastValidSentence: string;
 
     // Field que está sendo usado para ordenação
     SortField: TField;
@@ -518,8 +519,12 @@ begin
 end;
 
 procedure TosCustomMainForm.FilterActionExecute(Sender: TObject);
+var
+  sent: string;
+  data: oleVariant;
 begin
   inherited;
+  data := FilterDataset.data;
   FModifiedList.Clear;
   if Assigned(FCurrentResource) then
   begin
@@ -529,7 +534,11 @@ begin
         ReplaceReportSQLPrint
       else
       begin
-        ConsultaCombo.ExecuteFilter;
+        sent := ConsultaCombo.ExecuteFilter;
+        if sent = '' then begin
+          FilterDataset.data := data;
+          ConsultaCombo.ConfigFields(ConsultaCombo.ItemIndex);
+        end;
       end;
 
       FIDField := FilterDataset.Fields.FindField('ID');
@@ -710,7 +719,10 @@ procedure TosCustomMainForm.FilterDatasetBeforeOpen(DataSet: TDataSet);
 begin
   inherited;
   if ShowQueryAction.Checked then
+  begin
     ShowMessage(FilterDataset.CommandText);
+    Clipboard.AsText := FilterDataset.CommandText;
+  end;
 end;
 
 procedure TosCustomMainForm.ShowQueryActionExecute(Sender: TObject);
@@ -1709,9 +1721,12 @@ var
   id: integer;
 begin
   inherited;
-  id := field.DataSet.fieldByName('id').AsInteger;
-  if FModifiedList.IndexOf(IntToStr(id)) <> -1  then
-    AFont.Style := [fsItalic, fsBold];
+  if field.DataSet.findField('id') <> nil then
+  begin
+    id := field.DataSet.fieldByName('id').AsInteger;
+    if FModifiedList.IndexOf(IntToStr(id)) <> -1  then
+      AFont.Style := [fsItalic, fsBold];
+  end;
 end;
 
 
