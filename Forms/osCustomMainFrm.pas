@@ -422,6 +422,8 @@ begin
 end;
 
 procedure TosCustomMainForm.FilterDatasetAfterOpen(DataSet: TDataSet);
+var
+  IndexOptions: TIndexOptions;
 begin
   inherited;
   OnCheckActionsAction.Execute;
@@ -432,15 +434,24 @@ begin
 
   // Define o field de ordenação. Como a primeira coluna é o field 'ID', deve-se
   // escolher a segunda coluna do dataset
-  SortField := FilterDataSet.Fields[1];
-  // Define a ordem (ascendente)
-  AscendingSort := True;
+  SortField := FilterDataset.FindField(ConsultaCombo.FOrderColumn);
+  if SortField = nil then
+    SortField := FilterDataSet.Fields[1];
+
+  AscendingSort := ConsultaCombo.FOrderType <> 'D';
+
+  if AscendingSort then
+    IndexOptions := [ixCaseInsensitive]
+  else
+    IndexOptions := [ixDescending, ixCaseInsensitive];
 
   // Cria um índice para o field e a ordem estabelecidos
   FilterDataSet.AddIndex(SortIndexName, SortField.FieldName,
-      [ixCaseInsensitive]);
+      IndexOptions);
   // Define o nome do índice a ser usado pelo dataset
   FilterDataset.IndexName := SortIndexName;
+
+  FilterDataset.First;
 
   // Redesenha o grid para que seja mostrada a seta na coluna apropriada
   Grid.RedrawGrid;
