@@ -424,6 +424,7 @@ end;
 procedure TosCustomMainForm.FilterDatasetAfterOpen(DataSet: TDataSet);
 var
   IndexOptions: TIndexOptions;
+  orderColumn: string;
 begin
   inherited;
   OnCheckActionsAction.Execute;
@@ -432,24 +433,25 @@ begin
   // a primeira é sempre o field 'ID'
   Assert(FilterDataset.Fields.Count > 1);
 
-  // Define o field de ordenação. Como a primeira coluna é o field 'ID', deve-se
-  // escolher a segunda coluna do dataset
-  SortField := FilterDataset.FindField(ConsultaCombo.FOrderColumn);
-  if SortField = nil then
-    SortField := FilterDataSet.Fields[1];
-
-  AscendingSort := ConsultaCombo.FOrderType <> 'D';
-
-  if AscendingSort then
-    IndexOptions := [ixCaseInsensitive]
+  orderColumn := trim(ConsultaCombo.FOrderColumn);
+  if Copy(orderColumn, 1, 1) = '#' then
+    SortField := FilterDataSet.Fields[strToInt(Copy(orderColumn, 2, 1))]
   else
-    IndexOptions := [ixDescending, ixCaseInsensitive];
+    SortField := FilterDataset.FindField(ConsultaCombo.FOrderColumn);
+  if SortField <> nil then
+  begin
+    AscendingSort := ConsultaCombo.FOrderType <> 'D';
+    if AscendingSort then
+      IndexOptions := [ixCaseInsensitive]
+    else
+      IndexOptions := [ixDescending, ixCaseInsensitive];
 
-  // Cria um índice para o field e a ordem estabelecidos
-  FilterDataSet.AddIndex(SortIndexName, SortField.FieldName,
-      IndexOptions);
-  // Define o nome do índice a ser usado pelo dataset
-  FilterDataset.IndexName := SortIndexName;
+    // Cria um índice para o field e a ordem estabelecidos
+    FilterDataSet.AddIndex(SortIndexName, SortField.FieldName,
+        IndexOptions);
+    // Define o nome do índice a ser usado pelo dataset
+    FilterDataset.IndexName := SortIndexName;
+  end;
 
   FilterDataset.First;
 
@@ -1321,6 +1323,7 @@ end;
 procedure TosCustomMainForm.GridKeyPress(Sender: TObject; var Key: Char);
 begin
   inherited;
+  if not Assigned(SortField) then exit;
   // O índice de ordenação é criado no evento AfterOpen do dataset e, por isso,
   // ele deve estar obrigatoriamente criado quando este método for executado e
   // o dataset estiver ativo
