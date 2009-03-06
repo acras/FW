@@ -1030,16 +1030,11 @@ begin
     Grid.RedrawGrid;
   end;
 
-  // Garante que exista um índice no dataset antes de tentar apagá-lo. Esta
-  // propriedade conta o número de fields que compõem o índice atual. Se existir
-  // um índice então ele será composto de pelo menos um field. E não é
-  // necessário procurar pelo nome, pois o único índice do dataset será sempre
-  // esse. (Na verdade, a pesquisa não foi feita pelo nome porque, no momento em
-  // que isso foi escrito, eu não sabia fazê-la)
-  Assert(FilterDataset.IndexFieldCount > 0);
+
 
   // Apaga o índice atual
-  FilterDataset.DeleteIndex(SortIndexName);
+  if FilterDataset.IndexFieldCount > 0 then
+    FilterDataset.DeleteIndex(SortIndexName);
 
   // Define as opções do índice para não-sensível à caixa e ordenação ascendente
   // ou descendente, de acordo com a seleção atual
