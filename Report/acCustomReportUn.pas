@@ -8,7 +8,7 @@ uses
   osCustomDataSetProvider, osSQLDataSetProvider, SqlExpr, osSQLDataSet,
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
-  daDataModule, daQueryDataView, TypInfo, Printers, PsRBRoutines,
+  daDataModule, daQueryDataView, TypInfo, Printers,
   ppPDFDevice, ppPrintr;
 
 type
@@ -24,6 +24,7 @@ type
     margemInferior: double;
     margemEsquerda: double;
     margemDireita: double;
+    tipoSaida: string;
   end;
 
   TAdendo = record
@@ -83,6 +84,11 @@ type
 var
   acCustomReport: TacCustomReport;
 
+const
+  TSTela = 'T';
+  TSPDF = 'P';
+  TSTexto = 'X';
+
 
 implementation
 
@@ -96,18 +102,8 @@ begin
 end;
 
 {-------------------------------------------------------------------------
- Objetivo   > Imprimir o relatório. Buscar o template, fazer os tratamentos
-                necessários e imprimir conforme as configurações da classe.
- Parâmetros > Conforme documentação
- Retorno    >
- Criação    >
- Observações> Documentação iniciada em 21/03/2006 por Ricardo N. Acras
- Atualização> *21.03.2006 - Ricardo N. Acras
-                Adicionado código para manter a configuração de
-                ShowCancelDialog pois quando um template é carregado esta
-                configuração é perdida. Deve valer sempre a config da classe
-                e não a do template.
- ------------------------------------------------------------------------}
+ESTE MÉTODO PRECISA URGENTE DE UMA REFACTORING TOTAL
+--------------------------------------------------------------------------}
 procedure TacCustomReport.Print(const PID: integer);
 var
   stream: TMemoryStream;
@@ -115,6 +111,7 @@ var
   encontrou: boolean;
   showCancelDialog: boolean;
   config: TConfigImpressao;
+  extensao: string;
 begin
   //armazenar configurações do report para restaurar depois
   showCancelDialog := report.ShowCancelDialog;
@@ -126,6 +123,7 @@ begin
   config.margemInferior := -1;
   config.margemEsquerda := -1;
   config.margemDireita := -1;
+  config.tipoSaida := TSTela;
   beforePrint := Report.BeforePrint;
   stream := TMemoryStream.Create;
   config.preview := true;
@@ -159,14 +157,31 @@ begin
       ajustarAdendos;
       replaceReportSQLAddWhere(report, stream, PID);
     end;
+
+    if config.tipoSaida <> TSTela then
+    begin
+      if config.tipoSaida = TSPDF then extensao := 'pdf';
+      if config.tipoSaida = TSTexto then extensao := 'txt';
+      if FTextFileName = '' then
+        if not PromptForFileName(FTextFileName, '*.' + extensao, extensao,
+          '', '', true) then
+          exit;
+
+      if config.tipoSaida = TSPDF then
+      begin
+        SetOutputFile(FTextFileName, rfAcrobat);
+        Report.PDFSettings.OpenPDFFile := true;
+        Report.PDFSettings.Author := 'LabMaster';
+        Report.PDFSettings.Title := classname;
+        report.ShowPrintDialog := false;
+      end;
+
+      if config.tipoSaida = TSTexto then
+        SetOutputFile(FTextFileName, rfText);
+    end;
+
     report.BeforePrint := beforePrint;
     linkEvents;
-
-
-{$IFDEF DESENV}
-//    preview := true;
-//comentado a pedido de maringá para que respeite a config
-{$ENDIF}
 
     if FPrintToFile then
     begin
@@ -184,13 +199,16 @@ begin
       report.ShowPrintDialog := false;
       report.DeviceType := 'Printer';
     end;
-    if config.nomeImpressora<>'' then
-      report.PrinterSetup.PrinterName := config.nomeImpressora;
-    if config.orientation = 1 then
-      report.PrinterSetup.Orientation := poPortrait;
-    if config.orientation = 2 then
-      report.PrinterSetup.Orientation := poLandscape;
 
+    if not FPrintToFile then
+    begin
+      if config.nomeImpressora<>'' then
+        report.PrinterSetup.PrinterName := config.nomeImpressora;
+      if config.orientation = 1 then
+        report.PrinterSetup.Orientation := poPortrait;
+      if config.orientation = 2 then
+        report.PrinterSetup.Orientation := poLandscape;
+    end;
 
     Report.Units := utMillimeters;
     report.PrinterSetup.PaperName := getPaperName(config.nomeImpressora);
@@ -224,10 +242,6 @@ begin
       report.DeviceType := 'Printer';
     end;
 
-    // se é PDF exporta manualmente, senão usa o device
-    if FDeviceType = 'Adobe Acrobat Document' then
-      ExportToPDF(report, FTextFileName)
-    else
       Report.Print;
   finally
     FreeAndNil(stream);
