@@ -168,13 +168,7 @@ begin
           exit;
 
       if config.tipoSaida = TSPDF then
-      begin
         SetOutputFile(FTextFileName, rfAcrobat);
-        Report.PDFSettings.OpenPDFFile := true;
-        Report.PDFSettings.Author := 'LabMaster';
-        Report.PDFSettings.Title := classname;
-        report.ShowPrintDialog := false;
-      end;
 
       if config.tipoSaida = TSTexto then
         SetOutputFile(FTextFileName, rfText);
@@ -424,7 +418,7 @@ begin
       rfPDF:
         DeviceType := dtPDF;
       rfAcrobat:
-        DeviceType := 'Adobe Acrobat Document';
+        DeviceType := 'PDF';
 
       rfArchive:
         begin
