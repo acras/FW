@@ -370,7 +370,6 @@ begin
     if Form.IsModified then
     begin
       FModifiedList.Add(FilterDatasource.DataSet.fieldByName('id').AsString);
-      FModifiedList.savetofile('c:\momo.cds');
       if false then //TODO: trocar pela lógica de forçar a reexecução de filtro
       begin
         ExecLastFilter;
