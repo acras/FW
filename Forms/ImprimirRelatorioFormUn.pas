@@ -67,7 +67,8 @@ var
   templateName, FilterName: string;
   srchForm: TCustomSearchForm;
   config: TConfigImpressao;
-  sql: string;
+  sql, extensao: string;
+  FTextFileName: string;
 begin
   config.orientation := -1;
   config.larguraPapel := -1;
@@ -76,6 +77,8 @@ begin
   config.margemInferior := -1;
   config.margemEsquerda := -1;
   config.margemDireita := -1;
+  config.tipoSaida := 'T';
+  FTextFileName := '';
   //buscar informações no catálogo de relatórios
   qry := MainData.GetQuery;
   try
@@ -89,7 +92,7 @@ begin
                     ' R.MargemDireita, ' +
                     ' R.AlturaPapel, ' +
                     ' R.LarguraPapel, ' +
-                    ' R.Orientation ' +
+                    ' R.Orientation, R.tipoSaida ' +
                     ' FROM Relatorio R ' +
                     ' LEFT JOIN XFilterDef F ' +
                     '   ON F.IDXFilterDef=R.IDXFilterDef ' +
@@ -114,6 +117,8 @@ begin
       config.margemEsquerda := qry.fieldByName('margemEsquerda').AsInteger;
     if not qry.fieldByName('margemDireita').IsNull then
       config.margemDireita := qry.fieldByName('margemDireita').AsInteger;
+    if not qry.fieldByName('tipoSaida').IsNull then
+      config.tipoSaida := qry.fieldByName('tipoSaida').AsString;
   finally
     MainData.FreeQuery(qry);
   end;
@@ -169,8 +174,26 @@ begin
     Report.PrinterSetup.MarginRight := config.margemDireita;
   if config.margemSuperior <> -1 then
     Report.PrinterSetup.MarginTop := config.margemSuperior;
- 
-//      ExportToPDF(report, 'c:\hosa.pdf');
+
+  if config.tipoSaida <> TSTela then
+  begin
+    if config.tipoSaida = TSPDF then extensao := 'pdf';
+    if config.tipoSaida = TSTexto then extensao := 'txt';
+    if FTextFileName = '' then
+      if not PromptForFileName(FTextFileName, '*.' + extensao, extensao,
+        '', '', true) then
+        exit;
+
+    report.AllowPrintToFile := True;
+    report.TextFileName := FTextFileName;
+    report.ShowPrintDialog := false;
+
+    if config.tipoSaida = TSPDF then
+      report.DeviceType := 'PDF';
+
+    if config.tipoSaida = TSTexto then
+      report.DeviceType := 'TextFile';
+  end;
 
   report.Print;
 

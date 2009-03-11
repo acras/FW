@@ -103,6 +103,8 @@ end;
 
 {-------------------------------------------------------------------------
 ESTE MÉTODO PRECISA URGENTE DE UMA REFACTORING TOTAL
+- para piorar esta lógica está duplicada em: TImprimirRelatorioForm.ImprimirRelatorioComFiltro
+    não é bem duplicada, mas com certeza podemos juntar boa parte da lógica
 --------------------------------------------------------------------------}
 procedure TacCustomReport.Print(const PID: integer);
 var
