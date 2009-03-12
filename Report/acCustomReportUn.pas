@@ -65,7 +65,8 @@ type
   protected
     beforePrint: TNotifyEvent;
     adendos: TAdendos;
-    function getTemplate(id: integer; stream: TMemoryStream): boolean; virtual;
+    function getTemplate(id: integer; stream: TMemoryStream;
+      var config: TConfigImpressao): boolean; virtual;
     procedure linkEvents; virtual;
     function casosEspeciais(valorOriginal: string): string; virtual;
     procedure ajustarAdendos; virtual;
@@ -146,7 +147,7 @@ begin
     //chance da classe buscar seu template
     if not(encontrou) then
     begin
-      encontrou := getTemplate(PID, stream);
+      encontrou := getTemplate(PID, stream, config);
     end;
     if not(encontrou) then
     begin
@@ -388,7 +389,8 @@ procedure TacCustomReport.ajustarAdendos;
 begin
 end;
 
-function TacCustomReport.getTemplate(id: integer; stream: TMemoryStream): boolean;
+function TacCustomReport.getTemplate(id: integer; stream: TMemoryStream;
+  var config: TConfigImpressao): boolean;
 begin
   result := false;
 end;
