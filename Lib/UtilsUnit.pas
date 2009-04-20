@@ -31,7 +31,7 @@ procedure setHabilitaDBCheckBox(edtd: TDBCheckBox; enabled: boolean);
 procedure setHabilitaDBMemo(comp: TDBMemo; enabled: boolean);
 procedure setHabilitawwDBGrid(grd: TwwDBGrid; enabled: boolean);
 procedure ListFileDir(Path: string; FileList: TStrings);
-
+function isNumeric(valor: string): boolean;
 
 implementation
 
@@ -327,7 +327,15 @@ begin
   result := roundTo(val, -2);
 end;
 
+function isNumeric(valor: string): boolean;
+var
+  decimal: char;
+begin
+  decimal := DecimalSeparator;
 
-
+  DecimalSeparator := ',';
+  Result := StrToFloatDef(valor, MaxExtended) <> MaxExtended;
+  DecimalSeparator := decimal;
+end;
 
 end.
