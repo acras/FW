@@ -32,6 +32,7 @@ procedure setHabilitaDBMemo(comp: TDBMemo; enabled: boolean);
 procedure setHabilitawwDBGrid(grd: TwwDBGrid; enabled: boolean);
 procedure ListFileDir(Path: string; FileList: TStrings);
 function isNumeric(valor: string): boolean;
+function isConvert(Str: string): boolean;
 
 implementation
 
@@ -337,5 +338,54 @@ begin
   Result := StrToFloatDef(valor, MaxExtended) <> MaxExtended;
   DecimalSeparator := decimal;
 end;
+
+function isConvert(Str: string): boolean;
+var
+  Qtd, i: Smallint;
+  StrAux: String;
+  Posicao: Array[1..50] of Integer;
+  existe, possui: Boolean;
+begin
+  for i := 1 to 50 do
+    Posicao[i] := 0;
+
+  Qtd := 0;
+  StrAux := Str;
+
+  // Qtde de ocorrências do caracter "."
+  while Pos('.', StrAux) > 0 do
+  begin
+    Inc(Qtd);
+    Posicao[Qtd] := Pos('.', StrAux);
+    StrAux[Pos('.', StrAux)] := '*';
+  end;
+
+  existe := false;
+  // Verifica se existe uma ocorrência após a outra Ex.: 1.000..000
+  if(Qtd > 1) then
+    for i := 1 to Qtd-1 do
+      if(Posicao[i]+1) = (Posicao[i+1]) then
+        existe := True;
+
+  possui := false;
+  // Verifica se a ocorrência está correta Ex.: 1.0000.000
+  if(Qtd > 1) then
+  begin
+    if(Posicao[1] > 4) then
+      possui := true;
+
+    if(Posicao[Qtd]+3) > Length(Str) then
+      possui := true;
+
+    for i := 1 to Qtd-1 do
+      if(Posicao[i]+4) <> (Posicao[i+1]) then
+        possui := true;
+  end
+  else if(Qtd = 1) and ((Posicao[1]+3) > Length(Str)) then
+    possui := true;
+
+  Result := not(existe) and  not(possui);
+end;
+
 
 end.
