@@ -7,7 +7,7 @@ interface
 uses
   IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
-  Math, JvToolEdit, Wwdbgrid;
+  Math, JvToolEdit, Wwdbgrid, RegExpr;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -31,7 +31,7 @@ procedure setHabilitaDBCheckBox(edtd: TDBCheckBox; enabled: boolean);
 procedure setHabilitaDBMemo(comp: TDBMemo; enabled: boolean);
 procedure setHabilitawwDBGrid(grd: TwwDBGrid; enabled: boolean);
 procedure ListFileDir(Path: string; FileList: TStrings);
-function isNumeric(valor: string): boolean;
+function isNumeric(valor: string; acceptThousandSeparator: Boolean = False): boolean;
 function isConvert(Str: string): boolean;
 
 implementation
@@ -328,15 +328,16 @@ begin
   result := roundTo(val, -2);
 end;
 
-function isNumeric(valor: string): boolean;
+function isNumeric(valor: string;
+  acceptThousandSeparator: Boolean = False): boolean;
 var
   decimal: char;
 begin
-  decimal := DecimalSeparator;
-
-  DecimalSeparator := ',';
-  Result := StrToFloatDef(valor, MaxExtended) <> MaxExtended;
-  DecimalSeparator := decimal;
+  valor := Trim(valor);
+  if acceptThousandSeparator then
+    Result := ExecRegExpr('^((\d{1,3}(\.\d{3})*)|(\d+))(,\d+)?$', valor)
+  else
+    Result := ExecRegExpr('^\d+(,\d+)?$', valor);
 end;
 
 function isConvert(Str: string): boolean;
