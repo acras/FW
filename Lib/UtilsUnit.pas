@@ -33,6 +33,7 @@ procedure setHabilitawwDBGrid(grd: TwwDBGrid; enabled: boolean);
 procedure ListFileDir(Path: string; FileList: TStrings);
 function isNumeric(valor: string; acceptThousandSeparator: Boolean = False): boolean;
 function isConvert(Str: string): boolean;
+function extractPhoneNumber(Str: String; defaultDDD: string = '041'): string;
 
 implementation
 
@@ -386,6 +387,25 @@ begin
     possui := true;
 
   Result := not(existe) and  not(possui);
+end;
+
+function extractPhoneNumber(Str: String; defaultDDD: string = '041'): string;
+var
+  i: integer;
+  res: string;
+begin
+  res := '';
+  for i := 1 to length(Str) do
+    if isNumeric(str[i]) then
+      res := res + str[i];
+  if Length(res) = 11 then
+    result := res
+  else if Length(res) = 8 then
+    result := defaultDDD + res
+  else if length(res) = 10 then
+    result := '0' + res
+  else
+    result := '00000000000';
 end;
 
 
