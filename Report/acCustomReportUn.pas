@@ -58,10 +58,17 @@ type
     FPrintToFile: boolean;
     FTextFileName: string;
     FDeviceType: string;
+
+    FForcePrintWithoutDialog: Boolean;
+    FForcePreview: Boolean;
+
     procedure replaceReportSQLAddWhere(report: TppReport;
       template: TMemoryStream; id:integer);
     function replaceId(str: string; id: integer): string;
     function getPaperName(printerName: String): String;
+
+    procedure setForcePrintWithoutDialog(Value: Boolean);
+    procedure setForcePreview(Value: Boolean);
   protected
     beforePrint: TNotifyEvent;
     adendos: TAdendos;
@@ -73,7 +80,9 @@ type
     function replaceParamId(str: string; id: integer): string; virtual;
   public
     { Public declarations }
-    forcePrintWithoutDialog: boolean;
+    property forcePrintWithoutDialog: Boolean read FForcePrintWithoutDialog
+      write setForcePrintWithoutDialog;
+    property forcePreview: Boolean read FForcePreview write setForcePreview;
     procedure Print(const PID: integer); virtual;
     function getPipeline(name: String): TppDataPipeline;
     function findComponentUserName(name: String): TComponent;
@@ -234,12 +243,19 @@ begin
 
     if forcePrintWithoutDialog then
     begin
-      report.ShowCancelDialog := false;;
+      report.ShowCancelDialog := false;
       report.ShowPrintDialog := false;
       report.DeviceType := 'Printer';
     end;
 
-      Report.Print;
+    if forcePreview then
+    begin
+      report.ShowCancelDialog := true;
+      report.ShowPrintDialog := true;
+      report.DeviceType := 'Screen';
+    end;
+
+    Report.Print;
   finally
     FreeAndNil(stream);
   end;
@@ -250,6 +266,7 @@ begin
   adendos := TAdendos.Create;
   FPrintToFile := False;
   forcePrintWithoutDialog := false;
+  forcePreview := false;
 end;
 
 function TacCustomReport.getPipeline(name: String): TppDataPipeline;
@@ -495,6 +512,20 @@ begin
 
   lPrinter.Free;
 
+end;
+
+procedure TacCustomReport.setForcePreview(Value: Boolean);
+begin
+  FForcePreview := Value;
+  if FForcePreview then
+    FForcePrintWithoutDialog := False;
+end;
+
+procedure TacCustomReport.setForcePrintWithoutDialog(Value: Boolean);
+begin
+  FForcePrintWithoutDialog := Value;
+  if FForcePrintWithoutDialog then
+    FForcePreview := False;
 end;
 
 end.
