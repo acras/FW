@@ -387,6 +387,8 @@ begin
     numMeses := numMeses + 12-mes+mesAtual;
   if mes<mesAtual then
     numMeses := numMeses + mesAtual-mes;
+  if mes=mesAtual then
+    numMeses:= 12;
 
   //corrigir o número de meses pois pode ainda não ter fechado o último
   if diaAtual<dia then
