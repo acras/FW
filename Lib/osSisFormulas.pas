@@ -330,7 +330,7 @@ begin
                                             'Erro de divisão por zero.', []);
     end;
 
-    Result := (FMaquina.nErros = 0);
+    Result := (FMaquina.nErros = 0) and (GetNumErros = 0);
   end;
 
 end;
