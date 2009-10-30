@@ -328,6 +328,9 @@ begin
       // Excecoes em operacoes matematicas
       on EZeroDivide do FListaErros.Add(epError, Ord(efDivisaoPorZero),
                                             'Erro de divisão por zero.', []);
+
+      on EInvalidOp do FListaErros.Add(epError, Ord(efProcessamento),
+                                            'Resultado indefinido.', []);
     end;
 
     Result := (FMaquina.nErros = 0) and (GetNumErros = 0);
