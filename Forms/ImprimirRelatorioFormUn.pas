@@ -8,7 +8,7 @@ uses
   Buttons, ExtCtrls, osUtils, DBClient, osClientDataset, StdCtrls, Mask,
   wwdbedit, Wwdotdot, Wwdbcomb, osComboFilter, osSQLQuery, ppReport,
   ppComm, ppRelatv, ppProd, ppClass, osCustomSearchFrm, ppMemo, TypInfo,
-  printers, ppTypes, PsRBExport_Main, PsRBExport_Excel, ppDB, psrbroutines;
+  printers, ppTypes, ppDB;
 
 type
   TImprimirRelatorioForm = class(TosCustomEditForm)

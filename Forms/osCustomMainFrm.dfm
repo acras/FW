@@ -1,6 +1,6 @@
 inherited osCustomMainForm: TosCustomMainForm
-  Left = 343
-  Top = 347
+  Left = 342
+  Top = 55
   Width = 1024
   Height = 683
   ActiveControl = ResourcePanel
@@ -1903,7 +1903,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 896
     Top = 112
-    Version = '10.07'
+    Version = '10.09'
     mmColumnWidth = 0
     DataPipelineName = 'ppDBPipeline'
     object ppHeaderBand: TppHeaderBand
@@ -2051,7 +2051,7 @@ inherited osCustomMainForm: TosCustomMainForm
     PrinterSetup.mmMarginTop = 6350
     PrinterSetup.mmPaperHeight = 279401
     PrinterSetup.mmPaperWidth = 215900
-    PrinterSetup.PaperSize = 1
+    PrinterSetup.PaperSize = 121
     Template.DatabaseSettings.DataPipeline = plItem
     Template.DatabaseSettings.NameField = 'Name'
     Template.DatabaseSettings.TemplateField = 'Template'
@@ -2068,7 +2068,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 353
     Top = 362
-    Version = '10.07'
+    Version = '10.09'
     mmColumnWidth = 0
     object ppHeaderBand1: TppHeaderBand
       mmBottomOffset = 0

@@ -124,6 +124,7 @@ var
   showCancelDialog: boolean;
   config: TConfigImpressao;
   extensao: string;
+  nomePapel: string;
 begin
   //armazenar configurações do report para restaurar depois
   showCancelDialog := report.ShowCancelDialog;
@@ -217,7 +218,12 @@ begin
     end;
 
     Report.Units := utMillimeters;
-    report.PrinterSetup.PaperName := getPaperName(config.nomeImpressora);
+    if config.nomeImpressora <> '' then
+    begin
+      nomePapel := getPaperName(config.nomeImpressora);
+      if nomePapel <> '' then
+        report.PrinterSetup.PaperName := nomePapel;
+    end;
     if (config.alturaPapel <> -1) OR (config.larguraPapel <> -1) then
     begin
       if config.alturaPapel <> -1 then

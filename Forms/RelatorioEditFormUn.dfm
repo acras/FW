@@ -568,7 +568,7 @@ inherited RelatorioEditForm: TRelatorioEditForm
     TextSearchSettings.Enabled = False
     Left = 356
     Top = 68
-    Version = '10.07'
+    Version = '10.09'
     mmColumnWidth = 0
   end
   object FilterDataset: TosClientDataset
@@ -584,27 +584,5 @@ inherited RelatorioEditForm: TRelatorioEditForm
     DataSet = FilterDataset
     Left = 116
     Top = 152
-  end
-  object PsRBExportHTML1: TPsRBExportHTML
-    Creator = 'ReportBuilder'
-    DefaultFont.Charset = DEFAULT_CHARSET
-    DefaultFont.Color = clWindowText
-    DefaultFont.Height = -13
-    DefaultFont.Name = 'Arial'
-    DefaultFont.Style = []
-    DocumentPreferences.AutoMaximizeWindow = False
-    DocumentPreferences.DisableRightClick = False
-    DocumentPreferences.DisableCopying = False
-    LinkFont.Charset = DEFAULT_CHARSET
-    LinkFont.Color = clBlue
-    LinkFont.Height = -24
-    LinkFont.Name = 'Wingdings'
-    LinkFont.Style = []
-    LinkTextFirst = #217
-    LinkTextNext = #216
-    LinkTextPrev = #215
-    LinkTextLast = #218
-    Left = 376
-    Top = 40
   end
 end

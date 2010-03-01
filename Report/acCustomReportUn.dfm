@@ -46,7 +46,7 @@ object acCustomReport: TacCustomReport
     TextSearchSettings.Enabled = False
     Left = 128
     Top = 96
-    Version = '10.07'
+    Version = '10.09'
     mmColumnWidth = 188914
     object Detail: TppDetailBand
       PrintHeight = phDynamic
