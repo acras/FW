@@ -1641,7 +1641,10 @@ begin
   FNewFilter := true;
   //se o nó escolhido não contiver pai ele é referente a um domínio
   if node.Parent=nil then
+  begin
+    ShowHomePage(true, False);
     exit;
+  end;
 
   NewResource := TosAppResource(Manager.Resources.FindItemID(node.SelectedIndex));
   if FCurrentResource <> NewResource then
