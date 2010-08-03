@@ -235,8 +235,6 @@ type
     procedure LoadOutlookBar;
     procedure checkOperations;
 
-    procedure ControlActions(enabled: boolean);
-
     procedure adjustReportZoom;
     procedure SetNodeState(node: TTreeNode; Flags: Integer);
   protected
@@ -247,6 +245,7 @@ type
     procedure ResourceClick( Sender: TObject );
     procedure replaceReportSQLPrint;
     procedure CheckMultiSelection;
+    procedure ControlActions(enabled: boolean);    
     procedure ShowHomePage(freeRes: boolean; goHome: boolean = true);  dynamic;
     procedure HideHomePage(tipo: TTipoExibicao);
     function getSuperUserPass: string; virtual;
