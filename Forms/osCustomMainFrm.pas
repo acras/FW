@@ -546,7 +546,8 @@ begin
       else
       begin
         sent := ConsultaCombo.ExecuteFilter;
-        if sent = '' then begin
+        if sent = '' then
+        begin
           FilterDataset.data := data;
           ConsultaCombo.ConfigFields(ConsultaCombo.ItemIndex);
         end;
@@ -881,6 +882,7 @@ begin
 
   if Trim(FCurrentResource.FilterDefName) <> '' then
   begin
+    FilterDataset.Close;
     with ConsultaCombo do
     begin
       ClearViews;
