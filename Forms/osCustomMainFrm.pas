@@ -1233,7 +1233,7 @@ begin
 
   OnCheckActionsAction.Execute;
 
-  ShowHomePage(true);
+  ShowHomePage(true, false);
 end;
 
 procedure TosCustomMainForm.LoginActionExecute(Sender: TObject);
