@@ -3,7 +3,7 @@ unit osReportUtils;
 
 interface
 
-uses Classes, SQLMainData, osSQLDataSet, SysUtils, DB, ppReport, daDataModule,
+uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDataModule,
   daQueryDataView, ppTypes,daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, FMTBcd, osCustomDataSetProvider, SqlExpr,
   osSQLDataSetProvider, daSQl, osSQLQuery, osComboFilter, ppDBPipe, osClientDataSet;
@@ -44,7 +44,7 @@ uses Classes, SQLMainData, osSQLDataSet, SysUtils, DB, ppReport, daDataModule,
 
 implementation
 
-uses daDataView, ppClass, AppConstants, DateUtils, Dialogs; // RelatorioEditFormUn
+uses daDataView, ppClass, FwConstants, DateUtils, Dialogs; // RelatorioEditFormUn
 
 
 
@@ -56,7 +56,7 @@ begin
   result := false;
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnectionMeta;
+    query.SQLConnection := acCustomSQLMainData.SQLConnectionMeta;
     query.CommandText := 'SELECT ' +
                          '  template '+
                          'FROM ' +
@@ -81,7 +81,7 @@ begin
   name := UpperCase(Name);
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnection;
+    query.SQLConnection := acCustomSQLMainData.SQLConnection;
     query.CommandText := 'SELECT ' +
                          '  ITEM_ID '+
                          'FROM ' +
@@ -105,7 +105,7 @@ begin
   result := false;
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnection;
+    query.SQLConnection := acCustomSQLMainData.SQLConnection;
     query.CommandText := 'SELECT ' +
                          '  template '+
                          'FROM ' +
@@ -345,7 +345,7 @@ end;
 constructor TIdade.Create(dias: integer);
 begin
   Fdias := dias;
-  dataReferencia := MainData.GetServerDate;
+  dataReferencia := acCustomSQLMainData.GetServerDate;
 end;
 
 function TIdade.getAnos: integer;

@@ -16,7 +16,6 @@ object logger: Tlogger
         Name = 'ID'
         ParamType = ptInput
       end>
-    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 24
     object MasterDataSetIDLOG: TIntegerField

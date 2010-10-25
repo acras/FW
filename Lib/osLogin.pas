@@ -3,7 +3,7 @@ unit osLogin;
 interface
 
 uses
-  Windows, SysUtils, osSQLDataSet, SQLMainData, Controls, Dialogs;
+  Windows, SysUtils, osSQLDataSet, acCustomSQLMainDataUn, Controls, Dialogs;
 
 type
   TLoginUsuario = class
@@ -47,9 +47,9 @@ var
 begin
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnection;
+    query.SQLConnection := acCustomSQLMainData.SQLConnection;
     query.commandText := 'SELECT IDUsuario, Apelido, Nome, Status FROM Usuario ' +
-                         ' where UPPER(Apelido)= ' + QuotedStr(UpperCase(MainData.ApelidoUsuario));
+                         ' where UPPER(Apelido)= ' + QuotedStr(UpperCase(acCustomSQLMainData.ApelidoUsuario));
     query.Open;
     FIDUsuario := query.fieldByName('IDUsuario').AsInteger;
     FNome      := query.fieldByName('Nome').AsString;
@@ -85,7 +85,7 @@ var
 begin
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnection;
+    query.SQLConnection := acCustomSQLMainData.SQLConnection;
     query.CommandText := 'SELECT                                        ' +
                          ' Apelido '+
                          '   FROM                                       ' +
@@ -142,7 +142,7 @@ begin
     while (not LoginCorrect) and (ErrorCount < MaxErrorCount)
         and (mrCancel <> LoginForm.ShowModal) do
     begin
-      query.SQLConnection := MainData.SQLConnection;
+      query.SQLConnection := acCustomSQLMainData.SQLConnection;
       query.CommandText := 'SELECT idusuario, apelido, nome, senha, status FROM USUARIO' +
                            ' WHERE apelido=' + quotedStr(LoginForm.UsernameEdit.Text);
       query.Open;

@@ -2,13 +2,8 @@ unit acLogger;
 
 interface
 
-uses
-  SysUtils, Classes, FMTBcd, Provider, osCustomDataSetProvider,
-  osSQLDataSetProvider, DB, SqlExpr, osSQLDataSet, DBClient,
-  osClientDataset;
-
 type
-  Tlogger = class(TDataModule)
+  Taclogger = class(TDataModule)
     MasterDataSet: TosSQLDataSet;
     MasterProvider: TosSQLDataSetProvider;
     MasterDataSetIDLOG: TIntegerField;
@@ -44,7 +39,7 @@ var
 implementation
 
 
-uses LogCodes, SQLMainData, acCustomSQLMainDataUn, UsuarioDataUn, osLogin,
+uses SQLMainData, acCustomSQLMainDataUn, UsuarioDataUn, osLogin,
   Math, Variants;
 
 {$R *.dfm}
@@ -55,30 +50,30 @@ function Tlogger.getLogClassList: TStrings;
 var
   i: integer;
 begin
-  result := TStringList.Create;
+{  result := TStringList.Create;
   for i := 1 to MAX_CODE do
   begin
     if (logTitulosClasses[i] <> '') then
       result.Add(logTitulosClasses[i] + #9 + inttostr(i))
-  end;
+  end; }
 end;
 
 function Tlogger.getLogTiposList(log_class: integer): TStrings;
 var
   i: integer;
 begin
-  result := TStringList.Create;
+ { result := TStringList.Create;
   for i := 1 to MAX_CODE do
   begin
     if (logTitulosTipos[log_class][i] <> '') then
       result.Add(logTitulosTipos[log_class][i] + #9 + inttostr(i))
-  end;
+  end;}
 end;
 
 procedure Tlogger.registerLog(log_class, log_code: integer; idRegistro: integer = 0;
   description: string = '');
 begin
-  cdsLogger.close;
+{  cdsLogger.close;
   cdsLogger.Open;
   cdsLogger.Append;
   cdsLoggerIDLOG.Value := MainData.GetNewID('idLog');
@@ -97,14 +92,14 @@ begin
 
   cdsLogger.Post;
   cdsLogger.ApplyUpdates(0);
-end;
+}end;
 
 procedure Tlogger.registerLogForFieldChange(log_class, log_code: integer;
   field: TField; idRegistro: integer = 0);
 begin
-  if (field.OldValue<>field.NewValue) AND (field.NewValue<>Unassigned) then
+{  if (field.OldValue<>field.NewValue) AND (field.NewValue<>Unassigned) then
     logger.registerLog(log_class, log_code, idRegistro,
        'Valor Antigo: ' + VarToStr(field.OldValue) + ', valor novo: ' + VarToStr(field.NewValue));
-end;
+}end;
 
 end.
