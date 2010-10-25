@@ -1,0 +1,95 @@
+package fw;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+
+requires
+  repositorio_acras,
+  osControls,
+  vclie,
+  JvCoreD7R,
+  Jcl,
+  rbRCL107,
+  JvStdCtrlsD7R,
+  ibxpress,
+  B305_r70,
+  dbdltree,
+  mxOutlookBar_D7,
+  rbDB107,
+  rbDAD107,
+  rbIDE107,
+  adortl,
+  rbDBE107,
+  rbCIDE107,
+  rbCT107,
+  rbRIDE107,
+  rbRAP107,
+  tee,
+  rbTC107,
+  rbDIDE107,
+  rbUSER107,
+  rtl;
+
+contains
+  osFrm in '..\Forms\osFrm.pas' {osForm},
+  osCalculaFormulas in '..\Lib\osCalculaFormulas.pas',
+  osCIC in '..\Lib\osCIC.pas',
+  osCipher in '..\Lib\osCipher.pas',
+  osErrorHandler in '..\Lib\osErrorHandler.pas' {osErrorHandlerForm},
+  osExtenso in '..\Lib\osExtenso.pas',
+  osFuncoesParser in '..\Lib\osFuncoesParser.pas',
+  osGrafo in '..\Lib\osGrafo.pas',
+  osLex in '..\Lib\osLex.pas',
+  osMaquina in '..\Lib\osMaquina.pas',
+  osMD5 in '..\Lib\osMD5.pas',
+  osParser in '..\Lib\osParser.pas',
+  osParserErrorHand in '..\Lib\osParserErrorHand.pas',
+  osShellAPI in '..\Lib\osShellAPI.pas',
+  osUrl in '..\Lib\osUrl.pas',
+  osLookupDataUn in '..\Datamodules\osLookupDataUn.pas' {osLookupData: TDataModule},
+  acCustomSQLMainDataUn in '..\Datamodules\acCustomSQLMainDataUn.pas' {acCustomSQLMainData: TDataModule},
+  osCustomEditFrm in '..\Forms\osCustomEditFrm.pas' {osCustomEditForm},
+  osWizFrm in '..\Forms\osWizFrm.pas' {osWizForm},
+  osCustomMainFrm in '..\Forms\osCustomMainFrm.pas' {osCustomMainForm},
+  FilterDefDataUn in '..\Datamodules\FilterDefDataUn.pas' {FilterDefData: TDataModule},
+  acCustomParametroSistemaDataUn in '..\Datamodules\acCustomParametroSistemaDataUn.pas' {acCustomParametroSistemaData: TDataModule},
+  acCustomRelatorioDataUn in '..\Datamodules\acCustomRelatorioDataUn.pas' {acCustomRelatorioData: TDataModule},
+  osReportUtils in '..\lib\osReportUtils.pas',
+  FilterDefEditFormUn in '..\Forms\FilterDefEditFormUn.pas' {FilterDefEditForm},
+  osLogin in '..\Lib\osLogin.pas',
+  AdministracaoLookupDataUn in '..\Datamodules\AdministracaoLookupDataUn.pas' {AdministracaoLookupData: TDataModule},
+  RecursoDataUn in '..\Datamodules\RecursoDataUn.pas' {RecursoData: TDataModule},
+  RelatorioLookupDataUn in '..\Datamodules\RelatorioLookupDataUn.pas' {RelatorioLookupData: TDataModule},
+  EscolhaConexaoFormUn in '..\Forms\EscolhaConexaoFormUn.pas' {EscolhaConexaoForm},
+  TradutorFormUn in '..\Forms\TradutorFormUn.pas' {TradutorForm},
+  ImprimirRelatorioFormUn in '..\Forms\ImprimirRelatorioFormUn.pas' {ImprimirRelatorioForm},
+  acCustomReportUn in '..\Report\acCustomReportUn.pas' {acCustomReport: TDataModule},
+  FwConstants in '..\Datamodules\FwConstants.pas',
+  LoginFormUn in '..\Forms\LoginFormUn.pas' {LoginForm},
+  UtilsUnit in '..\Lib\UtilsUnit.pas',
+  ShowEventoLogFormUn in '..\Forms\ShowEventoLogFormUn.pas' {ShowEventoLogForm},
+  acRAP in '..\..\ReportGen\acRAP.pas',
+  RegExpr in '..\..\repositorio\RegExpr.pas';
+
+end.
