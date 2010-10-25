@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, osFrm, StdCtrls, Menus, ImgList, ActnList, osActionList,
   ComCtrls, ExtCtrls, acCollapsePanel, Wwdbcomb, Mask, wwdbedit, Wwdotdot,
-  osComboSearch, osUtils, Grids, Wwdbigrd, Wwdbgrid, MPeriodo, acLogger,
+  osComboSearch, osUtils, Grids, Wwdbigrd, Wwdbgrid, MPeriodo,
   DB, DBClient, osClientDataset;
 
 type

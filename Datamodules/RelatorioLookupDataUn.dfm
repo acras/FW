@@ -1,8 +1,9 @@
 inherited RelatorioLookupData: TRelatorioLookupData
   OldCreateOrder = True
-  Left = 356
-  Top = 152
-  Height = 301
+  OnCreate = DataModuleCreate
+  Left = 62
+  Top = 195
+  Height = 324
   Width = 486
   object TipoRelatorioClientDataSet: TosClientDataset
     Aggregates = <>
@@ -26,7 +27,7 @@ inherited RelatorioLookupData: TRelatorioLookupData
       ' BY'#13#10'  Nome'#13#10
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 40
   end
@@ -83,7 +84,7 @@ inherited RelatorioLookupData: TRelatorioLookupData
         Name = 'ITEM_ID'
         ParamType = ptInput
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 108
     object TemplateLookupDataSetNOME: TStringField
@@ -148,7 +149,7 @@ inherited RelatorioLookupData: TRelatorioLookupData
         Name = 'IDXFILTERDEF'
         ParamType = ptInput
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 172
     object FilterDefLookupDataSetNAME: TStringField
@@ -165,5 +166,37 @@ inherited RelatorioLookupData: TRelatorioLookupData
     Options = [poIncFieldProps, poNoReset]
     Left = 228
     Top = 172
+  end
+  object RelatorioClientDataset: TosClientDataset
+    Aggregates = <>
+    FetchOnDemand = False
+    Params = <>
+    DataProvider = RelatorioDataSetProvider
+    Left = 380
+    Top = 232
+    object RelatorioClientDatasetIDRELATORIO: TIntegerField
+      FieldName = 'IDRELATORIO'
+      Required = True
+    end
+    object RelatorioClientDatasetTITULO: TStringField
+      FieldName = 'TITULO'
+      Size = 50
+    end
+  end
+  object RelatorioDataSet: TosSQLDataSet
+    CommandText = 
+      'SELECT'#13#10'  IDRelatorio,'#13#10'  Titulo'#13#10'FROM'#13#10'  Relatorio'#13#10'ORDER BY'#13#10' ' +
+      ' Titulo'#13#10
+    MaxBlobSize = 32
+    Params = <>
+    SQLConnection = acCustomSQLMainData.SQLConnection
+    Left = 68
+    Top = 232
+  end
+  object RelatorioDataSetProvider: TosSQLDataSetProvider
+    DataSet = RelatorioDataSet
+    Options = [poNoReset]
+    Left = 228
+    Top = 232
   end
 end

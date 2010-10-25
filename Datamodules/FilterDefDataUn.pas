@@ -24,7 +24,7 @@ var
 
 implementation
 
-uses SQLMainData;
+uses acCustomSQLMainDataUn;
 
 {$R *.DFM}
 

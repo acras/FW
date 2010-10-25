@@ -12,7 +12,7 @@ uses
   ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, ppBands, ppCache, ppVar, ppCtrls,
   ppProd, ppPrnabl, osActionList, osClientDataset, osMD5,
   osUtils, OleCtrls, SHDocVw, ppTmplat, osSQLDataSet, dbTables,
-  SqlExpr, DBXpress, DBLocal, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
+  SqlExpr, DBXpress, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
   osSQLQuery, acFilterController, CommCtrl, clipbrd;
@@ -245,11 +245,12 @@ type
     procedure ResourceClick( Sender: TObject );
     procedure replaceReportSQLPrint;
     procedure CheckMultiSelection;
-    procedure ControlActions(enabled: boolean);    
+    procedure ControlActions(enabled: boolean);
     procedure ShowHomePage(freeRes: boolean; goHome: boolean = true);  dynamic;
     procedure HideHomePage(tipo: TTipoExibicao);
     function getSuperUserPass: string; virtual;
     function Login: boolean; dynamic;
+    procedure execSplash; virtual; abstract;
   public
     FCurrentEditForm: TosCustomEditForm;
     FCurrentDatamodule: TDatamodule;
@@ -273,7 +274,7 @@ var
 
 implementation
 
-uses SQLMainData, FilterDefEditFormUn, RecursoDataUn, LoginFormUn, SplashFormUn,
+uses acCustomSQLMainDataUn, FilterDefEditFormUn, RecursoDataUn, LoginFormUn,
   osReportUtils, UtilsUnit, Types;
 
 {$R *.DFM}
@@ -300,7 +301,7 @@ begin
   if Login then
   begin
     LoginAction.Caption := 'Alterar usuário';
-    TSplashForm.Execute
+    execSplash;
   end
   else
   begin
@@ -333,10 +334,10 @@ begin
 
   //TTMCI
   //para buscar os metadados dos filtros usar o SQLConnection de metadados
-  MainData.FilterQuery.SQLConnection := MainData.SQLConnectionMeta;
-  qry := MainData.GetQuery;
+  acCustomSQLMainData.FilterQuery.SQLConnection := acCustomSQLMainData.SQLConnectionMeta;
+  qry := acCustomSQLMainData.GetQuery;
   try
-    qry.SQLConnection := MainData.SQLConnectionMeta;
+    qry.SQLConnection := acCustomSQLMainData.SQLConnectionMeta;
     qry.SQL.Text := 'SELECT NAME FROM XFILTERDEF';
     qry.Open;
     qry.First;
@@ -348,7 +349,7 @@ begin
     //end;
   finally
     FreeAndNil(qry);
-    MainData.FilterQuery.SQLConnection := MainData.SQLConnection;
+    acCustomSQLMainData.FilterQuery.SQLConnection := acCustomSQLMainData.SQLConnection;
   end;
 end;
 
@@ -1155,7 +1156,7 @@ begin
 
       FUsername := LoginForm.UsernameEdit.Text;
 
-      MainData.GetUserInfo(FUserName);
+      acCustomSQLMainData.GetUserInfo(FUserName);
 
       StatusBar.Panels[1].Text := FUsername;
       cds.Params.Clear;
@@ -1629,7 +1630,7 @@ begin
   inherited;
   FSuperUserName := 'FWSuperUser';
 
-  StatusBar.Panels[2].Text := MainData.Profile;
+  StatusBar.Panels[2].Text := acCustomSQLMainData.Profile;
 end;
 
 

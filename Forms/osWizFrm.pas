@@ -62,7 +62,7 @@ const
 
 implementation
 
-uses SQLMainData;
+uses acCustomSQLMainDataUn;
 
 {$R *.DFM}
 
@@ -227,7 +227,7 @@ var
   sAux: string;
 begin
   if PTime then
-    sAux := FormatDateTime('hh:nn:ss', MainData.GetServerDatetime) + ' - '
+    sAux := FormatDateTime('hh:nn:ss', acCustomSQLMainData.GetServerDatetime) + ' - '
   else
     sAux := '';
   lbLog.Items.Add(sAux + Format(PMessage, Args));

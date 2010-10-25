@@ -1,13 +1,13 @@
 inherited RecursoEditForm: TRecursoEditForm
-  Left = 375
-  Top = 177
+  Left = 448
+  Top = 172
   VertScrollBar.Range = 0
   ActiveControl = DescricaoDominioCombo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   BorderWidth = 4
   Caption = 'Cadastro de Recursos'
-  ClientHeight = 397
+  ClientHeight = 443
   ClientWidth = 478
   PixelsPerInch = 96
   TextHeight = 13
@@ -16,14 +16,15 @@ inherited RecursoEditForm: TRecursoEditForm
     Top = 62
     Width = 24
     Height = 13
-    Caption = '&Tipo:'
+    Caption = 'Ti&po:'
+    FocusControl = DescricaoTipoRecursoCombo
   end
   object Label2: TLabel [1]
     Left = 8
-    Top = 110
+    Top = 142
     Width = 51
     Height = 13
-    Caption = '&Descri'#231#227'o:'
+    Caption = 'Des&cri'#231#227'o:'
     FocusControl = DescricaoEdit
   end
   object Label3: TLabel [2]
@@ -71,7 +72,7 @@ inherited RecursoEditForm: TRecursoEditForm
   end
   object DescricaoEdit: TDBMemo [8]
     Left = 8
-    Top = 128
+    Top = 160
     Width = 461
     Height = 45
     DataField = 'DESCRICAO'
@@ -115,19 +116,19 @@ inherited RecursoEditForm: TRecursoEditForm
   end
   object PageControl: TPageControl [11]
     Left = 8
-    Top = 180
+    Top = 212
     Width = 461
     Height = 209
     ActivePage = ClassesTabSheet
     TabOrder = 7
     object ClassesTabSheet: TTabSheet
-      Caption = '&Classes'
+      Caption = '&1 Classes'
       object Label5: TLabel
         Left = 4
         Top = 8
         Width = 129
         Height = 13
-        Caption = 'Nome da defini'#231#227'o de &Filtro'
+        Caption = 'No&me da defini'#231#227'o de Filtro'
         FocusControl = FilterDefNameEdit
       end
       object Label6: TLabel
@@ -135,7 +136,7 @@ inherited RecursoEditForm: TRecursoEditForm
         Top = 48
         Width = 125
         Height = 13
-        Caption = 'Nome da classe de &Dados'
+        Caption = 'Nome da c&lasse de Dados'
         FocusControl = DataClassNameEdit
       end
       object Label7: TLabel
@@ -151,13 +152,13 @@ inherited RecursoEditForm: TRecursoEditForm
         Top = 128
         Width = 136
         Height = 13
-        Caption = 'Nome da classe do Relat'#243'rio'
+        Caption = 'Nome da classe do Rela&t'#243'rio'
         FocusControl = ReportClassNameEdit
       end
       object FilterDefNameEdit: TDBEdit
         Left = 4
         Top = 22
-        Width = 440
+        Width = 205
         Height = 21
         DataField = 'FILTERDEFNAME'
         DataSource = MasterDataSource
@@ -190,9 +191,21 @@ inherited RecursoEditForm: TRecursoEditForm
         DataSource = MasterDataSource
         TabOrder = 3
       end
+      object DBCheckBox1: TDBCheckBox
+        Left = 216
+        Top = 24
+        Width = 225
+        Height = 17
+        Caption = 'For'#231'ar execu'#231#227'o ap'#243's registro modificado'
+        DataField = 'FORCAREEXECUCAOFILTRO'
+        DataSource = MasterDataSource
+        TabOrder = 4
+        ValueChecked = 'S'
+        ValueUnchecked = 'N'
+      end
     end
     object AcoesTabSheet: TTabSheet
-      Caption = '&A'#231#245'es'
+      Caption = '&2 A'#231#245'es'
       ImageIndex = 1
       object AcaoGrid: TwwDBGrid
         Left = 0
@@ -232,7 +245,6 @@ inherited RecursoEditForm: TRecursoEditForm
     Increment = 1.000000000000000000
     MaxValue = 1000.000000000000000000
     MinValue = 1.000000000000000000
-    Value = 1.000000000000000000
     DataField = 'NUMORDEM'
     DataSource = MasterDataSource
     TabOrder = 5
@@ -247,6 +259,18 @@ inherited RecursoEditForm: TRecursoEditForm
     DataSource = MasterDataSource
     TabOrder = 3
   end
+  object DBCheckBox2: TDBCheckBox [14]
+    Left = 59
+    Top = 114
+    Width = 190
+    Height = 17
+    Caption = 'Habilita '#39'Editar Todos'#39
+    DataField = 'HABILITAEDITARTODOS'
+    DataSource = MasterDataSource
+    TabOrder = 8
+    ValueChecked = 'S'
+    ValueUnchecked = 'N'
+  end
   inherited ActionList: TosActionList
     Left = 272
     object TestarAction: TAction
@@ -255,7 +279,7 @@ inherited RecursoEditForm: TRecursoEditForm
   end
   inherited MasterDataSource: TDataSource
     DataSet = RecursoClientDataSource
-    Left = 308
+    Left = 332
   end
   inherited ImageList: TImageList
     Left = 244
@@ -309,18 +333,10 @@ inherited RecursoEditForm: TRecursoEditForm
       Size = 40
     end
     object RecursoClientDataSourceINDICEIMAGEM: TIntegerField
-      DisplayLabel = 'Imagem:'
       FieldName = 'INDICEIMAGEM'
     end
     object RecursoClientDataSourceNUMORDEM: TIntegerField
-      DisplayLabel = 'Ordem'
       FieldName = 'NUMORDEM'
-    end
-    object RecursoClientDataSourceCONTEUDO: TBlobField
-      DisplayLabel = 'Conte'#250'do'
-      FieldName = 'CONTEUDO'
-      ProviderFlags = [pfInUpdate]
-      Size = 1
     end
     object RecursoClientDataSourceDescricaoDominio: TStringField
       DisplayLabel = 'Descri'#231#227'o do Dom'#237'nio'
@@ -330,7 +346,6 @@ inherited RecursoEditForm: TRecursoEditForm
       LookupKeyFields = 'IDDOMINIO'
       LookupResultField = 'DESCRICAO'
       KeyFields = 'IDDOMINIO'
-      ProviderFlags = [pfInUpdate]
       Size = 50
       Lookup = True
     end
@@ -367,6 +382,18 @@ inherited RecursoEditForm: TRecursoEditForm
     end
     object RecursoClientDataSourceAcaoDataSet: TDataSetField
       FieldName = 'AcaoDataSet'
+    end
+    object RecursoClientDataSourceHABILITAEDITARTODOS: TStringField
+      FieldName = 'HABILITAEDITARTODOS'
+      ProviderFlags = [pfInUpdate]
+      FixedChar = True
+      Size = 1
+    end
+    object RecursoClientDataSourceFORCAREEXECUCAOFILTRO: TStringField
+      FieldName = 'FORCAREEXECUCAOFILTRO'
+      ProviderFlags = [pfInUpdate]
+      FixedChar = True
+      Size = 1
     end
   end
   object AcaoClientDataSet: TosClientDataset
@@ -433,7 +460,7 @@ inherited RecursoEditForm: TRecursoEditForm
   end
   object AntibioticoPopupMenu: TPopupMenu
     Left = 388
-    Top = 220
+    Top = 188
     object EditarAcaoMenu: TMenuItem
       Action = AcaoEdit
     end
@@ -452,7 +479,7 @@ inherited RecursoEditForm: TRecursoEditForm
   end
   object AcaoActionList: TosActionList
     Left = 420
-    Top = 219
+    Top = 187
     object AcaoEdit: TDataSetEdit
       Category = 'Dataset'
       Caption = '&Editar'

@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, Classes, DB, DBClient, osClientDataset, osLookupDataUn, FMTBcd,
   Provider, osCustomDataSetProvider, osSQLDataSetProvider, SqlExpr,
-  osSQLDataSet, acCustomSQLMainDataUn;
+  osSQLDataSet;
 
 type
   TRelatorioLookupData = class(TosLookupData)
@@ -28,6 +28,12 @@ type
     FilterDefLookupDataSetIDXFILTERDEF: TIntegerField;
     FilterDefClientDataSetIDXFILTERDEF: TIntegerField;
     TipoRelatorioClientDataSetIDTIPORELATORIO: TIntegerField;
+    RelatorioClientDataset: TosClientDataset;
+    RelatorioDataSet: TosSQLDataSet;
+    RelatorioDataSetProvider: TosSQLDataSetProvider;
+    RelatorioClientDatasetIDRELATORIO: TIntegerField;
+    RelatorioClientDatasetTITULO: TStringField;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,13 +45,22 @@ var
 
 implementation
 
-uses SQLMainData;
+uses acCustomSQLMainDataUn;
 
 {$R *.dfm}
 
 procedure TRelatorioLookupData.GetData;
 begin
-  MainData.RegisterRefreshTable(tnTipoRelatorio, TipoRelatorioClientDataSet);
+  acCustomSQLMainData.RegisterRefreshTable(tnTipoRelatorio, TipoRelatorioClientDataSet);
+end;
+
+procedure TRelatorioLookupData.DataModuleCreate(Sender: TObject);
+begin
+  inherited;
+   TipoRelatorioLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+   TemplateLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+   FilterDefLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+   RelatorioDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
 end;
 
 end.

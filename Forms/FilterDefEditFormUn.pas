@@ -27,10 +27,9 @@ type
     cdsEditDetailExpressionList: TMemoField;
     cdsEditDetailConstraintList: TMemoField;
     cdsEditDetailOrderList: TMemoField;
-    cdsEditDetailAccessLevel: TIntegerField;
     cbTipo: TwwDBComboBox;
     Label3: TLabel;
-    PageControl1: TPageControl;
+    PageControl: TPageControl;
     TabSheet1: TTabSheet;
     edQuery: TDBMemo;
     TabSheet2: TTabSheet;
@@ -62,6 +61,14 @@ type
     ImportarQueryButton: TButton;
     RBComboSearch: TosComboSearch;
     report: TppReport;
+    cdsEditTITULO: TStringField;
+    Label5: TLabel;
+    DBEdit1: TDBEdit;
+    Label6: TLabel;
+    DBEdit3: TDBEdit;
+    cdsEditDetailORDERCOLUMN: TStringField;
+    DBCheckBox1: TDBCheckBox;
+    cdsEditDetailORDERTYPE: TStringField;
     procedure TestarActionExecute(Sender: TObject);
     procedure cdsEditNewRecord(DataSet: TDataSet);
     procedure ApagarFiltroActionExecute(Sender: TObject);
@@ -85,7 +92,7 @@ var
 
 implementation
 
-uses FilterDefDataUn, SQLMainData, MainFormUn, daDataView;
+uses FilterDefDataUn, acCustomSQLMainDataUn, osCustomMainFrm, daDataView;
 
 {$R *.DFM}
 
@@ -154,7 +161,7 @@ begin
   end;
   query := TosSQLDataSet.Create(nil);
   try
-    query.SQLConnection := MainData.SQLConnection;
+    query.SQLConnection := acCustomSQLMainData.SQLConnection;
     query.CommandText := 'SELECT                           ' +
                          '  Number,                        ' +
                          '  Description,                   ' +
@@ -162,8 +169,7 @@ begin
                          '  AttributeList,                 ' +
                          '  ExpressionList,                ' +
                          '  ConstraintList,                ' +
-                         '  OrderList,                     ' +
-                         '  AccessLevel                    ' +
+                         '  OrderList                      ' +
                          'FROM                             ' +
                          '  XFilterDefDetail               ' +
                          'WHERE                            ' +
@@ -201,7 +207,7 @@ begin
   inherited;
   stream := TMemoryStream.Create;
   try
-    if MainForm.getReportByResource(DataSet.Fields[1].AsString, stream) then
+    if osCustomMainForm.getReportByResource(DataSet.Fields[1].AsString, stream) then
     begin
       if not(cdsEditDetail.State in [dsEdit, dsInsert]) then
         cdsEditDetail.Edit;

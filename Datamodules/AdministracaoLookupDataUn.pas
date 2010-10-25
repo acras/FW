@@ -60,6 +60,7 @@ type
     GrupoLookupDataSetNOME: TStringField;
     GrupoClientDataSetIDGRUPO: TIntegerField;
     GrupoClientDataSetNOME: TStringField;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -72,15 +73,13 @@ var
 
 implementation
 
-uses SQLMainData;
-
 
 {$R *.dfm}
 
 
 procedure TAdministracaoLookupData.GetData;
 begin
-  with MainData do
+  with acCustomSQLMainData do
   begin
     RegisterRefreshTable(tnUsuario, UsuarioClientDataSet);
     RegisterRefreshTable(tnRecurso, RecursoClientDataset);
@@ -90,6 +89,18 @@ begin
     RegisterRefreshTable(tnCargo, CargoClientDataSet);
     RegisterRefreshTable(tnGrupo, GrupoClientDataSet);
   end;
+end;
+
+procedure TAdministracaoLookupData.DataModuleCreate(Sender: TObject);
+begin
+  inherited;
+  UsuarioLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  RecursoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  AcaoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  DominioLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  TipoRecursoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  CargoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  GrupoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
 end;
 
 end.

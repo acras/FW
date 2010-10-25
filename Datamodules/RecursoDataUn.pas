@@ -16,7 +16,6 @@ type
     MasterDataSource: TDataSource;
     MasterDataSetIDDOMINIO: TIntegerField;
     MasterDataSetNOME: TStringField;
-    MasterDataSetCONTEUDO: TBlobField;
     MasterDataSetFILTERDEFNAME: TStringField;
     MasterDataSetDATACLASSNAME: TStringField;
     MasterDataSetRESCLASSNAME: TStringField;
@@ -40,6 +39,9 @@ type
     UsuarioDataSetSENHA: TStringField;
     UsuarioDataSetNOME: TStringField;
     UsuarioProvider: TosSQLDataSetProvider;
+    MasterDataSetHABILITAEDITARTODOS: TStringField;
+    MasterDataSetFORCAREEXECUCAOFILTRO: TStringField;
+    procedure DataModuleCreate(Sender: TObject);
   private
 
   public
@@ -53,20 +55,19 @@ var
 
 implementation
 
-uses osAppResources, osErrorHandler, SQLMainData;
+uses osAppResources, osErrorHandler, acCustomSQLMainDataUn;
 
 {$R *.dfm}
 
 { TRecursoData }
 
-function TRecursoData.CheckResource(const User, Resource,
-  Action: string): boolean;
+function TRecursoData.CheckResource(const User, Resource, Action: string): boolean;
 var
   Query: TSQLDataSet;
 begin
   Query := TSQLDataSet.Create(nil);
   try
-    Query.SQLConnection := MainData.SQLConnection;
+    Query.SQLConnection := acCustomSQLMainData.SQLConnection;
     Query.CommandText := 'SELECT ' +
                          '  COUNT(DU.IDDireitoUso) HasRight ' +
                          'FROM ' +
@@ -128,6 +129,15 @@ begin
     CheckEmpty(FieldByName('IndiceImagem'));
     Check;
   end;
+end;
+
+procedure TRecursoData.DataModuleCreate(Sender: TObject);
+begin
+  MasterDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  AcaoDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  AcoesUsuarioDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  RecursosUsuarioDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  UsuarioDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
 end;
 
 initialization

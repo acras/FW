@@ -1,24 +1,25 @@
 object RecursoData: TRecursoData
   OldCreateOrder = False
-  Left = 577
-  Top = 101
+  OnCreate = DataModuleCreate
+  Left = 16
+  Top = 135
   Height = 491
   Width = 305
   object MasterDataSet: TosSQLDataSet
     CommandText = 
       'SELECT'#13#10'  IDRecurso,'#13#10'  IDDominio,'#13#10'  IDTipoRecurso,'#13#10'  Nome,'#13#10' ' +
-      ' Descricao,'#13#10'  Conteudo,'#13#10'  FilterDefName,'#13#10'  DataClassName,'#13#10'  ' +
-      'ResClassName,'#13#10'  ReportClassName,'#13#10'  IndiceImagem,'#13#10'  NumOrdem'#13#10 +
-      'FROM '#13#10'  Recurso'#13#10'WHERE'#13#10'  IDRecurso=:ID'#13#10
+      ' Descricao,'#13#10'  FilterDefName,'#13#10'  DataClassName,'#13#10'  ResClassName,' +
+      #13#10'  ReportClassName,'#13#10'  IndiceImagem,'#13#10'  NumOrdem,'#13#10'  habilitaEd' +
+      'itarTodos,'#13#10'  forcaReExecucaoFiltro'#13#10'FROM '#13#10'  Recurso'#13#10'WHERE'#13#10'  ' +
+      'IDRecurso=:ID'#13#10
     MaxBlobSize = 32
     Params = <
       item
         DataType = ftInteger
         Name = 'ID'
         ParamType = ptInput
-        Value = '-1'
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 40
     Top = 24
     object MasterDataSetIDRECURSO: TIntegerField
@@ -48,11 +49,6 @@ object RecursoData: TRecursoData
       ProviderFlags = [pfInUpdate]
       Size = 40
     end
-    object MasterDataSetCONTEUDO: TBlobField
-      FieldName = 'CONTEUDO'
-      ProviderFlags = [pfInUpdate]
-      Size = 1
-    end
     object MasterDataSetFILTERDEFNAME: TStringField
       FieldName = 'FILTERDEFNAME'
       Size = 50
@@ -77,6 +73,18 @@ object RecursoData: TRecursoData
       DisplayLabel = 'Ordem'
       FieldName = 'NUMORDEM'
     end
+    object MasterDataSetHABILITAEDITARTODOS: TStringField
+      FieldName = 'HABILITAEDITARTODOS'
+      ProviderFlags = [pfInUpdate]
+      FixedChar = True
+      Size = 1
+    end
+    object MasterDataSetFORCAREEXECUCAOFILTRO: TStringField
+      FieldName = 'FORCAREEXECUCAOFILTRO'
+      ProviderFlags = [pfInUpdate]
+      FixedChar = True
+      Size = 1
+    end
   end
   object MasterProvider: TosSQLDataSetProvider
     DataSet = MasterDataSet
@@ -100,8 +108,8 @@ object RecursoData: TRecursoData
       'upo = G.IdGrupo'#13#10'  INNER JOIN DireitoUso D'#13#10'    ON G.IdGrupo = D' +
       '.IdGrupo'#13#10'  INNER JOIN Recurso R'#13#10'    ON D.IdRecurso = R.IdRecur' +
       'so'#13#10'  INNER JOIN Dominio Dom'#13#10'    ON R.IdDominio = Dom.IdDominio' +
-      #13#10'WHERE'#13#10'   UPPER(U.Apelido) = UPPER(:UserName)'#13#10'ORDER BY'#13#10'  Dom' +
-      '.Descricao,'#13#10'  R.Nome'#13#10
+      #13#10'WHERE'#13#10'   UPPER(U.Apelido) LIKE UPPER(:UserName)'#13#10'ORDER BY'#13#10'  ' +
+      'Dom.Descricao,'#13#10'  R.Nome'#13#10
     MaxBlobSize = 32
     Params = <
       item
@@ -109,7 +117,7 @@ object RecursoData: TRecursoData
         Name = 'UserName'
         ParamType = ptInput
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 60
     Top = 192
   end
@@ -133,7 +141,7 @@ object RecursoData: TRecursoData
         ParamType = ptInput
         Size = 4
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 104
     Top = 80
     object AcaoDataSetDESCRICAO: TStringField
@@ -166,8 +174,8 @@ object RecursoData: TRecursoData
       'G'#13#10'    ON GU.IdGrupo = G.IdGrupo'#13#10'  JOIN DireitoUso D'#13#10'    ON G.' +
       'IdGrupo = D.IdGrupo'#13#10'  JOIN Recurso R'#13#10'    ON D.IdRecurso = R.Id' +
       'Recurso'#13#10'  JOIN Acao A'#13#10'    ON D.IdAcao = A.IdAcao'#13#10'WHERE'#13#10'  UPP' +
-      'ER(U.Apelido) = UPPER(:UserName)'#13#10'  AND UPPER(R.Nome) = UPPER(:N' +
-      'omeRecurso)'#13#10'  AND (U.Status <> '#39'X'#39#13#10'    OR U.Status IS NULL)'#13#10
+      'ER(U.Apelido) LIKE UPPER(:UserName)'#13#10'  AND UPPER(R.Nome) = UPPER' +
+      '(:NomeRecurso)'#13#10
     MaxBlobSize = 32
     Params = <
       item
@@ -180,7 +188,7 @@ object RecursoData: TRecursoData
         Name = 'NomeRecurso'
         ParamType = ptInput
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 60
     Top = 148
     object AcoesUsuarioDataSetNOMECOMPONENTE: TStringField
@@ -206,7 +214,7 @@ object RecursoData: TRecursoData
         ParamType = ptInput
         Value = 'Administrador'
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 60
     Top = 244
     object UsuarioDataSetAPELIDO: TStringField

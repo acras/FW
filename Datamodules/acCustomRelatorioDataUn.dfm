@@ -18,7 +18,6 @@ object acCustomRelatorioData: TacCustomRelatorioData
         Name = 'ID'
         ParamType = ptInput
       end>
-    SQLConnection = MainData.SQLConnection
     Left = 40
     Top = 24
     object MasterDataSetIDRELATORIO: TIntegerField

@@ -36,8 +36,8 @@ var
 
 implementation
 
-uses osReportUtils, SQLMainData, osFrm, ParametroSistemaDataUn,
-  acCustomReportUn, ReportUn;
+uses osReportUtils, acCustomSQLMainDataUn, osFrm, acCustomParametroSistemaDataUn,
+  acCustomReportUn;
 
 {$R *.dfm}
 
@@ -80,7 +80,7 @@ begin
   config.tipoSaida := 'T';
   FTextFileName := '';
   //buscar informações no catálogo de relatórios
-  qry := MainData.GetQuery;
+  qry := acCustomSQLMainData.GetQuery;
   try
     qry.sql.Text := 'SELECT ' +
                     ' RB.Name as TemplateName, '+
@@ -102,7 +102,7 @@ begin
     qry.Open;
     templateName := qry.FieldByName('TemplateName').AsString;
     FilterName := qry.FieldByName('NomeFiltro').AsString;
-    config.nomeImpressora := ParametroSistemaData.getNomeImpressoraClasse(qry.FieldByName('ClasseImpressora').AsString);
+    config.nomeImpressora := acCustomParametroSistemaData.getNomeImpressoraClasse(qry.FieldByName('ClasseImpressora').AsString);
     if not qry.fieldByName('orientation').IsNull then
       config.orientation := qry.fieldByName('orientation').AsInteger;
     if not qry.fieldByName('larguraPapel').IsNull then
@@ -120,7 +120,7 @@ begin
     if not qry.fieldByName('tipoSaida').IsNull then
       config.tipoSaida := qry.fieldByName('tipoSaida').AsString;
   finally
-    MainData.FreeQuery(qry);
+    acCustomSQLMainData.FreeQuery(qry);
   end;
   stream := TMemoryStream.Create;
   getTemplateByName(TemplateName, stream);
@@ -142,7 +142,7 @@ begin
       with srchForm do
       begin
         FilterDefName := filterName;
-        srchForm.DataProvider := MainData.prvFilter;
+        srchForm.DataProvider := acCustomSQLMainData.prvFilter;
         Execute('',3,toRetornarQuery);
         replaceReportSQL(report, stream, sqlResult.GetText);
         free;

@@ -8,7 +8,7 @@ uses
   StdCtrls, Mask, DBCtrls, Grids, DBGrids, ComCtrls,
   wwdbedit, Wwdotdot, Wwdbcomb, Menus, ImgList,
   osActionList, ToolWin, Buttons, ExtCtrls, osComboSearch, osUtils,
-  Wwdbigrd, Wwdbgrid, DBTables, Wwdbspin, DBActns, acCustomSQLMainDataUn;
+  Wwdbigrd, Wwdbgrid, DBTables, Wwdbspin, DBActns;
 
 type
   TRecursoEditForm = class(TosCustomEditForm)
@@ -30,7 +30,6 @@ type
     RecursoClientDataSourceDESCRICAO: TStringField;
     RecursoClientDataSourceIDDOMINIO: TIntegerField;
     RecursoClientDataSourceNOME: TStringField;
-    RecursoClientDataSourceCONTEUDO: TBlobField;
     RecursoClientDataSourceFILTERDEFNAME: TStringField;
     RecursoClientDataSourceDATACLASSNAME: TStringField;
     RecursoClientDataSourceRESCLASSNAME: TStringField;
@@ -76,6 +75,10 @@ type
     AcaoPost: TDataSetPost;
     AcaoCancel: TDataSetCancel;
     AcaoDelete: TDataSetDelete;
+    DBCheckBox1: TDBCheckBox;
+    RecursoClientDataSourceHABILITAEDITARTODOS: TStringField;
+    RecursoClientDataSourceFORCAREEXECUCAOFILTRO: TStringField;
+    DBCheckBox2: TDBCheckBox;
 
     procedure RecursoClientDataSourceBeforePost(DataSet: TDataSet);
     procedure AcaoClientDataSetBeforePost(DataSet: TDataSet);

@@ -1,14 +1,12 @@
 inherited FilterDefEditForm: TFilterDefEditForm
-  Left = 413
-  Top = 105
-  VertScrollBar.Range = 0
+  Left = 492
+  Top = 121
+  Width = 520
+  Height = 568
   ActiveControl = DBEdit2
   BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
   BorderWidth = 4
   Caption = 'Defini'#231#227'o de Filtros'
-  ClientHeight = 489
-  ClientWidth = 489
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -16,35 +14,44 @@ inherited FilterDefEditForm: TFilterDefEditForm
     Top = 40
     Width = 21
     Height = 13
-    Caption = 'Tipo'
+    Caption = '&Tipo'
   end
   object Label2: TLabel [1]
     Left = 8
     Top = 40
     Width = 28
     Height = 13
-    Caption = 'Nome'
+    Caption = '&Nome'
     FocusControl = DBEdit2
   end
   object Label3: TLabel [2]
     Left = 8
-    Top = 64
+    Top = 86
     Width = 27
     Height = 13
-    Caption = 'Filtros'
+    Caption = 'F&iltros'
+    FocusControl = DBGrid1
   end
   object Label4: TLabel [3]
-    Left = 8
-    Top = 472
+    Left = 23
+    Top = 506
     Width = 27
     Height = 13
-    Caption = 'Teste'
+    Anchors = [akRight, akBottom]
+    Caption = 'T&este'
+  end
+  object Label5: TLabel [4]
+    Left = 8
+    Top = 64
+    Width = 31
+    Height = 13
+    Caption = 'T'#237'tulo:'
   end
   inherited MainControlBar: TControlBar
-    Width = 489
+    Width = 496
     TabOrder = 4
   end
-  object DBEdit2: TDBEdit [5]
+  object DBEdit2: TDBEdit [6]
     Left = 48
     Top = 36
     Width = 289
@@ -53,11 +60,11 @@ inherited FilterDefEditForm: TFilterDefEditForm
     DataSource = MasterDataSource
     TabOrder = 0
   end
-  object DBGrid1: TDBGrid [6]
+  object DBGrid1: TDBGrid [7]
     Left = 8
-    Top = 80
-    Width = 475
-    Height = 173
+    Top = 104
+    Width = 490
+    Height = 161
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = dsEditDetail
     PopupMenu = PopupMenu
@@ -77,16 +84,11 @@ inherited FilterDefEditForm: TFilterDefEditForm
       item
         Expanded = False
         FieldName = 'Description'
-        Width = 349
-        Visible = True
-      end
-      item
-        Expanded = False
-        FieldName = 'AccessLevel'
+        Width = 415
         Visible = True
       end>
   end
-  object cbTipo: TwwDBComboBox [7]
+  object cbTipo: TwwDBComboBox [8]
     Left = 368
     Top = 36
     Width = 121
@@ -95,8 +97,6 @@ inherited FilterDefEditForm: TFilterDefEditForm
     Style = csDropDown
     MapList = True
     AllowClearKey = False
-    AutoDropDown = True
-    ShowMatchText = True
     DataField = 'FILTERTYPE'
     DataSource = MasterDataSource
     DropDownCount = 8
@@ -110,20 +110,20 @@ inherited FilterDefEditForm: TFilterDefEditForm
     TabOrder = 1
     UnboundDataType = wwDefault
   end
-  object PageControl1: TPageControl [8]
+  object PageControl: TPageControl [9]
     Left = 8
-    Top = 262
-    Width = 475
+    Top = 272
+    Width = 490
     Height = 195
-    ActivePage = TabSheet4
+    ActivePage = TabSheet5
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 3
     object TabSheet1: TTabSheet
-      Caption = 'Query'
+      Caption = '&Query'
       object edQuery: TDBMemo
         Left = 0
         Top = 0
-        Width = 467
+        Width = 482
         Height = 167
         Align = alClient
         DataField = 'QueryText'
@@ -139,12 +139,12 @@ inherited FilterDefEditForm: TFilterDefEditForm
       end
     end
     object TabSheet2: TTabSheet
-      Caption = 'Atributos'
+      Caption = '&Atributos'
       ImageIndex = 1
       object edAtributos: TDBMemo
         Left = 0
         Top = 0
-        Width = 467
+        Width = 482
         Height = 167
         Hint = 'Nome=TituloColuna[;Tam]'
         Align = alClient
@@ -162,12 +162,12 @@ inherited FilterDefEditForm: TFilterDefEditForm
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'Express'#245'es Default'
+      Caption = '&Express'#245'es Default'
       ImageIndex = 2
       object edExpression: TDBMemo
         Left = 0
         Top = 0
-        Width = 467
+        Width = 482
         Height = 167
         Hint = 'Express'#245'es que ser'#227'o adicionadas ao SQL (and)'
         Align = alClient
@@ -185,12 +185,12 @@ inherited FilterDefEditForm: TFilterDefEditForm
       end
     end
     object TabSheet4: TTabSheet
-      Caption = 'Restri'#231#245'es usu'#225'rio'
+      Caption = '&Restri'#231#245'es usu'#225'rio'
       ImageIndex = 3
       object edRestricoes: TDBMemo
         Left = 0
         Top = 0
-        Width = 467
+        Width = 482
         Height = 167
         Hint = 
           'Nome;Expressao'#13#10'Nome;Express'#227'o;Date'#13#10'Nome;Express'#227'o;List;cod1,de' +
@@ -211,15 +211,22 @@ inherited FilterDefEditForm: TFilterDefEditForm
       end
     end
     object TabSheet5: TTabSheet
-      Caption = 'Ordena'#231#227'o'
+      Caption = '&Ordena'#231#227'o'
       ImageIndex = 4
+      object Label6: TLabel
+        Left = 8
+        Top = 149
+        Width = 116
+        Height = 13
+        Caption = 'Coluna para Ordena'#231#227'o:'
+      end
       object edOrdenacao: TDBMemo
         Left = 0
         Top = 0
-        Width = 467
-        Height = 167
+        Width = 482
+        Height = 145
         Hint = 'Nome=Express'#227'o'
-        Align = alClient
+        Align = alTop
         DataField = 'OrderList'
         DataSource = dsEditDetail
         Font.Charset = ANSI_CHARSET
@@ -232,13 +239,35 @@ inherited FilterDefEditForm: TFilterDefEditForm
         ShowHint = True
         TabOrder = 0
       end
+      object DBEdit3: TDBEdit
+        Left = 128
+        Top = 146
+        Width = 249
+        Height = 21
+        DataField = 'ORDERCOLUMN'
+        DataSource = dsEditDetail
+        TabOrder = 1
+      end
+      object DBCheckBox1: TDBCheckBox
+        Left = 386
+        Top = 148
+        Width = 87
+        Height = 17
+        Caption = 'Descendente'
+        DataField = 'ORDERTYPE'
+        DataSource = dsEditDetail
+        TabOrder = 2
+        ValueChecked = 'D'
+        ValueUnchecked = 'A'
+      end
     end
   end
-  object csTeste: TosComboSearch [9]
-    Left = 44
-    Top = 468
+  object csTeste: TosComboSearch [10]
+    Left = 11
+    Top = 478
     Width = 157
     Height = 21
+    Anchors = [akRight, akBottom]
     ShowButton = True
     Style = csDropDown
     DataField = 'Teste'
@@ -247,10 +276,9 @@ inherited FilterDefEditForm: TFilterDefEditForm
     WordWrap = False
     UnboundDataType = wwDefault
     OnEnter = csTesteEnter
-    FilterDataProvider = MainData.prvFilter
     AllowClearKey = False
   end
-  object ImportarButton: TButton [10]
+  object ImportarButton: TButton [11]
     Left = 407
     Top = 4
     Width = 75
@@ -259,7 +287,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
     TabOrder = 6
     OnClick = ImportarButtonClick
   end
-  object FiltroComboSearch: TosComboSearch [11]
+  object FiltroComboSearch: TosComboSearch [12]
     Left = 324
     Top = 4
     Width = 121
@@ -270,23 +298,23 @@ inherited FilterDefEditForm: TFilterDefEditForm
     WordWrap = False
     UnboundDataType = wwDefault
     Visible = False
-    FilterDataProvider = MainData.prvFilter
     FilterDefName = 'FilterDef'
     AllowClearKey = False
     OnReturnSearch = FiltroComboSearchReturnSearch
   end
-  object ImportarQueryButton: TButton [12]
-    Left = 372
-    Top = 464
+  object ImportarQueryButton: TButton [13]
+    Left = 387
+    Top = 478
     Width = 107
     Height = 25
+    Anchors = [akRight, akBottom]
     Caption = 'Importar Query'
     TabOrder = 8
     OnClick = ImportarQueryButtonClick
   end
-  object RBComboSearch: TosComboSearch [13]
-    Left = 300
-    Top = 468
+  object RBComboSearch: TosComboSearch [14]
+    Left = 236
+    Top = 476
     Width = 121
     Height = 21
     ShowButton = True
@@ -295,10 +323,18 @@ inherited FilterDefEditForm: TFilterDefEditForm
     WordWrap = False
     UnboundDataType = wwDefault
     Visible = False
-    FilterDataProvider = MainData.prvFilter
     FilterDefName = 'Relatorio_RB'
     AllowClearKey = False
     OnReturnSearch = RBComboSearchReturnSearch
+  end
+  object DBEdit1: TDBEdit [15]
+    Left = 48
+    Top = 60
+    Width = 439
+    Height = 21
+    DataField = 'TITULO'
+    DataSource = MasterDataSource
+    TabOrder = 10
   end
   inherited ActionList: TosActionList
     Left = 308
@@ -361,6 +397,11 @@ inherited FilterDefEditForm: TFilterDefEditForm
       FixedChar = True
       Size = 3
     end
+    object cdsEditTITULO: TStringField
+      FieldName = 'TITULO'
+      ProviderFlags = [pfInUpdate]
+      Size = 100
+    end
   end
   object cdsEditDetail: TosClientDataset
     Aggregates = <>
@@ -416,10 +457,14 @@ inherited FilterDefEditForm: TFilterDefEditForm
       BlobType = ftMemo
       Size = 1
     end
-    object cdsEditDetailAccessLevel: TIntegerField
-      DefaultExpression = '0'
-      DisplayLabel = 'N'#237'vel'
-      FieldName = 'AccessLevel'
+    object cdsEditDetailORDERCOLUMN: TStringField
+      FieldName = 'ORDERCOLUMN'
+      Size = 50
+    end
+    object cdsEditDetailORDERTYPE: TStringField
+      FieldName = 'ORDERTYPE'
+      FixedChar = True
+      Size = 1
     end
   end
   object dsEditDetail: TDataSource
@@ -453,7 +498,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
   object dsTeste: TDataSource
     DataSet = cdsTeste
     Left = 336
-    Top = 432
+    Top = 416
   end
   object report: TppReport
     PrinterSetup.BinName = 'Default'
@@ -476,9 +521,9 @@ inherited FilterDefEditForm: TFilterDefEditForm
     OutlineSettings.Visible = False
     TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = False
-    Left = 260
-    Top = 464
-    Version = '10.07'
+    Left = 256
+    Top = 460
+    Version = '10.09'
     mmColumnWidth = 0
   end
 end

@@ -102,7 +102,7 @@ const
 
 implementation
 
-uses SQLMainData, osReportUtils, RelatorioDataUn, Dialogs;
+uses acCustomSQLMainDataUn, osReportUtils, acCustomRelatorioDataUn, Dialogs;
 
 {$R *.dfm}
 
@@ -142,9 +142,9 @@ begin
   config.preview := true;
   try
     encontrou := false;
-    if TRelatorioData.isChangeable(ClassName) then
+    if acCustomRelatorioData.isChangeable(ClassName) then
     begin
-      idTemplate := TRelatorioData.getTemplateConfigForUser(ClassName, config);
+      idTemplate := acCustomRelatorioData.getTemplateConfigForUser(ClassName, config);
       if idTemplate <> -1 then
       begin
         if getTemplateByID(idTemplate, stream) then

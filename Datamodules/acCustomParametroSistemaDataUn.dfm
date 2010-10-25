@@ -9,7 +9,7 @@ object acCustomParametroSistemaData: TacCustomParametroSistemaData
     CommandText = 'SELECT'#13#10'  '#13#10'FROM'#13#10'  ParametroSistema P'#13#10#13#10
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 40
     Top = 24
   end
@@ -22,7 +22,7 @@ object acCustomParametroSistemaData: TacCustomParametroSistemaData
   object ParamQuery: TosSQLQuery
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 44
     Top = 108
   end

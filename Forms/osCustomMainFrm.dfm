@@ -1,6 +1,6 @@
 inherited osCustomMainForm: TosCustomMainForm
-  Left = 342
-  Top = 55
+  Left = 233
+  Top = 415
   Width = 1024
   Height = 683
   ActiveControl = ResourcePanel
@@ -256,7 +256,7 @@ inherited osCustomMainForm: TosCustomMainForm
       Align = alClient
       TabOrder = 2
       ControlData = {
-        4C000000F74B0000A33800000000000000000000000000000000000000000000
+        4C000000234B00009B3700000000000000000000000000000000000000000000
         000000004C000000000000000000000001000000E0D057007335CF11AE690800
         2B2E12620A000000000000004C0000000114020000000000C000000000000046
         8000000000000000000000000000000000000000000000000000000000000000
@@ -977,7 +977,7 @@ inherited osCustomMainForm: TosCustomMainForm
     AfterOpen = FilterDatasetAfterOpen
     BeforeClose = FilterDatasetBeforeClose
     AfterScroll = FilterDatasetAfterScroll
-    DataProvider = MainData.prvFilter
+    DataProvider = acCustomSQLMainData.prvFilter
     Left = 696
     Top = 112
   end
@@ -2043,7 +2043,7 @@ inherited osCustomMainForm: TosCustomMainForm
     AutoStop = False
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'Carta'
+    PrinterSetup.PaperName = 'Letter'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.mmMarginBottom = 6350
     PrinterSetup.mmMarginLeft = 6350
@@ -2051,7 +2051,7 @@ inherited osCustomMainForm: TosCustomMainForm
     PrinterSetup.mmMarginTop = 6350
     PrinterSetup.mmPaperHeight = 279401
     PrinterSetup.mmPaperWidth = 215900
-    PrinterSetup.PaperSize = 121
+    PrinterSetup.PaperSize = 1
     Template.DatabaseSettings.DataPipeline = plItem
     Template.DatabaseSettings.NameField = 'Name'
     Template.DatabaseSettings.TemplateField = 'Template'

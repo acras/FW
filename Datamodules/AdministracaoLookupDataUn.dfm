@@ -1,7 +1,8 @@
 inherited AdministracaoLookupData: TAdministracaoLookupData
   OldCreateOrder = True
-  Left = 269
-  Top = 82
+  OnCreate = DataModuleCreate
+  Left = 30
+  Top = 110
   Height = 580
   Width = 486
   object UsuarioClientDataSet: TosClientDataset
@@ -116,7 +117,7 @@ inherited AdministracaoLookupData: TAdministracaoLookupData
     CommandText = 'SELECT'#13#10'  IdCargo,'#13#10'  Nome'#13#10'FROM'#13#10'  Cargo'#13#10'ORDER BY'#13#10'  Nome'
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 352
     object IntegerField1: TIntegerField
@@ -145,7 +146,7 @@ inherited AdministracaoLookupData: TAdministracaoLookupData
       'ER BY'#13#10'  Descricao'#13#10
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 300
     object IntegerField2: TIntegerField
@@ -173,7 +174,7 @@ inherited AdministracaoLookupData: TAdministracaoLookupData
       ' Descricao'
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 248
     object DominioLookupDataSetIDDOMINIO: TIntegerField
@@ -203,7 +204,7 @@ inherited AdministracaoLookupData: TAdministracaoLookupData
         ParamType = ptInput
         Value = 0
       end>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 192
     object AcaoLookupDataSetIDACAO: TIntegerField
@@ -227,7 +228,7 @@ inherited AdministracaoLookupData: TAdministracaoLookupData
     CommandText = 'SELECT'#13#10'  IDRecurso,'#13#10'  Nome'#13#10'FROM '#13#10'  Recurso'#13#10'ORDER BY'#13#10'  Nome'
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 120
     object RecursoLookupDataSetIDRECURSO: TIntegerField
@@ -249,7 +250,7 @@ inherited AdministracaoLookupData: TAdministracaoLookupData
     CommandText = 'SELECT'#13#10'  IDUsuario,'#13#10'  Nome'#13#10'FROM '#13#10'  Usuario'#13#10'ORDER BY'#13#10'  Nome'
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 68
     Top = 48
     object UsuarioLookupDataSetIDUSUARIO: TIntegerField
@@ -287,7 +288,7 @@ inherited AdministracaoLookupData: TAdministracaoLookupData
     CommandText = 'SELECT'#13#10'  IdGrupo,'#13#10'  Nome'#13#10'FROM'#13#10'  Grupo'#13#10
     MaxBlobSize = 32
     Params = <>
-    SQLConnection = MainData.SQLConnection
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 72
     Top = 412
     object GrupoLookupDataSetIDGRUPO: TIntegerField

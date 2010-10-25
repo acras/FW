@@ -27,6 +27,7 @@ type
 
   public
     procedure Validate(PDataSet: TDataSet);
+    class function getItemIdByReportId(idRelatorio: integer): integer;
     class function getTitulo(IdRelatorio: integer): string;
     class function isChangeable(className: string): boolean; virtual;
     class function getTemplateConfigForUser(className: string;
@@ -38,7 +39,7 @@ var
 
 implementation
 
-uses osErrorHandler, SQLMainData, osLogin, osReportUtils;
+uses osErrorHandler, acCustomSQLMainDataUn, osLogin, osReportUtils;
 
 {$R *.dfm}
 
@@ -105,7 +106,7 @@ class function TacCustomRelatorioData.getTitulo(IdRelatorio: integer): string;
 var
   qry: TosSQLQuery;
 begin
-  qry := MainData.GetQuery;
+  qry := acCustomSQLMainData.GetQuery;
   try
     qry.SQL.Text := 'Select titulo from Relatorio Where IdRelatorio=' + IntToStr(IdRelatorio);
     qry.Open;
@@ -133,6 +134,26 @@ begin
     Check;
   end;
 end;
+
+class function TacCustomRelatorioData.getItemIdByReportId(
+  idRelatorio: integer): integer;
+var
+  qry: TosSQLQuery;
+begin
+  qry := acCustomSQLMainData.GetQuery;
+  try
+    qry.SQL.Text := ' Select '+
+                    '   ITEM_ID ' +
+                    ' FROM Relatorio ' +
+                    ' WHERE IDRelatorio = ' + IntToStr(idRelatorio);
+    qry.Open;
+    result := qry.fields[0].AsInteger;
+  finally
+    acCustomSQLMainData.FreeQuery(qry);
+  end;
+end;
+
+
 
 
 end.

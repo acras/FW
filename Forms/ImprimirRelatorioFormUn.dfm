@@ -67,7 +67,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     Aggregates = <>
     FetchOnDemand = False
     Params = <>
-    DataProvider = MainData.prvFilter
+    DataProvider = acCustomSQLMainData.prvFilter
     Left = 64
     Top = 104
   end

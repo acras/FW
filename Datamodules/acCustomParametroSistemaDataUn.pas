@@ -30,7 +30,7 @@ var
 
 implementation
 
-uses acCustomSQLMainDataUn, osErrorHandler, osCIC, SQLMainData;
+uses acCustomSQLMainDataUn, osErrorHandler, osCIC;
 
 {$R *.dfm}
 
@@ -63,7 +63,7 @@ end;}
 
 procedure TacCustomParametroSistemaData.DataModuleCreate(Sender: TObject);
 begin
-  MainData.RegisterRefreshTable(tnParametroSistema, MasterClientDataset);
+  acCustomSQLMainData.RegisterRefreshTable(tnParametroSistema, MasterClientDataset);
 //  MainData.RegisterRefreshTable(tnFeriado, FeriadoClientDataSet);
 end;
 

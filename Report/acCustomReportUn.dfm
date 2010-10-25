@@ -15,7 +15,6 @@ object acCustomReport: TacCustomReport
     FetchOnDemand = False
     Params = <>
     ReadOnly = True
-    DataProvider = MainData.prvFilter
     Left = 28
     Top = 24
   end
