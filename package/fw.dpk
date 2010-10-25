@@ -49,7 +49,18 @@ requires
   rbTC107,
   rbDIDE107,
   rbUSER107,
-  rtl;
+  rtl,
+  dbrtl,
+  dsnap,
+  dbexpress,
+  osServer,
+  vcldb,
+  vcl,
+  acControls,
+  dsnapcon,
+  ip4000v7,
+  bdertl,
+  vclx;
 
 contains
   osFrm in '..\Forms\osFrm.pas' {osForm},
