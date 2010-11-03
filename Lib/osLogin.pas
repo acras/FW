@@ -144,7 +144,7 @@ begin
     begin
       query.SQLConnection := acCustomSQLMainData.SQLConnection;
       query.CommandText := 'SELECT idusuario, apelido, nome, senha, status FROM USUARIO' +
-                           ' WHERE apelido=' + quotedStr(LoginForm.UsernameEdit.Text);
+        ' WHERE lower(apelido) = ' + quotedStr(LowerCase(LoginForm.UsernameEdit.Text));
       query.Open;
       try
         if query.RecordCount = 0 then
