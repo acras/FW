@@ -1,4 +1,4 @@
-object LoginForm: TLoginForm
+object osCustomLoginForm: TosCustomLoginForm
   Left = 490
   Top = 262
   BorderStyle = bsToolWindow

@@ -3,7 +3,8 @@ unit osLogin;
 interface
 
 uses
-  Windows, SysUtils, osSQLDataSet, acCustomSQLMainDataUn, Controls, Dialogs;
+  Windows, SysUtils, osSQLDataSet, acCustomSQLMainDataUn, Controls, Dialogs,
+    osCustomLoginFormUn;
 
 type
   TLoginUsuario = class
@@ -22,7 +23,8 @@ type
     property Status: string read FStatus;
     property DefaultUserName: string read FDefaultUserName write FDefaultUserName;
     procedure getInfoUsuarioLogadoSistema;
-    function Login(caption: string): boolean;
+    function Login(caption: string): boolean; overload;
+    function Login(caption: string; loginFormClass: TLoginFormClass): boolean; overload;
     procedure Logout;
     function isTesoureiro: boolean;
     function isCaixa: boolean;
@@ -31,7 +33,7 @@ type
 
 implementation
 
-uses DB, osMD5, LoginFormUn;
+uses DB, osMD5;
 
 constructor TLoginUsuario.create;
 begin
@@ -109,15 +111,21 @@ begin
 end;
 
 function TLoginUsuario.Login(caption: string): boolean;
+begin
+  result := login(caption, TosCustomLoginForm);
+end;
+
+function TLoginUsuario.Login(caption: string;
+  loginFormClass: TLoginFormClass): boolean;
 const
   MaxErrorCount = 3;
 var
-  LoginForm: TLoginForm;
+  LoginForm: TosCustomLoginForm;
   query: TosSQLDataSet;
   ErrorCount: integer;
   LoginCorrect: boolean;
 begin
-  LoginForm := TLoginForm.Create(nil);
+  LoginForm := loginFormClass.Create(nil);
   LoginForm.Caption := caption;
   query := TosSQLDataSet.Create(nil);
   try

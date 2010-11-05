@@ -15,7 +15,7 @@ uses
   SqlExpr, DBXpress, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
-  osSQLQuery, acFilterController, CommCtrl, clipbrd;
+  osSQLQuery, acFilterController, CommCtrl, clipbrd, osCustomLoginFormUn;
   //ppWWRichEd;
 
 type
@@ -251,6 +251,7 @@ type
     function getSuperUserPass: string; virtual;
     function Login: boolean; dynamic;
     procedure execSplash; virtual; abstract;
+    function getLoginFormClass: TLoginFormClass; virtual;
   public
     FCurrentEditForm: TosCustomEditForm;
     FCurrentDatamodule: TDatamodule;
@@ -274,7 +275,7 @@ var
 
 implementation
 
-uses acCustomSQLMainDataUn, FilterDefEditFormUn, RecursoDataUn, LoginFormUn,
+uses acCustomSQLMainDataUn, FilterDefEditFormUn, RecursoDataUn,
   osReportUtils, UtilsUnit, Types;
 
 {$R *.DFM}
@@ -1079,7 +1080,7 @@ function TosCustomMainForm.Login: boolean;
 const
   MaxErrorCount = 3;
 var
-  LoginForm: TLoginForm;
+  LoginForm: TosCustomLoginForm;
   cdsUsuario: TosClientDataSet;
   cds: TosClientDataSet;
   ErrorCount: integer;
@@ -1088,7 +1089,7 @@ var
 begin
   FUserName := GetSystemUserName;
 
-  LoginForm := TLoginForm.Create(nil);
+  LoginForm := getLoginFormClass.Create(nil);
   cdsUsuario := TosClientDataSet.Create(nil);
   cds := TosClientDataset.Create(nil);
   try
@@ -1742,6 +1743,11 @@ begin
   end;
 end;
 
+
+function TosCustomMainForm.getLoginFormClass: TLoginFormClass;
+begin
+  result := TosCustomLoginForm;
+end;
 
 initialization
   ShortDateFormat := 'dd/mm/yyyy';

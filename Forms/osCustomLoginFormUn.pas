@@ -7,7 +7,8 @@ uses
   Dialogs, StdCtrls;
 
 type
-  TLoginForm = class(TForm)
+  TLoginFormClass = class of TosCustomLoginForm;
+  TosCustomLoginForm = class(TForm)
     UsernameEdit: TEdit;
     Label1: TLabel;
     btnOK: TButton;
@@ -27,12 +28,12 @@ implementation
 
 {$R *.dfm}
 
-procedure TLoginForm.FormShow(Sender: TObject);
+procedure TosCustomLoginForm.FormShow(Sender: TObject);
 begin
   FocusedControl.SetFocus;
 end;
 
-procedure TLoginForm.FormCreate(Sender: TObject);
+procedure TosCustomLoginForm.FormCreate(Sender: TObject);
 begin
   FocusedControl := UsernameEdit;
 end;
