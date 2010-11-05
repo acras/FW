@@ -142,7 +142,7 @@ begin
   config.preview := true;
   try
     encontrou := false;
-    if acCustomRelatorioData.isChangeable(ClassName) then
+    if TacCustomRelatorioData.isChangeable(ClassName) then
     begin
       idTemplate := acCustomRelatorioData.getTemplateConfigForUser(ClassName, config);
       if idTemplate <> -1 then
