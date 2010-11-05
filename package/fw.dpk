@@ -97,7 +97,7 @@ contains
   ImprimirRelatorioFormUn in '..\Forms\ImprimirRelatorioFormUn.pas' {ImprimirRelatorioForm},
   acCustomReportUn in '..\Report\acCustomReportUn.pas' {acCustomReport: TDataModule},
   FwConstants in '..\Datamodules\FwConstants.pas',
-  LoginFormUn in '..\Forms\LoginFormUn.pas' {LoginForm},
+  osCustomLoginFormUn in '..\Forms\osCustomLoginFormUn.pas' {LoginForm},
   UtilsUnit in '..\Lib\UtilsUnit.pas',
   ShowEventoLogFormUn in '..\Forms\ShowEventoLogFormUn.pas' {ShowEventoLogForm},
   acRAP in '..\..\ReportGen\acRAP.pas',
