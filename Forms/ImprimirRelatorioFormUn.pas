@@ -264,6 +264,7 @@ procedure TImprimirRelatorioForm.FormCreate(Sender: TObject);
 begin
   inherited;
   Operacoes := Operacoes-[oInserir,oExcluir,oVisualizar];
+  filterDataSet.dataProvider := acCustomSQLMainData.prvFilter;
 end;
 
 procedure TImprimirRelatorioForm.afterLoadStream;

@@ -101,6 +101,7 @@ contains
   UtilsUnit in '..\Lib\UtilsUnit.pas',
   ShowEventoLogFormUn in '..\Forms\ShowEventoLogFormUn.pas' {ShowEventoLogForm},
   acRAP in '..\..\ReportGen\acRAP.pas',
-  RegExpr in '..\..\repositorio\RegExpr.pas';
+  RegExpr in '..\..\repositorio\RegExpr.pas',
+  RecursoEditFormUn in '..\Forms\RecursoEditFormUn.pas' {RecursoEditForm};
 
 end.
