@@ -135,6 +135,7 @@ begin
   inherited;
   cdsTeste.Close;
   cdsTeste.CreateDataSet;
+  csTeste.FilterDataProvider := acCustomSQLMainData.prvFilter;
 end;
 
 procedure TFilterDefEditForm.ImportarButtonClick(Sender: TObject);

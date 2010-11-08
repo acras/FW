@@ -13,6 +13,7 @@ type
     MasterProvider: TosSQLDataSetProvider;
     MasterDataset: TosSQLDataset;
     FilterDefDetailDataset: TosSQLDataset;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -27,6 +28,12 @@ implementation
 uses acCustomSQLMainDataUn;
 
 {$R *.DFM}
+
+procedure TFilterDefData.DataModuleCreate(Sender: TObject);
+begin
+  MasterDataset.SQLConnection := acCustomSQLMainData.SQLConnection;
+  FilterDefDetailDataset.SQLConnection := acCustomSQLMainData.SQLConnection;
+end;
 
 initialization
   OSRegisterClass(TFilterDefData);

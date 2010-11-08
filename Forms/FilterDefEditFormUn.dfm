@@ -48,7 +48,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
     Caption = 'T'#237'tulo:'
   end
   inherited MainControlBar: TControlBar
-    Width = 496
+    Width = 504
     TabOrder = 4
   end
   object DBEdit2: TDBEdit [6]
@@ -276,6 +276,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
     WordWrap = False
     UnboundDataType = wwDefault
     OnEnter = csTesteEnter
+    FilterDataProvider = acCustomSQLMainData.prvFilter
     AllowClearKey = False
   end
   object ImportarButton: TButton [11]
@@ -503,7 +504,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
   object report: TppReport
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.mmMarginBottom = 6350
     PrinterSetup.mmMarginLeft = 6350
@@ -523,7 +524,7 @@ inherited FilterDefEditForm: TFilterDefEditForm
     TextSearchSettings.Enabled = False
     Left = 256
     Top = 460
-    Version = '10.09'
+    Version = '10.07'
     mmColumnWidth = 0
   end
 end

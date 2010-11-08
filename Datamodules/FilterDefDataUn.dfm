@@ -1,5 +1,6 @@
 object FilterDefData: TFilterDefData
   OldCreateOrder = False
+  OnCreate = DataModuleCreate
   Left = 379
   Top = 262
   Height = 376
@@ -27,6 +28,7 @@ object FilterDefData: TFilterDefData
         ParamType = ptInput
         Value = '-1'
       end>
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 56
     Top = 20
   end
@@ -44,6 +46,7 @@ object FilterDefData: TFilterDefData
         Name = 'IDXFilterDef'
         ParamType = ptInput
       end>
+    SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 188
     Top = 92
   end
