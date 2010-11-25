@@ -7,7 +7,7 @@ interface
 uses
   IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
-  Math, JvToolEdit, Wwdbgrid, RegExpr;
+  Math, JvToolEdit, Wwdbgrid, RegExpr,StdCtrls;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -34,6 +34,7 @@ procedure ListFileDir(Path: string; FileList: TStrings);
 function isNumeric(valor: string; acceptThousandSeparator: Boolean = False): boolean;
 function isConvert(Str: string): boolean;
 function extractPhoneNumber(Str: String; defaultDDD: string = '041'): string;
+procedure setHabilitaEdit(edit: TEdit; enabled: boolean);
 
 implementation
 
@@ -408,5 +409,18 @@ begin
     result := '00000000000';
 end;
 
+procedure setHabilitaEdit(edit: TEdit; enabled: boolean);
+begin
+  if enabled then
+  begin
+    edit.ReadOnly := false;
+    edit.Color := clWhite;
+  end
+  else
+  begin
+    edit.ReadOnly := true;
+    edit.Color := clBtnFace;
+  end;
+end;
 
 end.
