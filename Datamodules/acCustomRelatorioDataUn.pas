@@ -29,7 +29,7 @@ type
     procedure Validate(PDataSet: TDataSet);
     class function getItemIdByReportId(idRelatorio: integer): integer;
     class function getTitulo(IdRelatorio: integer): string;
-    class function isChangeable(className: string): boolean; virtual;
+    function isChangeable(className: string): boolean; virtual;
     class function getTemplateConfigForUser(className: string;
       var configImpressao: TConfigImpressao): integer; virtual;
   end;
@@ -97,7 +97,7 @@ begin
   end;}
 end;
 
-class function TacCustomRelatorioData.isChangeable(className: string): boolean;
+function TacCustomRelatorioData.isChangeable(className: string): boolean;
 begin
   result := false;
 end;
