@@ -1,6 +1,6 @@
 inherited osCustomMainForm: TosCustomMainForm
   Left = 233
-  Top = 415
+  Top = 311
   Width = 1024
   Height = 683
   ActiveControl = ResourcePanel
@@ -12,7 +12,7 @@ inherited osCustomMainForm: TosCustomMainForm
   object ControlBar: TControlBar [0]
     Left = 0
     Top = 0
-    Width = 1008
+    Width = 1016
     Height = 37
     Align = alTop
     AutoDrag = False
@@ -177,8 +177,8 @@ inherited osCustomMainForm: TosCustomMainForm
   end
   object StatusBar: TStatusBar [1]
     Left = 0
-    Top = 608
-    Width = 1008
+    Top = 610
+    Width = 1016
     Height = 19
     Panels = <
       item
@@ -199,7 +199,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Left = 0
     Top = 37
     Width = 120
-    Height = 571
+    Height = 573
     Caption = 'mxOutlookBar'
     Align = alLeft
     BorderStyle = bsSingle
@@ -243,20 +243,20 @@ inherited osCustomMainForm: TosCustomMainForm
   object Panel2: TPanel [3]
     Left = 281
     Top = 37
-    Width = 727
-    Height = 571
+    Width = 735
+    Height = 573
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 3
     object WebBrowser: TWebBrowser
       Left = 0
       Top = 33
-      Width = 727
-      Height = 538
+      Width = 735
+      Height = 540
       Align = alClient
       TabOrder = 2
       ControlData = {
-        4C000000234B00009B3700000000000000000000000000000000000000000000
+        4C000000F74B0000D03700000000000000000000000000000000000000000000
         000000004C000000000000000000000001000000E0D057007335CF11AE690800
         2B2E12620A000000000000004C0000000114020000000000C000000000000046
         8000000000000000000000000000000000000000000000000000000000000000
@@ -265,7 +265,7 @@ inherited osCustomMainForm: TosCustomMainForm
     object ResourcePanel: TPanel
       Left = 0
       Top = 0
-      Width = 727
+      Width = 735
       Height = 33
       Align = alTop
       Alignment = taLeftJustify
@@ -749,7 +749,7 @@ inherited osCustomMainForm: TosCustomMainForm
     Left = 120
     Top = 37
     Width = 161
-    Height = 571
+    Height = 573
     Align = alLeft
     Color = clBtnFace
     HotTrack = True
@@ -1903,7 +1903,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 896
     Top = 112
-    Version = '10.09'
+    Version = '10.07'
     mmColumnWidth = 0
     DataPipelineName = 'ppDBPipeline'
     object ppHeaderBand: TppHeaderBand
@@ -2051,7 +2051,7 @@ inherited osCustomMainForm: TosCustomMainForm
     PrinterSetup.mmMarginTop = 6350
     PrinterSetup.mmPaperHeight = 279401
     PrinterSetup.mmPaperWidth = 215900
-    PrinterSetup.PaperSize = 1
+    PrinterSetup.PaperSize = 119
     Template.DatabaseSettings.DataPipeline = plItem
     Template.DatabaseSettings.NameField = 'Name'
     Template.DatabaseSettings.TemplateField = 'Template'
@@ -2068,7 +2068,7 @@ inherited osCustomMainForm: TosCustomMainForm
     TextSearchSettings.Enabled = False
     Left = 353
     Top = 362
-    Version = '10.09'
+    Version = '10.07'
     mmColumnWidth = 0
     object ppHeaderBand1: TppHeaderBand
       mmBottomOffset = 0

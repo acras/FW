@@ -41,6 +41,7 @@ type
     UsuarioProvider: TosSQLDataSetProvider;
     MasterDataSetHABILITAEDITARTODOS: TStringField;
     MasterDataSetFORCAREEXECUCAOFILTRO: TStringField;
+    UsuarioDataSetSTATUS: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
 

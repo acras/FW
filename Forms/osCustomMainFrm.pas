@@ -1125,7 +1125,7 @@ begin
       cdsUsuario.Params.Clear;
       with cdsUsuario.Params.CreateParam(ftString, 'Username', ptInput) do
         Value := LoginForm.UsernameEdit.Text;
-
+      
       cdsUsuario.Open;
       try
         if cdsUsuario.RecordCount = 0 then
@@ -1138,6 +1138,14 @@ begin
             and (not cdsUsuario.FieldByName('Senha').IsNull or (LoginForm.PasswordEdit.Text <> '')) then
         begin
           MessageDlg('Senha incorreta.', mtError, [mbOK], 0);
+          LoginForm.FocusedControl := LoginForm.PasswordEdit;
+          Inc(ErrorCount);
+        end
+        else if (cdsUsuario.FieldByName('Status').AsString = 'X') then
+        begin
+          MessageDlg('Este usuário está inativo e não pode efetuar seu login no sistema.' +
+            #13 + 'Entre em contato com o administrador do sistema ou com o Suporte da Hotsoft.',
+            mtError, [mbOK], 0);
           LoginForm.FocusedControl := LoginForm.PasswordEdit;
           Inc(ErrorCount);
         end

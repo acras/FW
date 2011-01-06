@@ -1,8 +1,8 @@
 object RecursoData: TRecursoData
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 16
-  Top = 135
+  Left = 674
+  Top = 148
   Height = 491
   Width = 305
   object MasterDataSet: TosSQLDataSet
@@ -204,15 +204,14 @@ object RecursoData: TRecursoData
   end
   object UsuarioDataSet: TosSQLDataSet
     CommandText = 
-      'SELECT'#13#10'  Apelido,'#13#10'  Nome,'#13#10'  Senha'#13#10'FROM'#13#10'  Usuario'#13#10'WHERE'#13#10'  ' +
-      'UPPER(Apelido) = UPPER(:Username)'#13#10
+      'SELECT'#13#10'  Apelido,'#13#10'  Nome,'#13#10'  Senha,'#13#10'  Status'#13#10'FROM'#13#10'  Usuario' +
+      #13#10'WHERE'#13#10'  UPPER(Apelido) = UPPER(:Username)'#13#10
     MaxBlobSize = 32
     Params = <
       item
         DataType = ftString
         Name = 'Username'
         ParamType = ptInput
-        Value = 'Administrador'
       end>
     SQLConnection = acCustomSQLMainData.SQLConnection
     Left = 60
@@ -229,6 +228,11 @@ object RecursoData: TRecursoData
     object UsuarioDataSetNOME: TStringField
       FieldName = 'NOME'
       Size = 50
+    end
+    object UsuarioDataSetSTATUS: TStringField
+      FieldName = 'STATUS'
+      FixedChar = True
+      Size = 1
     end
   end
   object UsuarioProvider: TosSQLDataSetProvider
