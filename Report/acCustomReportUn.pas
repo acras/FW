@@ -46,7 +46,7 @@ type
 
   TReportFormat = (rfAcrobat, rfArchive, rfBitmap, rfMetafile, rfExcel,
                    rfGIF, rfHTML, rfJPEG, rfPrinter, rfReportText, rfRTF,
-                   rfText, rfWindowsMetafile, rfXHTML, rfPDF);
+                   rfText, rfWindowsMetafile, rfXHTML, rfPDF, rfPDFStream);
 
   TacCustomReport = class(TDataModule)
     FilterDatasource: TDataSource;
@@ -62,6 +62,11 @@ type
     FForcePrintWithoutDialog: Boolean;
     FForcePreview: Boolean;
 
+    FPDFStream: TMemoryStream;
+    FPDFDevice: TppPDFDevice;
+    FPrintToStream: Boolean;
+
+
     procedure replaceReportSQLAddWhere(report: TppReport;
       template: TMemoryStream; id:integer);
     function replaceId(str: string; id: integer): string;
@@ -72,6 +77,7 @@ type
   protected
     beforePrint: TNotifyEvent;
     adendos: TAdendos;
+
     function getTemplate(id: integer; stream: TMemoryStream;
       var config: TConfigImpressao): boolean; virtual;
     procedure linkEvents; virtual;
@@ -83,6 +89,8 @@ type
     property forcePrintWithoutDialog: Boolean read FForcePrintWithoutDialog
       write setForcePrintWithoutDialog;
     property forcePreview: Boolean read FForcePreview write setForcePreview;
+    property PDFStream: TMemoryStream read FPDFStream write FPDFStream;
+    property PrintToStream: Boolean read FPrintToStream write FPrintToStream;
     procedure Print(const PID: integer); virtual;
     function getPipeline(name: String): TppDataPipeline;
     function findComponentUserName(name: String): TComponent;
@@ -197,6 +205,22 @@ begin
       report.TextFileName := FTextFileName;
       report.ShowPrintDialog := false;
     end
+    else if FPrintToStream then
+    begin
+      if FPDFDevice = nil then
+      begin
+        FPDFDevice := TppPDFDevice.Create(nil);
+        FPDFStream := TMemoryStream.Create;
+      end
+      else
+      begin
+        FPDFStream.Clear;
+      end;
+
+      FPDFDevice.PDFSettings := Report.PDFSettings;
+      FPDFDevice.OutputStream := FPDFStream;
+      FPDFDevice.Publisher := Report.Publisher;
+    end
     else if config.preview then
     begin
       report.DeviceType := 'Screen';
@@ -261,7 +285,10 @@ begin
       report.DeviceType := 'Screen';
     end;
 
-    Report.Print;
+    if PrintToStream then
+      Report.PrintToDevices
+    else
+      Report.Print;
   finally
     FreeAndNil(stream);
   end;
@@ -489,7 +516,6 @@ begin
 
       rfXHTML:
         DeviceType := 'XHTML Document';
-
       else
         DeviceType := 'Screen';
     end; // case
