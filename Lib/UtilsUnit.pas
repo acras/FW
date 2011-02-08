@@ -1,7 +1,5 @@
 unit UtilsUnit;
 
-
-
 interface
 
 uses
@@ -35,6 +33,9 @@ function isNumeric(valor: string; acceptThousandSeparator: Boolean = False): boo
 function isConvert(Str: string): boolean;
 function extractPhoneNumber(Str: String; defaultDDD: string = '041'): string;
 procedure setHabilitaEdit(edit: TEdit; enabled: boolean);
+function InvertIntOn(const ANumberL, ANumberH: Integer): Int64;
+function InvertIntOff(const ANumberL, ANumberH: Integer): Int64;
+function ConvertIntToBase(ANumber: Int64): string;
 
 implementation
 
@@ -421,6 +422,49 @@ begin
     edit.ReadOnly := true;
     edit.Color := clBtnFace;
   end;
+end;
+
+function InvertIntOn(const ANumberL, ANumberH: Integer): Int64;
+asm
+  XOR EAX,$FFFFFFFF
+  XOR EDX,$FFFFFFFF
+  OR  EDX,$80000000
+end;
+
+function InvertIntOff(const ANumberL, ANumberH: Integer): Int64;
+asm
+  XOR EAX,$FFFFFFFF
+  XOR EDX,$FFFFFFFF
+end;
+
+function ConvertIntToBase(ANumber: Int64): string;
+const
+  CBaseMap: array[0..31] of Char = (
+    '2','3','4','5','6','7','8','9', //0-7
+    'A','B','C','D','E','F','G','H', //8-15
+    'J','K','L','M','N', //16-20
+    'P','Q','R','S','T','U','V','X','W','Y','Z'); //21-31
+var
+  I: Integer;
+begin
+  SetLength(Result, 15);
+  I := 0;
+
+  if ANumber < 0 then
+  begin
+    Inc(I);
+    Result[I] := '1';
+    ANumber := InvertIntOff(ANumber and $FFFFFFFF, (ANumber and $FFFFFFFF00000000) shr 32);
+  end;
+
+  while ANumber <> 0 do
+  begin
+    Inc(I);
+    Result[I] := CBaseMap[ANumber and $1F];
+    ANumber := ANumber shr 5;
+  end;
+
+  SetLength(Result, I);
 end;
 
 end.
