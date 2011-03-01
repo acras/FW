@@ -207,15 +207,16 @@ begin
     end
     else if FPrintToStream then
     begin
-      if FPDFDevice = nil then
+      if FPDFDevice <> nil then
       begin
-        FPDFDevice := TppPDFDevice.Create(nil);
-        FPDFStream := TMemoryStream.Create;
-      end
-      else
-      begin
-        FPDFStream.Clear;
+        FreeAndNil(FPDFDevice);
       end;
+      FPDFDevice := TppPDFDevice.Create(Self);
+      if FPDFStream <> nil then
+      begin
+        FreeAndNil(FPDFStream);
+      end;
+      FPDFStream := TMemoryStream.Create;
 
       FPDFDevice.PDFSettings := Report.PDFSettings;
       FPDFDevice.OutputStream := FPDFStream;
