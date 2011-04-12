@@ -5,7 +5,7 @@ interface
 uses
   IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
-  Math, JvToolEdit, Wwdbgrid, RegExpr,StdCtrls;
+  Math, JvToolEdit, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -36,6 +36,8 @@ procedure setHabilitaEdit(edit: TEdit; enabled: boolean);
 function InvertIntOn(const ANumberL, ANumberH: Integer): Int64;
 function InvertIntOff(const ANumberL, ANumberH: Integer): Int64;
 function ConvertIntToBase(ANumber: Int64): string;
+function RegistroDuplicado(PDataSet: TDataSet; IDField: string): Boolean;
+
 
 implementation
 
@@ -465,6 +467,32 @@ begin
   end;
 
   SetLength(Result, I);
+end;
+
+function RegistroDuplicado(PDataSet: TDataSet; IDField: string):
+  Boolean;
+var
+  ID: TIntegerField;
+  CDS: TClientDataset;
+  RecNoJaExiste : Integer;
+begin
+  CDS := TClientDataSet.Create(nil);
+  try
+    CDS.CloneCursor(TCustomClientDataSet(PDataSet), True);
+    ID := TIntegerField(PDataSet.FieldByName(IDField));
+    if CDS.Locate(IDField,ID.AsInteger,[loCaseInsensitive]) then
+    begin
+      RecNoJaExiste := CDS.RecNo;
+      if RecNoJaExiste <> PDataSet.RecNo then
+        Result := True
+      else
+        Result := False;
+    end
+    else
+    Result := False;
+  finally
+    FreeAndNil(CDS);
+  end;
 end;
 
 end.
