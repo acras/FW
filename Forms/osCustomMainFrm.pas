@@ -15,8 +15,8 @@ uses
   SqlExpr, DBXpress, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
-  osSQLQuery, acFilterController, CommCtrl, clipbrd, osCustomLoginFormUn;
-  //ppWWRichEd;
+  osSQLQuery, acFilterController, CommCtrl, clipbrd, osCustomLoginFormUn,
+  acReportContainer;//ppWWRichEd;
 
 type
   TDatamoduleClass = class of TDatamodule;
@@ -141,6 +141,7 @@ type
     spbPreviewLast: TSpeedButton;
     mskPreviewPercentage: TMaskEdit;
     spbPreviewCancel: TSpeedButton;
+    FReportDepot: TacReportContainer;
     procedure EditActionExecute(Sender: TObject);
     procedure ViewActionExecute(Sender: TObject);
     procedure NewActionExecute(Sender: TObject);

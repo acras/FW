@@ -6,7 +6,8 @@ interface
 uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDataModule,
   daQueryDataView, ppTypes,daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, FMTBcd, osCustomDataSetProvider, SqlExpr,
-  osSQLDataSetProvider, daSQl, osSQLQuery, osComboFilter, ppDBPipe, osClientDataSet;
+  osSQLDataSetProvider, daSQl, osSQLQuery, osComboFilter, ppDBPipe, osClientDataSet,
+  acReportContainer, Forms; 
 
   type TIdade = class
   private
@@ -41,59 +42,80 @@ uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDat
     strSQL: String; params: TStringList = nil; mapeamentos: TStringList = nil;
     recipient: TDataModule = nil);
 
-
 implementation
 
 uses daDataView, ppClass, FwConstants, DateUtils, Dialogs; // RelatorioEditFormUn
 
-
-
 function getTemplateByName(name: string; stream: TStream): boolean;
 var
   query: TosSQLDataset;
+  report: string;
 begin
   name := UpperCase(Name);
-  result := false;
-  query := TosSQLDataSet.Create(nil);
-  try
-    query.SQLConnection := acCustomSQLMainData.SQLConnectionMeta;
-    query.CommandText := 'SELECT ' +
-                         '  template '+
-                         'FROM ' +
-                         '  RB_ITEM '+
-                         'WHERE ' +
-                         '  UPPER(name) like UPPER(' + quotedStr(name) + ')';
-    query.Open;
-    if query.RecordCount>0 then
-    begin
-      TBLOBField(query.fields[0]).SaveToStream(stream);
-      result := true;
+  Result := false;
+  report := TacReportContainer(Application.MainForm.FindComponent('FReportDepot')).
+    findReportByName(name); 
+  if Length(report) > 0 then
+  begin
+    stream.Write(report[1],Length(report));
+    Result := True;
+  end
+  else
+  begin
+    query := TosSQLDataSet.Create(nil);
+    try
+      query.SQLConnection := acCustomSQLMainData.SQLConnectionMeta;
+      query.CommandText := ' SELECT ' +
+                           '   template, '+
+                           '   ITEM_ID '+
+                           ' FROM ' +
+                           '   RB_ITEM '+
+                           ' WHERE ' +
+                           '   UPPER(name) like UPPER(' + quotedStr(name) + ')';
+      query.Open;
+      if query.RecordCount>0 then
+      begin
+        TBLOBField(query.fields[0]).SaveToStream(stream);
+        TacReportContainer(Application.MainForm.FindComponent('FReportDepot')).
+          addReport(query.fields[1].AsInteger, name, TBLOBField(query.fields[0]).Value);
+        Result := true;
+      end;
+    finally
+      FreeAndNil(query);
     end;
-  finally
-    FreeAndNil(query);
   end;
 end;
 
 function getTemplateIDByName(name: string): integer;
 var
   query: TosSQLDataset;
+  id: Integer;
 begin
   name := UpperCase(Name);
-  query := TosSQLDataSet.Create(nil);
-  try
-    query.SQLConnection := acCustomSQLMainData.SQLConnection;
-    query.CommandText := 'SELECT ' +
-                         '  ITEM_ID '+
-                         'FROM ' +
-                         '  RB_Item '+
-                         'WHERE ' +
-                         '  UPPER(name) like UPPER(' + quotedStr(name) + ')';
-    query.Open;
-    result := -1;
-    if not query.eof then
-      result := query.fields[0].asInteger;
-  finally
-    FreeAndNil(query);
+  id := TacReportContainer(Application.MainForm.FindComponent('FReportDepot')).
+    findRportIdByName(name);
+  if id <> -1 then
+  begin
+    Result := id;
+  end
+  else
+  begin
+    query := TosSQLDataSet.Create(nil);
+    try
+      query.SQLConnection := acCustomSQLMainData.SQLConnection;
+      query.CommandText := ' SELECT ' +
+                           '   ITEM_ID '+
+                           ' FROM ' +
+                           '   RB_Item '+
+                           ' WHERE ' +
+                           '   UPPER(name) like UPPER(' + quotedStr(name) + ')';
+      query.Open;
+      Result := -1;
+      if not query.eof then
+        Result := query.fields[0].asInteger;
+    finally
+      FreeAndNil(query);
+    end;
   end;
 end;
 
@@ -101,25 +123,39 @@ end;
 function getTemplateById(id: integer; stream: TStream): boolean;
 var
   query: TosSQLDataset;
+  report: string;
 begin
-  result := false;
-  query := TosSQLDataSet.Create(nil);
-  try
-    query.SQLConnection := acCustomSQLMainData.SQLConnection;
-    query.CommandText := 'SELECT ' +
-                         '  template '+
-                         'FROM ' +
-                         '  RB_ITEM '+
-                         'WHERE ' +
-                         '  ITEM_ID = ' + intToStr(id);
-    query.Open;
-    if query.RecordCount>0 then
-    begin
-      TBLOBField(query.fields[0]).SaveToStream(stream);
-      result := true;
+  Result := false;
+  report := TacReportContainer(Application.MainForm.FindComponent('FReportDepot')).
+    findReportById(id);
+  if Length(report) > 0 then
+  begin
+    stream.Write(report[1],Length(report));
+    Result := True;
+  end
+  else
+  begin
+    query := TosSQLDataSet.Create(nil);
+    try
+      query.SQLConnection := acCustomSQLMainData.SQLConnection;
+      query.CommandText := ' SELECT ' +
+                           '   template, '+
+                           '   name '+
+                           ' FROM ' +
+                           '   RB_ITEM '+
+                           ' WHERE ' +
+                           '   ITEM_ID = ' + intToStr(id);
+      query.Open;
+      if query.RecordCount>0 then
+      begin
+        TBLOBField(query.fields[0]).SaveToStream(stream);
+        TacReportContainer(Application.MainForm.FindComponent('FReportDepot')).
+          addReport(id, query.fields[1].AsString, query.fields[0].AsString);
+        Result := True;
+      end;
+    finally
+      FreeAndNil(query);
     end;
-  finally
-    FreeAndNil(query);
   end;
 end;
 

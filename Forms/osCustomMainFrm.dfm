@@ -3134,4 +3134,8 @@ inherited osCustomMainForm: TosCustomMainForm
     Left = 600
     Top = 125
   end
+  object FReportDepot: TacReportContainer
+    Left = 905
+    Top = 37
+  end
 end
