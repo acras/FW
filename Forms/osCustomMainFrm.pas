@@ -231,8 +231,6 @@ type
     function CreateCurrentDatamodule: TDatamodule;
     function CreateCurrentReport: TacCustomReport;
 
-    procedure Logout;
-
     procedure LoadOutlookBar;
     procedure checkOperations;
 
@@ -250,6 +248,7 @@ type
     procedure ShowHomePage(freeRes: boolean; goHome: boolean = true);  dynamic;
     procedure HideHomePage(tipo: TTipoExibicao);
     function getSuperUserPass: string; virtual;
+    procedure Logout; dynamic;
     function Login: boolean; dynamic;
     procedure execSplash; virtual; abstract;
     function getLoginFormClass: TLoginFormClass; virtual;
