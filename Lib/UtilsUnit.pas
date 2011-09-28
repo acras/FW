@@ -37,6 +37,7 @@ function InvertIntOn(const ANumberL, ANumberH: Integer): Int64;
 function InvertIntOff(const ANumberL, ANumberH: Integer): Int64;
 function ConvertIntToBase(ANumber: Int64): string;
 function RegistroDuplicado(PDataSet: TDataSet; IDField: string): Boolean;
+function ConverteFK(id: Integer): string;
 
 
 implementation
@@ -492,6 +493,16 @@ begin
     Result := False;
   finally
     FreeAndNil(CDS);
+  end;
+end;
+
+function ConverteFK(id: Integer): string;
+begin
+  if (id = 0) then
+    Result := 'null'
+  else
+  begin
+    Result := IntToSTr(id);
   end;
 end;
 
