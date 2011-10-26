@@ -38,7 +38,9 @@ function InvertIntOff(const ANumberL, ANumberH: Integer): Int64;
 function ConvertIntToBase(ANumber: Int64): string;
 function RegistroDuplicado(PDataSet: TDataSet; IDField: string): Boolean;
 function ConverteFK(id: Integer): string;
-
+function ValidaTempo(tempo: string): string;
+function ValidaMinutos(tempo: string): Boolean;
+function ValidaIntervalo(inicio: string; fim: string): Boolean;
 
 implementation
 
@@ -505,5 +507,48 @@ begin
     Result := IntToSTr(id);
   end;
 end;
+
+function ValidaTempo(tempo: string): string;
+var
+  hora, minuto: Integer;
+begin
+  Result := 'ok';
+  if (Trim(tempo) = ':') or (Trim(tempo) = '') then
+    Result := 'vazio'
+  else if (Trim(Copy(tempo,0,2)) = '') or (Trim(Copy(tempo,4,2)) = '') then
+    Result := 'incorreto';
+end;
+
+function ValidaMinutos(tempo: string): Boolean;
+var
+  minuto: Integer;
+begin
+  minuto := StrToIntDef(Trim(Copy(tempo,4,2)),0);
+  if minuto > 59 then
+    Result := False
+  else
+    Result := True;
+end;
+
+function ValidaIntervalo(inicio: string; fim: string): Boolean;
+var
+  horaInicio, minutoInicio: Integer;
+  horaFim, minutoFim: Integer;
+begin
+  horaInicio := StrToIntDef(Trim(Copy(inicio,0,2)),0);
+  minutoInicio := StrToIntDef(Trim(Copy(inicio,4,2)),0);
+  horaFim := StrToIntDef(Trim(Copy(fim,0,2)),0);
+  minutoFim := StrToIntDef(Trim(Copy(fim,4,2)),0);
+
+  Result := True;
+  if (horaFim < horaInicio) or (horaFim = horaInicio) then
+  begin
+    if (horaFim = horaInicio) and (minutoInicio < minutoFim) then
+      Exit;
+
+    Result := False;
+  end;
+end;
+
 
 end.
