@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, Provider, osSQLDataSetProvider, SqlExpr,
   osCustomDataSetProvider, osUtils, osSQLQuery, osSQLDataSet, DBClient,
-  osClientDataset;
+  osClientDataset, acCustomReportUn;
 
 type
   TacCustomParametroSistemaData = class(TDataModule)
@@ -23,6 +23,7 @@ type
 //    procedure Validate(PDataSet: TDataSet);
 //    function GetNextOrcamento : integer;
     function getNomeImpressoraClasse(nomeClasseImpressora: string): string; virtual;
+    function getConfigImpressora(PID: Integer; var config: TConfigImpressao): Boolean; virtual;
   end;
 
 var
@@ -77,6 +78,12 @@ end;
 
 initialization
   OSRegisterClass(TacCustomParametroSistemaData);}
+
+function TacCustomParametroSistemaData.getConfigImpressora(PID: Integer;
+  var config: TConfigImpressao): Boolean;
+begin
+  Result := False;
+end;
 
 function TacCustomParametroSistemaData.getNomeImpressoraClasse(
   nomeClasseImpressora: string): string;
