@@ -110,7 +110,8 @@ const
 
 implementation
 
-uses acCustomSQLMainDataUn, osReportUtils, acCustomRelatorioDataUn, Dialogs;
+uses acCustomSQLMainDataUn, osReportUtils, acCustomRelatorioDataUn, Dialogs,
+  acCustomParametroSistemaDataUn;
 
 {$R *.dfm}
 
@@ -170,6 +171,7 @@ begin
     if not(encontrou) then
     begin
       getTemplateByName(ClassName, stream);
+      config.nomeImpressora := acCustomParametroSistemaData.getNomeImpressoraClasse('LASER');
       if stream.size<>0 then
         encontrou := true;
     end;
