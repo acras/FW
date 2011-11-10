@@ -110,8 +110,7 @@ const
 
 implementation
 
-uses acCustomSQLMainDataUn, osReportUtils, acCustomRelatorioDataUn, Dialogs,
-  acCustomParametroSistemaDataUn;
+uses acCustomSQLMainDataUn, osReportUtils, acCustomRelatorioDataUn, Dialogs;
 
 {$R *.dfm}
 
@@ -244,9 +243,6 @@ begin
     end;
 
     Report.Units := utMillimeters;
-
-    if config.nomeImpressora = '' then
-      acCustomParametroSistemaData.getConfigImpressora(PID,config);
 
     if config.nomeImpressora <> '' then
     begin
