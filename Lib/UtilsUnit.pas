@@ -40,7 +40,8 @@ function RegistroDuplicado(PDataSet: TDataSet; IDField: string): Boolean;
 function ConverteFK(id: Integer): string;
 function ValidaTempo(tempo: string): string;
 function ValidaMinutos(tempo: string): Boolean;
-function ValidaIntervalo(inicio: string; fim: string): Boolean;
+function ValidaHoras(tempo: string): Boolean;
+function ValidaIntervalo(inicio: string; fim: string; permiteIgual: Boolean = false): Boolean;
 
 implementation
 
@@ -472,8 +473,7 @@ begin
   SetLength(Result, I);
 end;
 
-function RegistroDuplicado(PDataSet: TDataSet; IDField: string):
-  Boolean;
+function RegistroDuplicado(PDataSet: TDataSet; IDField: string): Boolean;
 var
   ID: TIntegerField;
   CDS: TClientDataset;
@@ -511,41 +511,57 @@ end;
 function ValidaTempo(tempo: string): string;
 var
   hora, minuto: Integer;
+  tamanho: Integer;
 begin
+  tamanho := Length(tempo);
   Result := 'ok';
   if (Trim(tempo) = ':') or (Trim(tempo) = '') then
     Result := 'vazio'
-  else if (Trim(Copy(tempo,0,2)) = '') or (Trim(Copy(tempo,4,2)) = '') then
+  else if (Trim(Copy(tempo,0,tamanho-3)) = '') or (Trim(Copy(tempo,tamanho-1,2)) = '') then
     Result := 'incorreto';
 end;
 
 function ValidaMinutos(tempo: string): Boolean;
 var
   minuto: Integer;
+  tamanho: Integer;
 begin
-  minuto := StrToIntDef(Trim(Copy(tempo,4,2)),0);
-  if minuto > 59 then
-    Result := False
-  else
-    Result := True;
+  tamanho := Length(tempo);
+  minuto := StrToIntDef(Trim(Copy(tempo,tamanho-1,2)),0);
+  Result := not (minuto > 59);
 end;
 
-function ValidaIntervalo(inicio: string; fim: string): Boolean;
+function ValidaHoras(tempo: string): Boolean;
+var
+  hora: Integer;
+begin
+  hora := StrToIntDef(Trim(Copy(tempo,0,2)),0);
+  Result := not (hora > 23);
+end;
+
+function ValidaIntervalo(inicio: string; fim: string; permiteIgual: Boolean): Boolean;
 var
   horaInicio, minutoInicio: Integer;
   horaFim, minutoFim: Integer;
+  tamInicio, tamFim: Integer;
 begin
-  horaInicio := StrToIntDef(Trim(Copy(inicio,0,2)),0);
-  minutoInicio := StrToIntDef(Trim(Copy(inicio,4,2)),0);
-  horaFim := StrToIntDef(Trim(Copy(fim,0,2)),0);
-  minutoFim := StrToIntDef(Trim(Copy(fim,4,2)),0);
+  tamInicio := Length(inicio);
+  tamFim := Length(fim);  
+  horaInicio := StrToIntDef(Trim(Copy(inicio,0,tamInicio-3)),0);
+  minutoInicio := StrToIntDef(Trim(Copy(inicio,tamInicio-1,2)),0);
+  horaFim := StrToIntDef(Trim(Copy(fim,0,tamFim-3)),0);
+  minutoFim := StrToIntDef(Trim(Copy(fim,tamFim-1,2)),0);
 
   Result := True;
-  if (horaFim < horaInicio) or (horaFim = horaInicio) then
+  if (horaFim <= horaInicio) then
   begin
-    if (horaFim = horaInicio) and (minutoInicio < minutoFim) then
-      Exit;
-
+    if (horaFim = horaInicio) then
+    begin
+      if (minutoInicio < minutoFim) then
+        Exit
+      else if (minutoInicio = minutoFim) and (permiteIgual) then
+        Exit;
+    end;
     Result := False;
   end;
 end;
