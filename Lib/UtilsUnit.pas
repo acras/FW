@@ -492,7 +492,7 @@ begin
         Result := False;
     end
     else
-    Result := False;
+      Result := False;
   finally
     FreeAndNil(CDS);
   end;
@@ -510,7 +510,7 @@ end;
 
 function ValidaTempo(tempo: string): string;
 var
-  hora, minuto: Integer;
+  hora: Integer;
   tamanho: Integer;
 begin
   tamanho := Length(tempo);
@@ -518,6 +518,8 @@ begin
   if (Trim(tempo) = ':') or (Trim(tempo) = '') then
     Result := 'vazio'
   else if (Trim(Copy(tempo,0,tamanho-3)) = '') or (Trim(Copy(tempo,tamanho-1,2)) = '') then
+    Result := 'incorreto'
+  else if not TryStrToInt(Trim(Copy(tempo,0,tamanho-3)), hora) then
     Result := 'incorreto';
 end;
 
