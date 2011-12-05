@@ -571,9 +571,15 @@ begin
   end;
 end;
 
+// essa função corrige horas como 1_:00, 1_:_0
 function FormataHora(tempo: string): string;
+var
+  hora: Integer;
+  minuto: Integer;
 begin
-  Result := tempo;
+  hora := GetHora(tempo);
+  minuto := GetMinuto(tempo);
+  Result := IntToStr(hora)+':'+IntToStr(minuto);
 end;
 
 function GetHora(tempo: string): Integer;
