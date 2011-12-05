@@ -98,7 +98,7 @@ var
 
 implementation
 
-uses RecursoDataUn, AdministracaoLookupDataUn, SQLMainData;
+uses RecursoDataUn, AdministracaoLookupDataUn;
 
 {$R *.DFM}
 
@@ -121,7 +121,7 @@ begin
   inherited;
   PageControl.ActivePage := ClassesTabSheet;
 
-  MainData.RefreshTables([tnDominio, tnTipoRecurso]);
+  acCustomSQlMainData.RefreshTables([tnDominio, tnTipoRecurso]);
 
   viewMode := FormMode=fmView;
   if viewMode then
@@ -134,14 +134,14 @@ procedure TRecursoEditForm.RecursoClientDataSourceAfterApplyUpdates(Sender: TObj
 begin
   inherited;
   if TClientDataSet(Sender).UpdateStatus in [usModified, usInserted, usDeleted] then
-    MainData.UpdateVersion(tnRecurso);
+    acCustomSQLMainData.UpdateVersion(tnRecurso);
 end;
 
 procedure TRecursoEditForm.AcaoClientDataSetAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant);
 begin
   inherited;
   if TClientDataSet(Sender).UpdateStatus in [usModified, usInserted, usDeleted] then
-    MainData.UpdateVersion(tnAcao);
+    acCustomSQLMainData.UpdateVersion(tnAcao);
 
 end;
 

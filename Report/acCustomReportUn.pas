@@ -9,7 +9,7 @@ uses
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
   daDataModule, daQueryDataView, TypInfo, Printers,
-  ppPDFDevice, ppPrintr, ppChrtDP;
+  ppPDFDevice, ppPrintr;
 
 type
   TTipoAdendo = (taWHERE, taORDER);

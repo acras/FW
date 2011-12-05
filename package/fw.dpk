@@ -47,7 +47,6 @@ requires
   rbRIDE107,
   rbRAP107,
   tee,
-  rbTC107,
   rbDIDE107,
   rbUSER107,
   rtl,

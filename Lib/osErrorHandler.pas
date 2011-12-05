@@ -4,58 +4,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, db, osCIC;
+  Dialogs, StdCtrls, db, osCIC, richedit;
 
 type
   TErrorType = (etError, etCritical, etWarning);
 
-  {$IFDEF WEB}
-  TosErrorHandlerForm = class(TForm)
-    lbErros: TListBox;
-    btnFechar: TButton;
-    btnContinua: TButton;
-    btnCancela: TButton;
-    procedure lbErrosDrawItem(Control: TWinControl; Index: Integer;
-      Rect: TRect; State: TOwnerDrawState);
-    procedure lbErrosMeasureItem(Control: TWinControl; Index: Integer;
-      var Height: Integer);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormShow(Sender: TObject);
-
-  private
-    FErrorBmp: TBitmap;
-    FWarningBmp: TBitmap;
-    FCriticalBmp: TBitmap;
-    FEnableWarnings: boolean;
-
-    function Execute: boolean;
-    function GetErrorCount: integer;
-
-  public
-    procedure CheckEmpty(PField : TField; PFieldName: string = ''); overload;
-    procedure CheckEmpty(PStr, PFieldName: string); overload;
-    procedure WarningEmpty(PField : TField; PFieldName: string = ''); overload;
-    function IsEmpty(PStr : string) : boolean; overload;
-    function IsEmpty(PField : TField) : boolean; overload;
-    function IsFullStr(PField : TField) : boolean;
-    function IsFullDigit(PField : TField) : boolean;
-    function IsCIC(PField : TField): boolean;
-    function IsCNPJ(PField : TField): boolean;
-    function IsCPF(PField : TField): boolean;
-    function IsUF(PField : TField) : boolean;
-
-    procedure Check;
-    procedure Clear;
-    procedure Add(PMsg : string; PErrorType : TErrorType = etError);
-
-    property ErrorCount: integer read GetErrorCount;
-
-    property EnableWarnings: boolean read FEnableWarnings write FEnableWarnings;
-  end;
-
-  {$ELSE}
   TosErrorHandlerForm = class(TForm)
     lbErros: TListBox;
     btnFechar: TButton;
@@ -102,7 +55,6 @@ type
 
     property EnableWarnings: boolean read FEnableWarnings write FEnableWarnings;
   end;
-  {$ENDIF}
 const
   OBRIGATORIO = 'Obrigatório: %s';
   AVISO_OBRIGATORIO = '%s não informado';
@@ -126,7 +78,6 @@ var
   bContinua: boolean;
   i: integer;
 begin
-  {$IFNDEF WEB}
   bContinua := True;
   for i:=0 to lbErros.Items.Count-1 do
     if TErrorType(lbErros.Items.Objects[i]) <> etWarning then
@@ -140,7 +91,6 @@ begin
   btnCancela.Visible := bContinua;
   ShowModal;
   Result := (ModalResult = mrYes);
-  {$ENDIF}
 end;
 
 procedure TosErrorHandlerForm.lbErrosDrawItem(Control: TWinControl; Index: Integer;
@@ -157,7 +107,6 @@ var
   end;
 
 begin
-  {$IFNDEF WEB}
   with lbErros.Canvas do
   begin
     Bmp := TBitmap.Create;
@@ -205,7 +154,6 @@ begin
       Bmp.Free;
     end;
   end;
-  {$ENDIF}
 end;
 
 procedure TosErrorHandlerForm.lbErrosMeasureItem(Control: TWinControl; Index: Integer;
@@ -226,7 +174,6 @@ end;
 
 procedure TosErrorHandlerForm.FormCreate(Sender: TObject);
 begin
-  {$IFNDEF WEB}
   FErrorBmp := TBitmap.Create;
   FErrorBmp.Handle := LoadBitmap( HInstance, 'OS_ERROR' );
   FWarningBmp := TBitmap.Create;
@@ -234,16 +181,13 @@ begin
   FCriticalBmp := TBitmap.Create;
   FCriticalBmp.Handle := LoadBitmap( HInstance, 'OS_CRITICAL' );
   FEnableWarnings := True;
-  {$ENDIF}
 end;
 
 procedure TosErrorHandlerForm.FormDestroy(Sender: TObject);
 begin
-  {$IFNDEF WEB}
   FErrorBmp.Free;
   FWarningBmp.Free;
   FCriticalBmp.Free;
-  {$ENDIF}
 end;
 
 
@@ -413,10 +357,8 @@ end;
 
 procedure TosErrorHandlerForm.FormShow(Sender: TObject);
 begin
-  {$IFNDEF WEB}
   Self.Left := Application.MainForm.ClientOrigin.X + Application.MainForm.ClientWidth - Self.Width - 18;
   Self.Top := Application.MainForm.ClientOrigin.Y + 54;
-  {$ENDIF}
 end;
 
 

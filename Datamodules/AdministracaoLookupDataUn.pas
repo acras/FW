@@ -101,6 +101,7 @@ begin
   TipoRecursoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
   CargoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
   GrupoLookupDataSet.SQLConnection := acCustomSQLMainData.SQLConnection;
+  GetData;
 end;
 
 end.
