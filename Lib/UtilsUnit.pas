@@ -42,6 +42,9 @@ function ValidaTempo(tempo: string): string;
 function ValidaMinutos(tempo: string): Boolean;
 function ValidaHoras(tempo: string): Boolean;
 function ValidaIntervalo(inicio: string; fim: string; permiteIgual: Boolean = false): Boolean;
+function FormataHora(tempo: string): string;
+function GetHora(tempo: string): Integer;
+function GetMinuto(tempo: string): Integer;
 
 implementation
 
@@ -568,5 +571,25 @@ begin
   end;
 end;
 
+function FormataHora(tempo: string): string;
+begin
+  Result := tempo;
+end;
+
+function GetHora(tempo: string): Integer;
+var
+  tam: Integer;
+begin
+  tam := Length(tempo);
+  Result := StrToIntDef(Trim(Copy(tempo,0,tam-3)),0);
+end;
+
+function GetMinuto(tempo: string): Integer;
+var
+  tam: Integer;
+begin
+  tam := Length(tempo);
+  Result := StrToIntDef(Trim(Copy(tempo,tam-1,2)),0);
+end;
 
 end.
