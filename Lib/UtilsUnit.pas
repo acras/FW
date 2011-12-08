@@ -478,15 +478,15 @@ end;
 
 function RegistroDuplicado(PDataSet: TDataSet; IDField: string): Boolean;
 var
-  ID: TIntegerField;
+  ID: TField;
   CDS: TClientDataset;
   RecNoJaExiste : Integer;
 begin
   CDS := TClientDataSet.Create(nil);
   try
     CDS.CloneCursor(TCustomClientDataSet(PDataSet), True);
-    ID := TIntegerField(PDataSet.FieldByName(IDField));
-    if CDS.Locate(IDField,ID.AsInteger,[loCaseInsensitive]) then
+    ID := PDataSet.FieldByName(IDField);
+    if CDS.Locate(IDField,ID.Value,[loCaseInsensitive]) then
     begin
       RecNoJaExiste := CDS.RecNo;
       if RecNoJaExiste <> PDataSet.RecNo then
