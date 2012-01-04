@@ -102,6 +102,7 @@ contains
   ShowEventoLogFormUn in '..\Forms\ShowEventoLogFormUn.pas' {ShowEventoLogForm},
   acRAP in '..\..\ReportGen\acRAP.pas',
   RegExpr in '..\..\repositorio\RegExpr.pas',
-  RecursoEditFormUn in '..\Forms\RecursoEditFormUn.pas' {RecursoEditForm};
+  RecursoEditFormUn in '..\Forms\RecursoEditFormUn.pas' {RecursoEditForm},
+  ImprimirRelatorioTesteFormUn in '..\Forms\ImprimirRelatorioTesteFormUn.pas' {ImprimirRelatorioTesteForm};
 
 end.

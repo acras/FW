@@ -171,7 +171,8 @@ begin
     if not(encontrou) then
     begin
       getTemplateByName(ClassName, stream);
-      config.nomeImpressora := acCustomParametroSistemaData.getNomeImpressoraClasse('LASER');
+      if acCustomParametroSistemaData <> nil then
+        config.nomeImpressora := acCustomParametroSistemaData.getNomeImpressoraClasse('LASER');
       if stream.size<>0 then
         encontrou := true;
     end;
