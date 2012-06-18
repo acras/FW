@@ -30,6 +30,7 @@ procedure setHabilitaDBMemo(comp: TDBMemo; enabled: boolean);
 procedure setHabilitawwDBGrid(grd: TwwDBGrid; enabled: boolean);
 procedure ListFileDir(Path: string; FileList: TStrings);
 function isNumeric(valor: string; acceptThousandSeparator: Boolean = False): boolean;
+function isIP(valor: string): boolean;
 function isConvert(Str: string): boolean;
 function extractPhoneNumber(Str: String; defaultDDD: string = '041'): string;
 procedure setHabilitaEdit(edit: TEdit; enabled: boolean);
@@ -352,6 +353,12 @@ begin
     Result := ExecRegExpr('^\d+(,\d+)?$', valor);
 end;
 
+function isIP(valor: string): boolean;
+begin
+  valor := Trim(valor);
+  Result := ExecRegExpr('^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}?$', valor);
+end;
+
 function isConvert(Str: string): boolean;
 var
   Qtd, i: Smallint;
@@ -576,10 +583,22 @@ function FormataHora(tempo: string): string;
 var
   hora: Integer;
   minuto: Integer;
+  sHora: string;
+  sMinuto: string;
 begin
   hora := GetHora(tempo);
+  if hora = 0 then
+    sHora := '00'
+  else
+    sHora := IntToStr(hora);
+
   minuto := GetMinuto(tempo);
-  Result := IntToStr(hora)+':'+IntToStr(minuto);
+  if minuto = 0 then
+    sMinuto := '00'
+  else
+    sMinuto := IntToStr(minuto);
+
+  Result := sHora+':'+sMinuto;
 end;
 
 function GetHora(tempo: string): Integer;
