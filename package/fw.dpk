@@ -29,10 +29,7 @@ requires
   repositorio_acras,
   osControls,
   vclie,
-  JvCoreD7R,
-  Jcl,
   rbRCL107,
-  JvStdCtrlsD7R,
   ibxpress,
   B305_r70,
   dbdltree,
@@ -60,7 +57,8 @@ requires
   dsnapcon,
   ip4000v7,
   bdertl,
-  vclx;
+  vclx,
+  visualclx;
 
 contains
   osFrm in '..\Forms\osFrm.pas' {osForm},

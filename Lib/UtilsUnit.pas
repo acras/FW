@@ -5,7 +5,7 @@ interface
 uses
   IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
-  Math, JvToolEdit, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient;
+  Math, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient, wwdbedit, Buttons;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -21,9 +21,10 @@ procedure setHabilitaComponente(comp: TComponent; enabled: boolean);
 procedure habilitaComponentes(comps: varArrayOfcomps);
 procedure desHabilitaComponentes(comps: array of TComponent);
 procedure setHabilitaDBEdit(edt: TDBEdit; enabled: boolean);
+procedure setHabilitaButton(btn: TButton; enabled: boolean);
+procedure setHabilitaSpeedButton(btn: TSpeedButton; enabled: boolean);
 procedure setHabilitawwComboBox(comboBox: TwwDBComboBox; enabled: boolean);
 procedure setHabilitawwDateTimePicker(dateTimePicker: TwwDBDateTimePicker; enabled: boolean);
-procedure setHabilitaJvDirectoryEdit(edtd: TJvDirectoryEdit; enabled: boolean);
 function roundToCurr(val: double): double;
 procedure setHabilitaDBCheckBox(edtd: TDBCheckBox; enabled: boolean);
 procedure setHabilitaDBMemo(comp: TDBMemo; enabled: boolean);
@@ -66,6 +67,17 @@ begin
     FindClose(SR);
   end;
 end;
+
+procedure setHabilitaButton(btn: TButton; enabled: boolean);
+begin
+  btn.Enabled := enabled;
+end;
+
+procedure setHabilitaSpeedButton(btn: TSpeedButton; enabled: boolean);
+begin
+  btn.Enabled := enabled;
+end;
+
 
 function isDigitOrControl(Key: char): boolean;
 var
@@ -247,20 +259,6 @@ begin
   end;
 end;
 
-procedure setHabilitaJvDirectoryEdit(edtd: TJvDirectoryEdit; enabled: boolean);
-begin
-  if enabled then
-  begin
-    edtd.ReadOnly := false;
-    edtd.Color := clWhite;
-  end
-  else
-  begin
-    edtd.ReadOnly := true;
-    edtd.Color := clBtnFace;
-  end;
-end;
-
 procedure setHabilitaDBCheckBox(edtd: TDBCheckBox; enabled: boolean);
 begin
   if enabled then
@@ -310,14 +308,16 @@ begin
     setHabilitawwComboBox((comp as TwwDBComboBox), enabled);
   if comp is TwwDBDateTimePicker then
     setHabilitawwDateTimePicker((comp as TwwDBDateTimePicker), enabled);
-  if comp is TJvDirectoryEdit then
-    setHabilitaJvDirectoryEdit((comp as TJvDirectoryEdit), enabled);
   if comp is TDBCheckBox then
     setHabilitadbCheckBox((comp as TDBCheckBox), enabled);
   if comp is TDBMemo then
     setHabilitaDBMemo((comp as TDBMemo), enabled);
   if comp is TwwDBGrid then
     setHabilitawwDBGrid((comp as twwDBGrid), enabled);
+  if comp is TButton then
+    setHabilitaButton((comp as TButton), enabled);
+  if comp is TSpeedButton then
+    setHabilitaSpeedButton((comp as TSpeedButton), enabled);
 end;
 
 procedure habilitaComponentes(comps: varArrayOfcomps);
