@@ -627,26 +627,24 @@ var
   diretorio: string;
 begin
   diretorio:= GetSpecialFolderLocation(Application.Handle, CSIDL_COMMON_APPDATA) + '\';
-  if not FileExists (diretorio + 'COMANDO.TXT') then
-  begin
-    AssignFile(FComando, diretorio + 'COMANDO.TXT');
-    try
-      Rewrite(FComando);
-      Writeln(FComando, comando);
-    finally
-      CloseFile(FComando);
-    end;
+
+  DeleteFile(diretorio + 'COMANDO.TXT');
+  DeleteFile(diretorio + 'PRINTLBL.BAT');
+
+  AssignFile(FComando, diretorio + 'COMANDO.TXT');
+  try
+    Rewrite(FComando);
+    Writeln(FComando, comando);
+  finally
+    CloseFile(FComando);
   end;
 
-  if not FileExists(diretorio + 'PRINTLBL.BAT') then
-  begin
-    AssignFile(FBat, diretorio + 'PRINTLBL.BAT');
-    try
-      Rewrite(FBat);
-      Writeln(FBat, 'TYPE "' + diretorio + 'COMANDO.TXT" > '+impressora);
-    finally
-      CloseFile(FBat);
-    end;
+  AssignFile(FBat, diretorio + 'PRINTLBL.BAT');
+  try
+    Rewrite(FBat);
+    Writeln(FBat, 'TYPE "' + diretorio + 'COMANDO.TXT" > '+impressora);
+  finally
+    CloseFile(FBat);
   end;
 
   ShellExecute(0, 'Open', PChar(diretorio + 'PRINTLBL.BAT'), nil, nil, Ord(SW_HIDE));
