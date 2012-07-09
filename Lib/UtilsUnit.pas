@@ -47,7 +47,7 @@ function ValidaIntervalo(inicio: string; fim: string; permiteIgual: Boolean = fa
 function FormataHora(tempo: string): string;
 function GetHora(tempo: string): Integer;
 function GetMinuto(tempo: string): Integer;
-procedure ImprimirImpressoraTermica(const comando: string);
+procedure ImprimirImpressoraTermica(const comando, impressora: String);
 
 implementation
 
@@ -621,7 +621,7 @@ begin
   Result := StrToIntDef(Trim(Copy(tempo,tam-1,2)),0);
 end;
 
-procedure ImprimirImpressoraTermica(const comando: string);
+procedure ImprimirImpressoraTermica(const comando, impressora: String);
 var
   FBat, FComando: TextFile;
   diretorio: string;
@@ -643,7 +643,7 @@ begin
     AssignFile(FBat, diretorio + 'PRINTLBL.BAT');
     try
       Rewrite(FBat);
-      Writeln(FBat, 'TYPE "' + diretorio + 'COMANDO.TXT" > LPT1');
+      Writeln(FBat, 'TYPE "' + diretorio + 'COMANDO.TXT" > '+impressora);
     finally
       CloseFile(FBat);
     end;
