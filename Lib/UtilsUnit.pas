@@ -5,7 +5,7 @@ interface
 uses
   IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
-  Math, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient, wwdbedit, Buttons;
+  Math, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient, wwdbedit, Buttons, ShellAPI, acSysUtils;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -47,10 +47,14 @@ function ValidaIntervalo(inicio: string; fim: string; permiteIgual: Boolean = fa
 function FormataHora(tempo: string): string;
 function GetHora(tempo: string): Integer;
 function GetMinuto(tempo: string): Integer;
+procedure ImprimirImpressoraTermica(const comando: string);
 
 implementation
 
 uses DateUtils, Variants;
+
+const
+  CSIDL_COMMON_APPDATA = $0023;
 
 procedure ListFileDir(Path: string; FileList: TStrings);
 var
@@ -615,6 +619,37 @@ var
 begin
   tam := Length(tempo);
   Result := StrToIntDef(Trim(Copy(tempo,tam-1,2)),0);
+end;
+
+procedure ImprimirImpressoraTermica(const comando: string);
+var
+  FBat, FComando: TextFile;
+  diretorio: string;
+begin
+  diretorio:= GetSpecialFolderLocation(Application.Handle, CSIDL_COMMON_APPDATA) + '\';
+  if not FileExists (diretorio + 'COMANDO.TXT') then
+  begin
+    AssignFile(FComando, diretorio + 'COMANDO.TXT');
+    try
+      Rewrite(FComando);
+      Writeln(FComando, comando);
+    finally
+      CloseFile(FComando);
+    end;
+  end;
+
+  if not FileExists(diretorio + 'PRINTLBL.BAT') then
+  begin
+    AssignFile(FBat, diretorio + 'PRINTLBL.BAT');
+    try
+      Rewrite(FBat);
+      Writeln(FBat, 'TYPE "' + diretorio + 'COMANDO.TXT" > LPT1');
+    finally
+      CloseFile(FBat);
+    end;
+  end;
+
+  ShellExecute(0, 'Open', PChar(diretorio + 'PRINTLBL.BAT'), nil, nil, Ord(SW_HIDE));
 end;
 
 end.
