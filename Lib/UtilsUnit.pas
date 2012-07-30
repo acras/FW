@@ -47,7 +47,9 @@ function ValidaIntervalo(inicio: string; fim: string; permiteIgual: Boolean = fa
 function FormataHora(tempo: string): string;
 function GetHora(tempo: string): Integer;
 function GetMinuto(tempo: string): Integer;
+function ConverteData(data: string): TDateTime;
 procedure ImprimirImpressoraTermica(const comando, impressora: String);
+
 
 implementation
 
@@ -55,6 +57,11 @@ uses DateUtils, Variants;
 
 const
   CSIDL_COMMON_APPDATA = $0023;
+
+function ConverteData(data: string): TDateTime;
+begin
+  Result := StrToDateTime(Copy(data,7,2)+'/'+Copy(data,5,2)+'/'+Copy(data,1,4));
+end;
 
 procedure ListFileDir(Path: string; FileList: TStrings);
 var
