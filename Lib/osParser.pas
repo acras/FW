@@ -27,6 +27,7 @@ type
     procedure emit_FuncArg(NumArgumentos: Integer);
     procedure emit_ConstNum(Num: String);
     procedure emit_ConstBool(Num: String);
+    procedure emit_ConstString(str: String);    
     procedure emit_RValor(NomeVariavel: String);
     procedure emit_LValor(NomeVariavel: String);
     procedure emit_Operador(Operador: String);
@@ -109,8 +110,8 @@ type
     tFechaPar,
     tVirgula,
     tConstNumero,
-    tConstBooleano{,
-    tString});  //adicionado tString MS0001
+    tConstBooleano,
+    tString);  //adicionado tString MS0001
 
   { Erros detectaveis pelo parser }
   TerrParser =
@@ -143,8 +144,8 @@ const
      ('fecha parêntesis'),
      ('vírgula'),
      ('constante numérica'),
-     ('constante booleana'){,
-     ('constante string')}); //MS0001
+     ('constante booleana'),
+     ('constante string')); //MS0001
 
 implementation
 
@@ -169,6 +170,9 @@ begin
   FLex := TosLexico.Create;
 
   // Op. Logicos
+
+  FLex.AdicionaToken('"([^"]*)"', ord(tString));
+
   FLex.AdicionaToken('NOT', ord(tOperadorUnario));
   FLex.AdicionaToken('(OR|XOR)', ord(tOperadorLogicoDisjuntivo));
   FLex.AdicionaToken('AND', ord(tOperadorLogicoConjuntivo));
@@ -186,8 +190,6 @@ begin
   FLex.AdicionaToken('\(', ord(tAbrePar));
   FLex.AdicionaToken('\)', ord(tFechaPar));
   FLex.AdicionaToken(',', ord(tVirgula));
-
-//  FLex.AdicionaToken('"', ord(tString)); //MS0001
 
   // identificadores de variavel e funcao
   FLex.AdicionaToken('[a-zA-Z_][a-zA-Z_0-9]*', ord(tIdentificador));
@@ -455,11 +457,11 @@ begin
       end;
 
       //MS0001 aqui vai peghar a string mesmo
-{    ord(tString):
+    ord(tString):
       begin
-        FPrograma.emit_ConstBool(FLookAhead.Value);
+        FPrograma.emit_ConstString(FLookAhead.Value);
         Match(ord(tString));
-      end;}
+      end;
 
   else
     begin
@@ -599,6 +601,12 @@ begin
   end;
 
   Result := Copy(FFonte, PosI, PosF-PosI);
+end;
+
+procedure TExprPrograma.emit_ConstString(str: String);
+begin
+  FFonte := FFonte + 'conststring:' + str + #13#10;
+  inc(FnLinhas);
 end;
 
 { TStack }

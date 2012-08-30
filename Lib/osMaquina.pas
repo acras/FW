@@ -21,27 +21,34 @@ type
 
   { Representa uma variavel da maquina }
   TVariavelMaquina = class (TItemLookup)
-    FValor: Double;
+    FValor: Variant;
   public
     constructor Create; overload;
-    constructor Create(pNome: String; pValor: Double); overload;
+    constructor Create(pNome: String; pValor: Variant); overload;
 
     property Nome: String read FNome write FNome;
-    property Valor: Double read FValor write FValor;
+    property Valor: Variant read FValor write FValor;
   end;
 
   { Representa funcao da maquina }
   TFuncaoCallback = function (Parametros: TList) : Double;
+  TFuncaoStrCallback = function (Parametros: TList) : String;
 
   TFuncaoMaquina = class (TItemLookup)
     FNumeroParametros: Integer;
+    FTipo: Char;
     FCallBack: TFuncaoCallback;
+    FCallBackStr: TFuncaoStrCallback;
   public
     constructor Create(NomeFunc: String; NumParam: Integer;
-                       Func: TFuncaoCallback);
+                       Func: TFuncaoCallback); overload;
+    constructor Create(NomeFunc: String; NumParam: Integer;
+                       Func: TFuncaoStrCallback); overload;
 
     property Nome: String read FNome;
+    property Tipo: Char read FTipo;    
     property CallBack: TFuncaoCallback read FCallBack;
+    property CallBackStr: TFuncaoStrCallback read FCallBackStr;
   end;
 
   { Maquina virtual para processamento de expressoes aritmeticas }
@@ -51,9 +58,11 @@ type
     FVariaveis: TListLookUp;  // Listas de variaveis e funcoes definidas
     FFuncoes: TListLookUp;
     FResultado: Double;       // Resultado do processamento
+    FResultadoStr: string;       // Resultado do processamento    
     FnLinhaProc: Integer;     // Linha atual sendo processada
     FnNumArg: Integer;  // Linha de inicio de leitura de argumento
     FListaErros: TListErro;   // Lista de Erros ocorridos
+    FStrings: TStringList;
 
   private
     procedure ProcessaInstrucao(bytecode: Integer; Parametro: String);
@@ -76,10 +85,11 @@ type
     procedure RegisterUserFunction(Name: string; NumParams: integer; FunctionPointer: TFuncaoCallback);
 
     // Cria/atribui valores aa variaveis
-    function SetaVariavel(NomeVar: String; Value: Double): Boolean;
+    function SetaVariavel(NomeVar: String; Value: Variant): Boolean;
 
     // propriedades
     property Resultado: Double read FResultado;
+    property ResultadoStr: string read FResultadoStr;    
     property Parser: TosParser read FParser write FParser;
     property Variavel[NomeVar: String]: Double read LeVariavel write pSetaVariavel;
     property ListaVariavel: TListLookup read FVariaveis;
@@ -92,7 +102,7 @@ type
 
   { Tipos possiveis de instrucao da maquina }
   TTipoInstrucao =
-    (tiFunc = 0, tiArg, tiConstNum, tiConstBool, tiRValue, tiOp, tiOpUn);
+    (tiFunc = 0, tiArg, tiConstNum, tiConstBool, tiConstString, tiRValue, tiOp, tiOpUn);
 
   { Erros possiveis }
   TerrMaquina =
@@ -117,6 +127,7 @@ const
      ('arg'),
      ('constnum'),
      ('constbool'),
+     ('conststring'),
      ('rvalue'),
      ('op'),
      ('opun'));
@@ -131,7 +142,7 @@ begin
   FValor := 0;
 end;
 
-constructor TVariavelMaquina.Create(pNome: String; pValor: Double);
+constructor TVariavelMaquina.Create(pNome: String; pValor: Variant);
 begin
   FNome := pNome;
   FValor := pValor;
@@ -154,6 +165,8 @@ begin
   FFuncoes.Add(TFuncaoMaquina.Create('SQRT', 1, raiz));
   FFuncoes.Add(TFuncaoMaquina.Create('TEST', 1, teste));
   FFuncoes.Add(TFuncaoMaquina.Create('IIF', 3, iif));
+  FFuncoes.Add(TFuncaoMaquina.Create('SUB', 3, sub));
+  FFuncoes.Add(TFuncaoMaquina.Create('SIF', 3, sif));
 
 end;
 
@@ -162,6 +175,7 @@ begin
   FPilhaExec.Free;
   FVariaveis.Free;
   FFuncoes.Free;
+  FStrings.Free;
 end;
 
 
@@ -170,7 +184,7 @@ begin
   FFuncoes.Add(TFuncaoMaquina.Create(Name, NumParams, FunctionPointer));
 end;
 
-function TosMaquina.SetaVariavel(NomeVar: String; Value: Double): Boolean;
+function TosMaquina.SetaVariavel(NomeVar: String; Value: Variant): Boolean;
 var
   Variavel: TVariavelMaquina;
 begin
@@ -284,31 +298,15 @@ begin
     end;
   end;
 
-  if FpilhaExec.Count = 0 then
-  begin
-    // Faltou o resultado na pilha
-    FListaErros.Add(epError, Ord(emFaltaResultado),
-                    'Erro interno: faltou resultado na pilha!', []);
-    Result := False;
-    Exit;
-  end;
-
-  // Ultimo elemento da pilha deve ser o resultado
-  FResultado := Double(FpilhaExec.pop^);
-
-  if FpilhaExec.Count <> 0 then
-  begin
-    // nao pode sobrar operandos na pilha
-    Result := False;
-    Exit;
-  end;
-
   Result := FListaErros.Count = 0;
 end;
 
 procedure TosMaquina.ProcessaInstrucao(bytecode: Integer; Parametro: String);
 var
   ValorVar: ^Double;
+  ValorString: PChar;
+  stringVar: string;
+  doubleAux: Double;
   Variavel: TVariavelMaquina;
 begin
     case bytecode of
@@ -350,6 +348,15 @@ begin
           FpilhaExec.push(ValorVar);
         end;
 
+     ord(tiConstString): // constantes string
+        begin
+          if FStrings = nil then
+            FStrings := TStringList.Create;
+          ValorString := PChar(FStrings.Strings[
+            FStrings.Add(StringReplace(Parametro,'"','',[rfReplaceAll]))]);
+          FpilhaExec.push(ValorString);
+        end;
+
      ord(tiRValue): // variaveis
         begin
           // obter valor variavel
@@ -366,9 +373,18 @@ begin
             ValorVar^ := 1;
           end
           else
-            ValorVar^ := Variavel.Valor;
-
-          FpilhaExec.push(ValorVar);
+          begin
+            if TryStrToFloat(Variavel.Valor,doubleAux) then
+            begin
+              ValorVar^ := Variavel.Valor;
+              FpilhaExec.push(ValorVar);
+            end
+            else
+            begin
+              ValorString := PChar(string(Variavel.Valor));
+              FpilhaExec.push(ValorString);              
+            end;
+          end;
         end;
 
     end;
@@ -380,6 +396,8 @@ var
   Argumentos : TList;
   i: Integer;
   Res: ^Double;
+  ResStr: string;
+  PStr: PChar;
 begin
   // Procura funcao em questao
   Funcao := FFuncoes.LookUp(NomeFuncao);
@@ -434,7 +452,14 @@ begin
 
   // Finalmente, chama a callback e executa a funcao
   try
-    Res^ := Funcao.CallBack(Argumentos);
+    if Funcao.Tipo = 'D' then
+    begin
+      FResultado := Funcao.CallBack(Argumentos);
+    end
+    else
+    begin
+      FResultadoStr := Funcao.CallBackStr(Argumentos);
+    end;
   except
     on E: Exception do
     // Erro interno na chamada da função
@@ -447,8 +472,6 @@ begin
           [ NomeFuncao, E.Message ]);
     end;
   end;
-
-  FpilhaExec.push(Res);
 
   Argumentos.Free;
 end;
@@ -681,6 +704,16 @@ begin
   FNome := NomeFunc;
   FNumeroParametros := NumParam;
   FCallBack := @Func;
+  FTipo := 'D';
+end;
+
+constructor TFuncaoMaquina.Create(NomeFunc: String; NumParam: Integer;
+  Func: TFuncaoStrCallback);
+begin
+  FNome := NomeFunc;
+  FNumeroParametros := NumParam;
+  FCallBackStr := @Func;
+  FTipo := 'S';  
 end;
 
 { TListLookup }

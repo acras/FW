@@ -10,6 +10,8 @@ function potencia(Parametros: TList): Double; forward;
 function raiz(Parametros: TList): Double; forward;
 function teste(Parametros: TList): Double; forward;
 function iif(Parametros: TList): Double; forward;
+function sub(Parametros: TList): string; forward;
+function sif(Parametros: TList): string; forward;
 
 implementation
 
@@ -49,6 +51,27 @@ begin
     Result := Double(Parametros.Items[0]^)
   else
     Result := Double(Parametros.Items[1]^);
+end;
+
+function sub(Parametros: TList): string;
+var
+  valor, antigo, novo: String;
+begin
+  valor := PChar(Parametros.Items[2]);
+  antigo := PChar(Parametros.Items[1]);
+  novo := PChar(Parametros.Items[0]);
+  Result := StringReplace(valor,antigo,novo,[rfReplaceAll]);
+end;
+
+function sif(Parametros: TList): string;
+var
+  ExpLogica: double;
+begin
+  ExpLogica := Double(Parametros.Items[2]^);
+  if ExpLogica <> 1 then
+    Result := PChar(Parametros.Items[0])
+  else
+    Result := PChar(Parametros.Items[1]);
 end;
 
 end.
