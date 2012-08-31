@@ -232,7 +232,6 @@ var
   PosInstrucao: Integer;
   Instrucao: String;
   bytecode: Integer;
-
 begin
   if Parser = nil then
   begin
@@ -296,6 +295,33 @@ begin
       Instrucao := Copy(Linha, PosInstrucao + 1, Length(Linha) - PosInstrucao);
       ProcessaInstrucao(bytecode, Instrucao);
     end;
+  end;
+
+  if FpilhaExec.Count = 0 then
+  begin
+    // Faltou o resultado na pilha
+    FListaErros.Add(epError, Ord(emFaltaResultado),
+                    'Erro interno: faltou resultado na pilha!', []);
+    Result := False;
+    Exit;
+  end;
+
+  // Ultimo elemento da pilha deve ser o resultado
+  if FResultadoStr <> '' then
+  begin
+    FpilhaExec.pop;
+  end
+  else
+  begin
+    FResultado := Double(FpilhaExec.pop^);
+  end;
+
+
+  if FpilhaExec.Count <> 0 then
+  begin
+    // nao pode sobrar operandos na pilha
+    Result := False;
+    Exit;
   end;
 
   Result := FListaErros.Count = 0;
@@ -396,7 +422,6 @@ var
   Argumentos : TList;
   i: Integer;
   Res: ^Double;
-  ResStr: string;
   PStr: PChar;
 begin
   // Procura funcao em questao
@@ -454,11 +479,16 @@ begin
   try
     if Funcao.Tipo = 'D' then
     begin
-      FResultado := Funcao.CallBack(Argumentos);
+      Res^ := Funcao.CallBack(Argumentos);
+      FpilhaExec.push(Res);
     end
     else
     begin
-      FResultadoStr := Funcao.CallBackStr(Argumentos);
+      if FStrings = nil then
+        FStrings := TStringList.Create;
+      PStr := PChar(FStrings.Strings[FStrings.Add(Funcao.CallBackStr(Argumentos))]);
+      FpilhaExec.push(PStr);
+      FResultadoStr := PStr;
     end;
   except
     on E: Exception do
