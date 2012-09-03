@@ -180,7 +180,7 @@ begin
   // Op. Aritmeticos e relacionais
   FLex.AdicionaToken('([*/]|MOD|DIV)', ord(tOperadorMultiplicativo));
   FLex.AdicionaToken('[+-]', ord(tOperadorAditivo));
-  FLex.AdicionaToken('(<|>|>=|<=|=|<>)', ord(tOperadorRelacional));
+  FLex.AdicionaToken('(>=|<=|<>|<|>|=)', ord(tOperadorRelacional));
 
   // constantes
   FLex.AdicionaToken('[0-9]+(\,[0-9]+)?', ord(tConstNumero));
