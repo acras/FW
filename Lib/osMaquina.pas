@@ -626,7 +626,6 @@ begin
       Res^ := 1
     else
       Res^ := 0;
-    Res^ := Arg1+Arg2;
     FpilhaExec.push(Res);
   end
   else
