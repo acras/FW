@@ -134,6 +134,8 @@ const
 
 implementation
 
+uses Variants;
+
 { TVariavelMaquina }
 
 constructor TVariavelMaquina.Create;
@@ -400,15 +402,25 @@ begin
           end
           else
           begin
-            if TryStrToFloat(Variavel.Valor,doubleAux) then
+            if (not VarIsNull(Variavel.Valor)) then
             begin
-              ValorVar^ := Variavel.Valor;
-              FpilhaExec.push(ValorVar);
+              if (TryStrToFloat(Variavel.Valor,doubleAux)) then
+              begin
+                ValorVar^ := Variavel.Valor;
+                FpilhaExec.push(ValorVar);
+              end
+              else
+              begin
+                ValorString := PChar(string(Variavel.Valor));
+                FpilhaExec.push(ValorString);
+              end;
             end
             else
             begin
-              ValorString := PChar(string(Variavel.Valor));
-              FpilhaExec.push(ValorString);              
+              if FStrings = nil then
+                FStrings := TStringList.Create;
+              ValorString := PChar(FStrings.Strings[FStrings.Add(' ')]);
+              FpilhaExec.push(ValorString);
             end;
           end;
         end;

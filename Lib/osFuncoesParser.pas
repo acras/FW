@@ -56,8 +56,14 @@ end;
 function sub(Parametros: TList): string;
 var
   valor, antigo, novo: String;
+  dvalor: Double;
 begin
   valor := PChar(Parametros.Items[2]);
+  if valor = '' then
+  begin
+    dvalor := Double(Parametros.Items[2]^);
+    valor := FloatToStr(dvalor);
+  end;
   antigo := PChar(Parametros.Items[1]);
   novo := PChar(Parametros.Items[0]);
   Result := StringReplace(valor,antigo,novo,[rfReplaceAll]);
