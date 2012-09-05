@@ -12,6 +12,7 @@ function teste(Parametros: TList): Double; forward;
 function iif(Parametros: TList): Double; forward;
 function sub(Parametros: TList): string; forward;
 function sif(Parametros: TList): string; forward;
+function sel(Parametros: TList): string; forward;
 
 implementation
 
@@ -66,7 +67,7 @@ begin
   end;
   antigo := PChar(Parametros.Items[1]);
   novo := PChar(Parametros.Items[0]);
-  Result := StringReplace(valor,antigo,novo,[rfReplaceAll]);
+  Result := StringReplace(valor,antigo,novo,[rfReplaceAll, rfIgnoreCase]);
 end;
 
 function sif(Parametros: TList): string;
@@ -78,6 +79,17 @@ begin
     Result := PChar(Parametros.Items[0])
   else
     Result := PChar(Parametros.Items[1]);
+end;
+
+function sel(Parametros: TList): string;
+var
+  valor: String;
+  inicio, qtde: Integer;
+begin
+  valor := PChar(Parametros.Items[2]);
+  inicio := trunc(Double(Parametros.Items[1]^));
+  qtde := trunc(Double(Parametros.Items[0]^));
+  Result := Copy(valor, inicio, qtde);
 end;
 
 end.
