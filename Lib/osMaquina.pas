@@ -405,7 +405,8 @@ begin
           begin
             if (not VarIsNull(Variavel.Valor)) then
             begin
-              if (TryStrToFloat(Variavel.Valor,doubleAux)) then
+              if (TryStrToFloat(Variavel.Valor,doubleAux)) and
+                 (Pos('ST_', UpperCase(Parametro)) = 0) then
               begin
                 ValorVar^ := Variavel.Valor;
                 FpilhaExec.push(ValorVar);
