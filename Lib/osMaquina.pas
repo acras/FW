@@ -169,7 +169,8 @@ begin
   FFuncoes.Add(TFuncaoMaquina.Create('IIF', 3, iif));
   FFuncoes.Add(TFuncaoMaquina.Create('SUB', 3, sub));
   FFuncoes.Add(TFuncaoMaquina.Create('SIF', 3, sif));
-  FFuncoes.Add(TFuncaoMaquina.Create('SEL', 3, sel));  
+  FFuncoes.Add(TFuncaoMaquina.Create('SEL', 3, sel));
+  FFuncoes.Add(TFuncaoMaquina.Create('NUM', 1, num));    
 
 end;
 

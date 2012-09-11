@@ -13,6 +13,7 @@ function iif(Parametros: TList): Double; forward;
 function sub(Parametros: TList): string; forward;
 function sif(Parametros: TList): string; forward;
 function sel(Parametros: TList): string; forward;
+function num(Parametros: TList): Double; forward;
 
 implementation
 
@@ -90,6 +91,11 @@ begin
   inicio := trunc(Double(Parametros.Items[1]^));
   qtde := trunc(Double(Parametros.Items[0]^));
   Result := Copy(valor, inicio, qtde);
+end;
+
+function num(Parametros: TList): Double;
+begin
+  Result := StrToFloat(PChar(Parametros.Items[0]));
 end;
 
 end.
