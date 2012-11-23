@@ -30,7 +30,6 @@ requires
   osControls,
   vclie,
   ibxpress,
-  B305_r70,
   dbdltree,
   mxOutlookBar_D7,
   adortl,
@@ -61,7 +60,8 @@ requires
   rbIDE147,
   rbCIDE147,
   rbRIDE147,
-  rbRAP147;
+  rbRAP147,
+  Abbrevia;
 
 contains
   osFrm in '..\Forms\osFrm.pas' {osForm},
