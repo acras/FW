@@ -49,6 +49,7 @@ function GetHora(tempo: string): Integer;
 function GetMinuto(tempo: string): Integer;
 function ConverteData(data: string): TDateTime;
 procedure ImprimirImpressoraTermica(const comando, impressora: String);
+function NomeDaTecla(Key: Word): string;
 
 
 implementation
@@ -655,6 +656,77 @@ begin
   end;
 
   ShellExecute(0, 'Open', PChar(diretorio + 'PRINTLBL.BAT'), nil, nil, Ord(SW_HIDE));
+end;
+
+function NomeDaTecla(Key: Word): string;
+var
+  keyboardState: TKeyboardState;
+  asciiResult: Integer;
+begin
+  case Key of
+    VK_BACK:    Result := '[BACKSPACE]'; //backspace
+    VK_RETURN:  Result := '[ENTER]'; //enter
+    VK_SHIFT:   Result := '[SHIFT]';	//Shift key
+    VK_CONTROL: Result := '[CTRL]';	//Ctrl key
+    VK_MENU:    Result := '[ALT]';	//Alt key
+    VK_ESCAPE:  Result := '[ESC]';	//Esc key
+    VK_SPACE:   Result := '[ESPAÇO]';	//Space bar
+    VK_LEFT:    Result := '[SETA PARA ESQUERDA]';	//Left Arrow key
+    VK_UP:      Result := '[SETA PARA CIMA]';	//Up Arrow key
+    VK_RIGHT:   Result := '[SETA PARA DIREITA]';	//Right Arrow key
+    VK_DOWN:    Result := '[SETA PARA BAIXO]';	//Down Arrow key
+    VK_INSERT:  Result := '[INSERT]';	//Insert key
+    VK_DELETE:  Result := '[DELETE]';	//Delete key
+    VK_END:     Result := '[END]';	//End key
+    VK_HOME:    Result := '[HOME]';	//Home key
+    VK_PRIOR:   Result := '[PAGE UP]';	//Page Up key
+    VK_NEXT:    Result := '[PAGE DOWN]';	//Page Down key
+    VK_TAB:     Result := '';	//Tab key
+    VK_NUMPAD0: Result := '[NUMPAD 0]';	//0 key (numeric keypad)
+    VK_NUMPAD1: Result := '[NUMPAD 1]';	//1 key (numeric keypad)
+    VK_NUMPAD2: Result := '[NUMPAD 2]';	//2 key (numeric keypad)
+    VK_NUMPAD3: Result := '[NUMPAD 3]';	//3 key (numeric keypad)
+    VK_NUMPAD4: Result := '[NUMPAD 4]';	//4 key (numeric keypad)
+    VK_NUMPAD5: Result := '[NUMPAD 5]';	//5 key (numeric keypad)
+    VK_NUMPAD6: Result := '[NUMPAD 6]';	//6 key (numeric keypad)
+    VK_NUMPAD7: Result := '[NUMPAD 7]';	//7 key (numeric keypad)
+    VK_NUMPAD8: Result := '[NUMPAD 8]';	//8 key (numeric keypad)
+    VK_NUMPAD9: Result := '[NUMPAD 9]';	//9 key (numeric keypad)
+    VK_MULTIPLY:  Result := '[NUMPAD *]';	//Multiply key (numeric keypad)
+    VK_ADD:       Result := '[NUMPAD +]';	//Add key (numeric keypad)
+    VK_SEPARATOR: Result := '[NUMPAD .]';	//Separator key (numeric keypad)
+    VK_SUBTRACT:  Result := '[NUMPAD -]';	//Subtract key (numeric keypad)
+    VK_DECIMAL:   Result := '[NUMPAD ,]';	//Decimal key (numeric keypad)
+    VK_DIVIDE:    Result := '[NUMPAD /]';	//Divide key (numeric keypad)
+    194:    Result := '[NUMPAD .]';  //. numeric keypad
+    VK_F1:  Result := '[F1]';	//F1 key
+    VK_F2:  Result := '[F2]';	//F2 key
+    VK_F3:  Result := '[F3]';	//F3 key
+    VK_F4:  Result := '[F4]';	//F4 key
+    VK_F5:  Result := '[F5]';	//F5 key
+    VK_F6:  Result := '[F6]';	//F6 key
+    VK_F7:  Result := '[F7]';	//F7 key
+    VK_F8:  Result := '[F8]';	//F8 key
+    VK_F9:  Result := '[F9]'; //F9 key
+    VK_F10: Result := '[F10]'; //F10 key
+    VK_F11: Result := '[F11]'; //F11 key
+    VK_F12: Result := '[F12]'; //F12 key
+    219: Result := ''; //´ acento
+    222: Result := ''; //~ acento
+  else
+    GetKeyboardState(keyboardState);
+    SetLength(Result, 2) ;
+    asciiResult := ToAscii(key, MapVirtualKey(key, 0), keyboardState, @Result[1], 0) ;
+    case asciiResult of
+      0: Result := '';
+      1: SetLength(Result, 1);
+      2:;
+      else
+        Result := '';
+    end;
+    if Trim(Result) <> '' then
+      Result := UpperCase(Result);
+  end;
 end;
 
 end.
