@@ -50,6 +50,7 @@ function GetMinuto(tempo: string): Integer;
 function ConverteData(data: string): TDateTime;
 procedure ImprimirImpressoraTermica(const comando, impressora: String);
 function NomeDaTecla(Key: Word): string;
+function RoundToCurrency(const AValue: Currency; const ADigit: TRoundToRange = -2): Currency;
 
 
 implementation
@@ -727,6 +728,22 @@ begin
     if Trim(Result) <> '' then
       Result := UpperCase(Result);
   end;
+end;
+
+function RoundToCurrency(const AValue: Currency; const ADigit: TRoundToRange): Currency;
+var
+  LFactor: Extended;
+  rmOrig: TFPURoundingMode;
+begin
+  rmOrig := GetRoundMode();
+  if rmOrig <> rmNearest then
+    SetRoundMode(rmNearest);
+
+  LFactor := IntPower(10, ADigit);
+  Result := Round(AValue / LFactor) * LFactor;
+
+  if rmOrig <> rmNearest then
+    SetRoundMode(rmOrig);
 end;
 
 end.
