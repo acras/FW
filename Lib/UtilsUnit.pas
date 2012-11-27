@@ -51,6 +51,7 @@ function ConverteData(data: string): TDateTime;
 procedure ImprimirImpressoraTermica(const comando, impressora: String);
 function NomeDaTecla(Key: Word): string;
 function RoundToCurrency(const AValue: Currency; const ADigit: TRoundToRange = -2): Currency;
+function ConverteTecladoNumerico(Key: Word): Word;
 
 
 implementation
@@ -683,23 +684,23 @@ begin
     VK_PRIOR:   Result := '[PAGE UP]';	//Page Up key
     VK_NEXT:    Result := '[PAGE DOWN]';	//Page Down key
     VK_TAB:     Result := '';	//Tab key
-    VK_NUMPAD0: Result := '[NUMPAD 0]';	//0 key (numeric keypad)
-    VK_NUMPAD1: Result := '[NUMPAD 1]';	//1 key (numeric keypad)
-    VK_NUMPAD2: Result := '[NUMPAD 2]';	//2 key (numeric keypad)
-    VK_NUMPAD3: Result := '[NUMPAD 3]';	//3 key (numeric keypad)
-    VK_NUMPAD4: Result := '[NUMPAD 4]';	//4 key (numeric keypad)
-    VK_NUMPAD5: Result := '[NUMPAD 5]';	//5 key (numeric keypad)
-    VK_NUMPAD6: Result := '[NUMPAD 6]';	//6 key (numeric keypad)
-    VK_NUMPAD7: Result := '[NUMPAD 7]';	//7 key (numeric keypad)
-    VK_NUMPAD8: Result := '[NUMPAD 8]';	//8 key (numeric keypad)
-    VK_NUMPAD9: Result := '[NUMPAD 9]';	//9 key (numeric keypad)
-    VK_MULTIPLY:  Result := '[NUMPAD *]';	//Multiply key (numeric keypad)
-    VK_ADD:       Result := '[NUMPAD +]';	//Add key (numeric keypad)
-    VK_SEPARATOR: Result := '[NUMPAD .]';	//Separator key (numeric keypad)
-    VK_SUBTRACT:  Result := '[NUMPAD -]';	//Subtract key (numeric keypad)
-    VK_DECIMAL:   Result := '[NUMPAD ,]';	//Decimal key (numeric keypad)
-    VK_DIVIDE:    Result := '[NUMPAD /]';	//Divide key (numeric keypad)
-    194:    Result := '[NUMPAD .]';  //. numeric keypad
+    VK_NUMPAD0: Result := '0';	//96 0 key (numeric keypad)
+    VK_NUMPAD1: Result := '1';	//97 1 key (numeric keypad)
+    VK_NUMPAD2: Result := '2';	//98 2 key (numeric keypad)
+    VK_NUMPAD3: Result := '3';	//99 3 key (numeric keypad)
+    VK_NUMPAD4: Result := '4';	//100 4 key (numeric keypad)
+    VK_NUMPAD5: Result := '5';	//101 5 key (numeric keypad)
+    VK_NUMPAD6: Result := '6';	//102 6 key (numeric keypad)
+    VK_NUMPAD7: Result := '7';	//103 7 key (numeric keypad)
+    VK_NUMPAD8: Result := '8';	//104 8 key (numeric keypad)
+    VK_NUMPAD9: Result := '9';	//105 9 key (numeric keypad)
+    VK_MULTIPLY:  Result := '*';	//106 Multiply key (numeric keypad)
+    VK_ADD:       Result := '+';	//107 Add key (numeric keypad)
+    VK_SEPARATOR: Result := '.';	//108 / 194 Separator key (numeric keypad)
+    VK_SUBTRACT:  Result := '-';	//109 Subtract key (numeric keypad)
+    VK_DECIMAL:   Result := ',';	//110 Decimal key (numeric keypad)
+    VK_DIVIDE:    Result := '/';	//111 Divide key (numeric keypad)
+    194:    Result := '.';  //. numeric keypad
     VK_F1:  Result := '[F1]';	//F1 key
     VK_F2:  Result := '[F2]';	//F2 key
     VK_F3:  Result := '[F3]';	//F3 key
@@ -744,6 +745,29 @@ begin
 
   if rmOrig <> rmNearest then
     SetRoundMode(rmOrig);
+end;
+
+function ConverteTecladoNumerico(Key: Word): Word;
+begin
+  case Key of
+    VK_NUMPAD0: Result := 48;	//96 0 key (numeric keypad)
+    VK_NUMPAD1: Result := 49;	//97 1 key (numeric keypad)
+    VK_NUMPAD2: Result := 50;	//98 2 key (numeric keypad)
+    VK_NUMPAD3: Result := 51;	//99 3 key (numeric keypad)
+    VK_NUMPAD4: Result := 52;	//100 4 key (numeric keypad)
+    VK_NUMPAD5: Result := 53;	//101 5 key (numeric keypad)
+    VK_NUMPAD6: Result := 54;	//102 6 key (numeric keypad)
+    VK_NUMPAD7: Result := 55;	//103 7 key (numeric keypad)
+    VK_NUMPAD8: Result := 56;	//104 8 key (numeric keypad)
+    VK_NUMPAD9: Result := 57;	//105 9 key (numeric keypad)
+    VK_MULTIPLY:  Result := 106;	//106 Multiply key (numeric keypad)
+    VK_ADD:       Result := 107;	//107 Add key (numeric keypad)
+    VK_SEPARATOR: Result := 194;	//108 / 194 Separator key (numeric keypad)
+    VK_SUBTRACT:  Result := 189;	//109 Subtract key (numeric keypad)
+    VK_DECIMAL:   Result := 188;	//110 Decimal key (numeric keypad)
+    VK_DIVIDE:    Result := 193;	//111 Divide key (numeric keypad)
+    194: Result := 190;
+  end;
 end;
 
 end.
