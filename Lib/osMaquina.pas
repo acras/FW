@@ -170,8 +170,13 @@ begin
   FFuncoes.Add(TFuncaoMaquina.Create('SUB', 3, sub));
   FFuncoes.Add(TFuncaoMaquina.Create('SIF', 3, sif));
   FFuncoes.Add(TFuncaoMaquina.Create('SEL', 3, sel));
-  FFuncoes.Add(TFuncaoMaquina.Create('NUM', 1, num));    
-
+  FFuncoes.Add(TFuncaoMaquina.Create('NUM', 1, num));
+  FFuncoes.Add(TFuncaoMaquina.Create('STR', 1, str));
+  FFuncoes.Add(TFuncaoMaquina.Create('CONCAT', 2, concat));
+  FFuncoes.Add(TFuncaoMaquina.Create('ROUND', 1, round));
+  FFuncoes.Add(TFuncaoMaquina.Create('MASC', 2, masc));
+  FFuncoes.Add(TFuncaoMaquina.Create('EQUAL', 2, equal));
+  FFuncoes.Add(TFuncaoMaquina.Create('TRIM', 1, trimstr)); 
 end;
 
 destructor TosMaquina.Destroy;

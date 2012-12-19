@@ -14,6 +14,12 @@ function sub(Parametros: TList): string; forward;
 function sif(Parametros: TList): string; forward;
 function sel(Parametros: TList): string; forward;
 function num(Parametros: TList): Double; forward;
+function concat(Parametros: TList): string; forward;
+function str(Parametros: TList): string; forward;
+function round(Parametros: TList): Double; forward;
+function masc(Parametros: TList): string; forward;
+function equal(Parametros: TList): Double; forward;
+function trimstr(Parametros: TList): string; forward;
 
 implementation
 
@@ -95,9 +101,48 @@ end;
 
 function num(Parametros: TList): Double;
 begin
-  Result := StrToFloat(PChar(Parametros.Items[0]));
+  try
+    Result := StrToFloat(PChar(Parametros.Items[0]));
+  except
+    Result := 0;
+  end;
+end;
+
+function concat(Parametros: TList): string;
+var
+  v1,v2: string;
+begin
+  v1 := PChar(Parametros.Items[1]);
+  v2 := PChar(Parametros.Items[0]);
+  Result := v1 + v2;
+end;
+
+function str(Parametros: TList): string;
+begin
+  Result := FloatToStr(Double(Parametros.Items[0]^));
+end;
+
+function round(Parametros: TList): Double;
+begin
+  Result := Trunc(Double(Parametros.Items[0]^));
+end;
+
+function masc(Parametros: TList): string;
+begin
+  Result := FormatFloat(PChar(Parametros.Items[1]), Double(Parametros.Items[0]^));
+end;
+
+function equal(Parametros: TList): Double;
+begin
+  if (string(PChar(Parametros.Items[1])) = string(PChar(Parametros.Items[0]))) then
+    Result := 1
+  else
+    Result := 2;
+end;
+
+function trimstr(Parametros: TList): string;
+begin
+  Result := Trim(PChar(Parametros.Items[0]));
 end;
 
 end.
-
-
