@@ -34,6 +34,8 @@ uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDat
   function getTemplateIDByName(name: string): integer;
 
   procedure replaceReportSQL(report: TppReport; template: TMemoryStream; strSQL: String);
+  procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream; strWhere: String);
+
   procedure replaceReportSQLAddWhere(report: TppReport; template: TMemoryStream;
     strWHERE: String);
   function tiraNumerosDoFinal(str: String): string;
@@ -517,6 +519,50 @@ begin
   result := original * fatorMult;
 end;
 
+procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream; strWhere: String);
+var
+  liIndex, i: Integer;
+  lDataModule: TdaDataModule;
+  lDataView: TdaDataView;
+  aSQL: TDaSQL;
+  nomePipeline: String;
+  crit: TdaCriteria;
+begin
+  report.Template.LoadFromStream(template);
 
+  aSQL := nil;
+
+  lDataModule := daGetDataModule(Report.MainReport);
+
+  if (lDataModule <> nil) then
+  begin
+
+    liIndex := 0;
+
+    while (liIndex < lDatamodule.DataViewCount) and (aSQL = nil) do
+    begin
+
+      lDataView := lDataModule.DataViews[liIndex];
+      if (lDataView <> nil) and (lDataView is TdaQueryDataView) and (Report.Datapipeline <> nil)
+        and (Report.DataPipeline.Dataview = lDataview) then
+      begin
+        for i := 0 to lDataView.DataPipelineCount-1 do
+        begin
+          nomePipeline := tiraNumerosDoFinal(lDataView.DataPipelines[i].Name) ;
+          if (UpperCase(nomePipeline)=upperCase(report.DataPipeline.Name)) then
+          begin
+            aSQL := TdaQueryDataView(lDataView).SQL;
+            crit := aSQL.AddCriteria(dacrField);
+            crit.Expression := '1';
+            crit.Value := '1 AND '+strWhere;
+          end;
+        end;
+      end;
+
+      Inc(liIndex);
+
+    end;
+  end;
+end;
 
 end.

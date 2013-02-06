@@ -8,7 +8,7 @@ uses
   Buttons, ExtCtrls, osUtils, DBClient, osClientDataset, StdCtrls, Mask,
   wwdbedit, Wwdotdot, Wwdbcomb, osComboFilter, osSQLQuery, ppReport,
   ppComm, ppRelatv, ppProd, ppClass, osCustomSearchFrm, ppMemo, TypInfo,
-  printers, ppTypes, ppDB;
+  printers, ppTypes, ppDB, ppParameter;
 
 type
   TImprimirRelatorioForm = class(TosCustomEditForm)
@@ -130,23 +130,15 @@ begin
     ComboFilter.ClearViews;
     ComboFilter.FilterDefName := FilterName;
     ComboFilter.GetViews();
-    if not ComboFilter.defTemRestricaoUsuario(0) OR ComboFilter.isDefCustomFilter(0) then
-    begin
-      sql := ComboFilter.ExecuteFilter();
-      replaceReportSQL(report, stream, sql);
-    end
-    else
-    begin
-      srchForm := TCustomSearchForm.Create(application);
 
-      with srchForm do
-      begin
-        FilterDefName := filterName;
-        srchForm.DataProvider := acCustomSQLMainData.prvFilter;
-        Execute('',3,toRetornarQuery);
-        replaceReportSQL(report, stream, sqlResult.GetText);
-        free;
-      end;
+    srchForm := TCustomSearchForm.Create(application);
+    with srchForm do
+    begin
+      FilterDefName := filterName;
+      srchForm.DataProvider := acCustomSQLMainData.prvFilter;
+      Execute('',3,toRetornarQuery);
+      replaceReportSQLAddParam(report, stream, GetExpressions);
+      free;
     end;
   end
   else

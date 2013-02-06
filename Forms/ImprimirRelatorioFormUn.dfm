@@ -35,8 +35,9 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
   object Report: TppReport
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
     PrinterSetup.PrinterName = 'Default'
+    PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
     PrinterSetup.mmMarginLeft = 6350
     PrinterSetup.mmMarginRight = 6350
@@ -48,20 +49,42 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     AllowPrintToArchive = True
     ArchiveFileName = 'c:\horasmarecl.pdf'
     DeviceType = 'Adobe Acrobat Document'
+    DefaultFileDeviceType = 'PDF'
     EmailSettings.ReportFormat = 'PDF'
+    LanguageID = 'Default'
     OnPreviewFormCreate = reportPreviewFormCreate
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
     OutlineSettings.Enabled = False
     OutlineSettings.Visible = False
+    PDFSettings.EmbedFontOptions = [efUseSubset]
+    PDFSettings.EncryptSettings.AllowCopy = True
+    PDFSettings.EncryptSettings.AllowInteract = True
+    PDFSettings.EncryptSettings.AllowModify = True
+    PDFSettings.EncryptSettings.AllowPrint = True
+    PDFSettings.EncryptSettings.Enabled = False
+    PDFSettings.FontEncoding = feAnsi
+    PDFSettings.ImageCompressionLevel = 25
     PreviewFormSettings.WindowState = wsMaximized
     PreviewFormSettings.ZoomSetting = zsPageWidth
+    RTFSettings.DefaultFont.Charset = DEFAULT_CHARSET
+    RTFSettings.DefaultFont.Color = clWindowText
+    RTFSettings.DefaultFont.Height = -13
+    RTFSettings.DefaultFont.Name = 'Arial'
+    RTFSettings.DefaultFont.Style = []
+    TextFileName = '($MyDocuments)\Report.pdf'
     TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = False
+    XLSSettings.AppName = 'ReportBuilder'
+    XLSSettings.Author = 'ReportBuilder'
+    XLSSettings.Subject = 'Report'
+    XLSSettings.Title = 'Report'
     Left = 200
     Top = 104
-    Version = '10.09'
+    Version = '14.07'
     mmColumnWidth = 0
+    object ppParameterList1: TppParameterList
+    end
   end
   object FilterDataSet: TosClientDataset
     Aggregates = <>
