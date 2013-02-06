@@ -551,10 +551,13 @@ begin
           nomePipeline := tiraNumerosDoFinal(lDataView.DataPipelines[i].Name) ;
           if (UpperCase(nomePipeline)=upperCase(report.DataPipeline.Name)) then
           begin
-            aSQL := TdaQueryDataView(lDataView).SQL;
-            crit := aSQL.AddCriteria(dacrField);
-            crit.Expression := '1';
-            crit.Value := '1 AND '+strWhere;
+            if strWhere <> '' then
+            begin
+              aSQL := TdaQueryDataView(lDataView).SQL;
+              crit := aSQL.AddCriteria(dacrField);
+              crit.Expression := '1';
+              crit.Value := '1 AND '+strWhere;
+            end;
           end;
         end;
       end;
