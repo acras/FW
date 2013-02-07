@@ -34,7 +34,8 @@ uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDat
   function getTemplateIDByName(name: string): integer;
 
   procedure replaceReportSQL(report: TppReport; template: TMemoryStream; strSQL: String);
-  procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream; strWhere: String);
+  procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream;
+    strSelect: String; strWhere: String);
 
   procedure replaceReportSQLAddWhere(report: TppReport; template: TMemoryStream;
     strWHERE: String);
@@ -519,7 +520,8 @@ begin
   result := original * fatorMult;
 end;
 
-procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream; strWhere: String);
+procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream;
+  strSelect: String; strWhere: String);
 var
   liIndex, i: Integer;
   lDataModule: TdaDataModule;
@@ -551,9 +553,13 @@ begin
           nomePipeline := tiraNumerosDoFinal(lDataView.DataPipelines[i].Name) ;
           if (UpperCase(nomePipeline)=upperCase(report.DataPipeline.Name)) then
           begin
-            if strWhere <> '' then
+            aSQL := TdaQueryDataView(lDataView).SQL;
+            if aSQL.EditSQLAsText then
             begin
-              aSQL := TdaQueryDataView(lDataView).SQL;
+              aSQL.SQLText.Text := strSelect;
+            end
+            else if strWhere <> '' then
+            begin
               crit := aSQL.AddCriteria(dacrField);
               crit.Expression := '1';
               crit.Value := '1 AND '+strWhere;

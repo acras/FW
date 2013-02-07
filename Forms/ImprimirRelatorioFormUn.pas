@@ -137,7 +137,7 @@ begin
       FilterDefName := filterName;
       srchForm.DataProvider := acCustomSQLMainData.prvFilter;
       Execute('',3,toRetornarQuery);
-      replaceReportSQLAddParam(report, stream, GetExpressions);
+      replaceReportSQLAddParam(report, stream, sqlResult.Text, GetExpressions);
       free;
     end;
   end
