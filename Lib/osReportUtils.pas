@@ -556,13 +556,17 @@ begin
             aSQL := TdaQueryDataView(lDataView).SQL;
             if aSQL.EditSQLAsText then
             begin
-              aSQL.SQLText.Text := strSelect;
+              if strSelect <> '' then
+                aSQL.SQLText.Text := strSelect;
             end
-            else if strWhere <> '' then
+            else
             begin
-              crit := aSQL.AddCriteria(dacrField);
-              crit.Expression := '1';
-              crit.Value := '1 AND '+strWhere;
+              if strWhere <> '' then
+              begin
+                crit := aSQL.AddCriteria(dacrField);
+                crit.Expression := '1';
+                crit.Value := '1 AND '+strWhere;
+              end;
             end;
           end;
         end;
