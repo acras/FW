@@ -5,7 +5,8 @@ interface
 uses
   IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
-  Math, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient, wwdbedit, Buttons, ShellAPI, acSysUtils;
+  Math, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient, wwdbedit, Buttons, ShellAPI, acSysUtils,
+  osSQLConnection, osSQLQuery;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -52,6 +53,8 @@ procedure ImprimirImpressoraTermica(const comando, impressora: String);
 function NomeDaTecla(Key: Word): string;
 function RoundToCurrency(const AValue: Currency; const ADigit: TRoundToRange = -2): Currency;
 function ConverteTecladoNumerico(Key: Word): Word;
+function ConverteMinutos(minutos: Integer): string;
+function GetDateTime(conn: TosSQLConnection): TDateTime;
 
 
 implementation
@@ -767,6 +770,50 @@ begin
     VK_DECIMAL:   Result := 188;	//110 Decimal key (numeric keypad)
     VK_DIVIDE:    Result := 193;	//111 Divide key (numeric keypad)
     194: Result := 190;
+  end;
+end;
+
+function ConverteMinutos(minutos: Integer): String;
+var
+  horas: Integer;
+  h,m: string;
+begin
+  if minutos < 0 then
+  begin
+    minutos := minutos * -1;
+    Result := '-';
+  end
+  else
+    Result := '';
+
+  horas := minutos div 60;
+  minutos := minutos mod 60;
+
+  h := IntToStr(horas);
+  if Length(h) = 2 then
+    h := '0'+h
+  else if Length(h) = 1 then
+    h := '00'+h;
+
+  m := IntToStr(minutos);
+  if Length(m) = 1 then
+    m := '0'+m;
+  Result := Result+h+':'+m;
+end;
+
+function GetDateTime(conn: TosSQLConnection): TDateTime;
+var
+  qry: TosSQLQuery;
+begin
+  try
+    qry := TosSQLQuery.Create(nil);
+    qry.SQLConnection := conn;
+    qry.SQL.Text := 'select CURRENT_TIMESTAMP as DataHoraServidor from RDB$DATABASE';
+    qry.Open;
+    Result := qry.FieldByName('DataHoraServidor').AsDatetime;
+  finally
+    qry.Close;
+    FreeAndNil(qry);
   end;
 end;
 
