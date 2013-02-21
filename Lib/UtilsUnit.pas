@@ -55,7 +55,8 @@ function RoundToCurrency(const AValue: Currency; const ADigit: TRoundToRange = -
 function ConverteTecladoNumerico(Key: Word): Word;
 function ConverteMinutos(minutos: Integer): string;
 function GetDateTime(conn: TosSQLConnection): TDateTime;
-
+function GetNewID(conn: TosSQLConnection): Integer;
+function GetGenerator(conn: TosSQLConnection; generator: string): Integer;
 
 implementation
 
@@ -813,6 +814,38 @@ begin
     Result := qry.FieldByName('DataHoraServidor').AsDatetime;
   finally
     qry.Close;
+    FreeAndNil(qry);
+  end;
+end;
+
+function GetNewID(conn: TosSQLConnection): Integer;
+var
+  qry: TosSQLQuery;
+begin
+  try
+    qry := TosSQLQuery.Create(nil);
+    qry.SQLConnection := conn;
+    qry.SQL.Text := 'select gen_id(KGIDHIGH, 1) id from RDB$DATABASE';
+    qry.Open;
+
+    Result := qry.FieldByName('id').AsInteger * 10;
+  finally
+    FreeAndNil(qry);
+  end;
+end;
+
+function GetGenerator(conn: TosSQLConnection; generator: string): Integer;
+var
+  qry: TosSQLQuery;
+begin
+  try
+    qry := TosSQLQuery.Create(nil);
+    qry.SQLConnection := conn;
+    qry.SQL.Text := 'select gen_id('+generator+', 1) id from RDB$DATABASE';
+    qry.Open;
+
+    Result := qry.FieldByName('id').AsInteger * 10;
+  finally
     FreeAndNil(qry);
   end;
 end;
