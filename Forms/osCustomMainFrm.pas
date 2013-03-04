@@ -16,7 +16,7 @@ uses
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
   osSQLQuery, acFilterController, CommCtrl, clipbrd, osCustomLoginFormUn,
-  acReportContainer;//ppWWRichEd;
+  acReportContainer, ppParameter;//ppWWRichEd;
 
 type
   TDatamoduleClass = class of TDatamodule;
@@ -201,7 +201,6 @@ type
     FEditForm: TosCustomEditForm;
     FActionDblClick: TAction;
     FSelectedList: TStringListExt;
-    FIDField: TField;
     FSelectionField: TField;
     lastValidSentence: string;
 
@@ -241,6 +240,7 @@ type
     FCurrentResource: TosAppResource;
     FSuperUserName: string;
     FModifiedList: TStringList;
+    FIDField: TField;
     procedure ResourceClick( Sender: TObject );
     procedure replaceReportSQLPrint;
     procedure CheckMultiSelection;
