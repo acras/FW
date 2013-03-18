@@ -57,6 +57,7 @@ function ConverteMinutos(minutos: Integer): string;
 function GetDateTime(conn: TosSQLConnection): TDateTime;
 function GetNewID(conn: TosSQLConnection): Integer;
 function GetGenerator(conn: TosSQLConnection; generator: string): Integer;
+function ConverteStrToDate(data: string): TDateTime;
 
 implementation
 
@@ -848,6 +849,11 @@ begin
   finally
     FreeAndNil(qry);
   end;
+end;
+
+function ConverteStrToDate(data: string): TDateTime;
+begin
+  Result := StrToDateTime(Copy(data,9,2)+'/'+Copy(data,6,2)+'/'+Copy(data,1,4));
 end;
 
 end.
