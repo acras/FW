@@ -58,6 +58,7 @@ function GetDateTime(conn: TosSQLConnection): TDateTime;
 function GetNewID(conn: TosSQLConnection): Integer;
 function GetGenerator(conn: TosSQLConnection; generator: string): Integer;
 function ConverteStrToDate(data: string): TDateTime;
+function ConverteStrToDate2(data: string): TDateTime;
 
 implementation
 
@@ -66,6 +67,7 @@ uses DateUtils, Variants;
 const
   CSIDL_COMMON_APPDATA = $0023;
 
+// 20001020
 function ConverteData(data: string): TDateTime;
 begin
   Result := StrToDateTime(Copy(data,7,2)+'/'+Copy(data,5,2)+'/'+Copy(data,1,4));
@@ -851,9 +853,17 @@ begin
   end;
 end;
 
+// 2000/10/20
 function ConverteStrToDate(data: string): TDateTime;
 begin
   Result := StrToDateTime(Copy(data,9,2)+'/'+Copy(data,6,2)+'/'+Copy(data,1,4));
+end;
+
+// 10/20/00
+function ConverteStrToDate2(data: string): TDateTime;
+begin
+  Result := StrToDateTime(Copy(data,4,2)+'/'+Copy(data,1,2)+'/'+
+    Copy(FormatDateTime('yyyy',Today),1,2)+Copy(data,7,2));
 end;
 
 end.
