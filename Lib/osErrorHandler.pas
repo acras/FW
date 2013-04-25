@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, db, osCIC, richedit;
+  Dialogs, StdCtrls, db, osCIC, richedit, RegExpr;
 
 type
   TErrorType = (etError, etCritical, etWarning);
@@ -46,6 +46,7 @@ type
     function IsCNPJ(PField : TField): boolean;
     function IsCPF(PField : TField): boolean;
     function IsUF(PField : TField) : boolean;
+    function IsEmail(PField : TField) : boolean;
 
     procedure Check;
     procedure Clear;
@@ -320,6 +321,14 @@ begin
     Result := False
   else
     Result := (Pos(SiglaUF, SiglasValidas) > 0);
+end;
+
+function TosErrorHandlerForm.IsEmail(PField : TField) : boolean;
+var
+  email: string;
+begin
+  email := PField.AsString;
+  Result := ExecRegExpr('/^$|\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\z/',email);
 end;
 
 function TosErrorHandlerForm.IsEmpty(PField: TField): boolean;
