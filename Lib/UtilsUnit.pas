@@ -679,6 +679,7 @@ begin
     VK_CONTROL: Result := '[CTRL]';	//Ctrl key
     VK_MENU:    Result := '[ALT]';	//Alt key
     VK_ESCAPE:  Result := '[ESC]';	//Esc key
+    VK_CAPITAL: Result := '[CAPS LOCK]';
     VK_SPACE:   Result := '[ESPAÇO]';	//Space bar
     VK_LEFT:    Result := '[SETA PARA ESQUERDA]';	//Left Arrow key
     VK_UP:      Result := '[SETA PARA CIMA]';	//Up Arrow key

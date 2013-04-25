@@ -312,7 +312,7 @@ end;
 
 function TosErrorHandlerForm.IsUF(PField: TField): boolean;
 const
-  SiglasValidas = 'RS SC PR SP MS MT RJ ES MG GO BA PE SE AL PI MA RN CE PB PA AM AC RO RR AA TO DF';
+  SiglasValidas = 'RS SC PR SP MS MT RJ ES MG GO BA PE SE AL PI MA RN CE PB PA AM AC RO RR AP TO DF';
 var
   SiglaUF : string;
 begin
@@ -324,11 +324,9 @@ begin
 end;
 
 function TosErrorHandlerForm.IsEmail(PField : TField) : boolean;
-var
-  email: string;
 begin
-  email := PField.AsString;
-  Result := ExecRegExpr('/^$|\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\z/',email);
+  Result := ExecRegExpr('^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,4}(\.[A-Za-z]{2,4})?$',
+    PField.AsString);
 end;
 
 function TosErrorHandlerForm.IsEmpty(PField: TField): boolean;
