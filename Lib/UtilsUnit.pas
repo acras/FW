@@ -6,7 +6,7 @@ uses
   IBServices, INIFiles, Forms, AbZipper, Windows, SysUtils, StrUtils, Controls,
   osComboSearch, graphics, Classes, DBCtrls, wwdbdatetimepicker, Wwdbcomb,
   Math, Wwdbgrid, RegExpr,StdCtrls, DB, DBClient, wwdbedit, Buttons, ShellAPI, acSysUtils,
-  osSQLConnection, osSQLQuery;
+  osSQLConnection, osSQLQuery, WinSock;
 
 type
   varArrayOfcomps = array of TComponent;
@@ -59,6 +59,7 @@ function GetNewID(conn: TosSQLConnection): Integer;
 function GetGenerator(conn: TosSQLConnection; generator: string): Integer;
 function ConverteStrToDate(data: string): TDateTime;
 function ConverteStrToDate2(data: string): TDateTime;
+function GetIPAddress: string;
 
 implementation
 
@@ -865,6 +866,27 @@ function ConverteStrToDate2(data: string): TDateTime;
 begin
   Result := StrToDateTime(Copy(data,4,2)+'/'+Copy(data,1,2)+'/'+
     Copy(FormatDateTime('yyyy',Today),1,2)+Copy(data,7,2));
+end;
+
+function GetIPAddress: string;
+var
+  Buffer: array[0..255] of Char;
+  RemoteHost: PHostEnt;
+  tempAddress: Integer;
+  BufferR: array[0..3] of Byte absolute tempAddress;
+begin
+  Winsock.GetHostName(@Buffer, 255);
+  RemoteHost := Winsock.GetHostByName(Buffer);
+  if RemoteHost = nil then
+  begin
+    tempAddress := winsock.htonl($07000001); { 127.0.0.1 }
+  end
+  else
+  begin
+    tempAddress := longint(pointer(RemoteHost^.h_addr_list^)^);
+    tempAddress := Winsock.ntohl(tempAddress);
+  end;
+  Result := Format('%d.%d.%d.%d', [BufferR[3], BufferR[2], BufferR[1], BufferR[0]]);
 end;
 
 end.
