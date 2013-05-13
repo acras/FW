@@ -54,6 +54,7 @@ type
     Report: TppReport;
     procedure DataModuleCreate(Sender: TObject);
     procedure ReportPreviewFormCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     FPrintToFile: boolean;
     FTextFileName: string;
@@ -563,6 +564,11 @@ begin
   FForcePrintWithoutDialog := Value;
   if FForcePrintWithoutDialog then
     FForcePreview := False;
+end;
+
+procedure TacCustomReport.DataModuleDestroy(Sender: TObject);
+begin
+  FreeAndNil(adendos);
 end;
 
 end.
