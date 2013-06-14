@@ -271,7 +271,7 @@ begin
       try
          FMasterDataset.ApplyUpdates(0);
       except                       
-        MessageDlg('nao deu', mtWarning, [mbOK], 0);
+        MessageDlg('Erro ao salvar as alterações.', mtWarning, [mbOK], 0);
       end;
     end;
   finally
