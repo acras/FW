@@ -69,6 +69,7 @@ var
   config: TConfigImpressao;
   sql, extensao: string;
   FTextFileName: string;
+  where: string;
 begin
   config.orientation := -1;
   config.larguraPapel := -1;
@@ -137,7 +138,16 @@ begin
       FilterDefName := filterName;
       srchForm.DataProvider := acCustomSQLMainData.prvFilter;
       Execute('',3,toRetornarQuery);
-      replaceReportSQLAddParam(report, stream, sqlResult.Text, GetExpressions);
+      where := GetExpressions;
+      if ConsultaCombo.GetExprList(ConsultaCombo.Items.IndexOf(ConsultaCombo.Text)).Text <> '' then
+      begin
+        if where = '' then
+          where := ConsultaCombo.GetExprList(ConsultaCombo.Items.IndexOf(ConsultaCombo.Text)).Text
+        else
+          where := where + ' AND ' +
+            ConsultaCombo.GetExprList(ConsultaCombo.Items.IndexOf(ConsultaCombo.Text)).Text;
+      end;
+      replaceReportSQLAddParam(report, stream, sqlResult.Text, Trim(where));
       free;
     end;
   end
@@ -188,10 +198,6 @@ begin
   end;
 
   report.Print;
-
-
-
-
 end;
 
 {-------------------------------------------------------------------------
