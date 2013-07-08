@@ -574,8 +574,6 @@ begin
               if strOrder <> '' then
               begin
                 try
-                  strOrder := strOrder;
-
                   criterios := TStringList.Create;
 
                   criterios.Delimiter := ',';
