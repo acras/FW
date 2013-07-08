@@ -49,6 +49,7 @@ function FormataHora(tempo: string): string;
 function GetHora(tempo: string): Integer;
 function GetMinuto(tempo: string): Integer;
 function ConverteData(data: string): TDateTime;
+function ConverteDataHora(data: string): TDateTime;
 procedure ImprimirImpressoraTermica(const comando, impressora: String);
 function NomeDaTecla(Key: Word): string;
 function RoundToCurrency(const AValue: Currency; const ADigit: TRoundToRange = -2): Currency;
@@ -72,6 +73,13 @@ const
 function ConverteData(data: string): TDateTime;
 begin
   Result := StrToDateTime(Copy(data,7,2)+'/'+Copy(data,5,2)+'/'+Copy(data,1,4));
+end;
+
+// 20001020235959
+function ConverteDataHora(data: string): TDateTime;
+begin
+  Result := StrToDateTime(Copy(data,7,2)+'/'+Copy(data,5,2)+'/'+Copy(data,1,4)+' '+
+      Copy(data,9,2)+':'+Copy(data,11,2)+':'+Copy(data,13,2));
 end;
 
 procedure ListFileDir(Path: string; FileList: TStrings);
