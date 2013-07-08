@@ -35,7 +35,7 @@ uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDat
 
   procedure replaceReportSQL(report: TppReport; template: TMemoryStream; strSQL: String);
   procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream;
-    strSelect: String; strWhere: String);
+    strSelect: String; strWhere: String; strOrder: string = ''; AscendingSort: Boolean = True);
 
   procedure replaceReportSQLAddWhere(report: TppReport; template: TMemoryStream;
     strWHERE: String);
@@ -80,7 +80,7 @@ begin
       begin
         TBLOBField(query.fields[0]).SaveToStream(stream);
         TacReportContainer(Application.MainForm.FindComponent('FReportDepot')).
-          addReport(query.fields[1].AsInteger, name, TBLOBField(query.fields[0]).Value);
+          addReport(query.fields[1].AsInteger, name, TBLOBField(query.fields[0]).AsString);
         Result := true;
       end;
     finally
@@ -331,7 +331,8 @@ begin
         begin
 
           lDataView := lDataModule.DataViews[liIndex];
-          if (lDataView <> nil) and (lDataView is TdaQueryDataView) and (Report.Datapipeline <> nil) and (Report.DataPipeline.Dataview = lDataview) then
+          if (lDataView <> nil) and (lDataView is TdaQueryDataView) and (Report.Datapipeline <> nil)
+            and (Report.DataPipeline.Dataview = lDataview) then
           begin
             for i := 0 to lDataView.DataPipelineCount-1 do
             begin
@@ -521,14 +522,16 @@ begin
 end;
 
 procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream;
-  strSelect: String; strWhere: String);
+  strSelect: String; strWhere: String; strOrder: string; AscendingSort: Boolean);
 var
-  liIndex, i: Integer;
+  liIndex, i, y: Integer;
   lDataModule: TdaDataModule;
   lDataView: TdaDataView;
   aSQL: TDaSQL;
   nomePipeline: String;
   crit: TdaCriteria;
+  ord: TdaField;
+  criterios, item: TStringList;
 begin
   report.Template.LoadFromStream(template);
 
@@ -566,6 +569,43 @@ begin
                 crit := aSQL.AddCriteria(dacrField);
                 crit.Expression := '1';
                 crit.Value := '1 AND '+strWhere;
+              end;
+
+              if strOrder <> '' then
+              begin
+                try
+                  strOrder := strOrder;
+
+                  criterios := TStringList.Create;
+
+                  criterios.Delimiter := ',';
+                  criterios.DelimitedText := strOrder;
+
+                  for y := 0 to criterios.Count -1 do
+                  begin
+                    try
+                      item := TStringList.Create;
+                      item.Delimiter := '.';
+                      item.DelimitedText := criterios.Strings[y]; 
+
+                      ord := TdaField.Create(nil);
+                      ord.ChildType := 2;
+                      ord.Alias := item.Strings[1];
+                      ord.FieldAlias := item.Strings[1];
+                      ord.FieldName := item.Strings[1];
+                      ord.SQLFieldName := item.Strings[1];
+                      ord.TableAlias := nomePipeline;
+                      ord.TableSQLAlias := item.Strings[0];
+                      
+                      aSQL.AddOrderByField(ord,AscendingSort);
+                    finally
+                      FreeAndNil(ord);
+                      FreeAndNil(item);
+                    end;
+                  end;
+                finally
+                  FreeAndNil(criterios);
+                end;
               end;
             end;
           end;

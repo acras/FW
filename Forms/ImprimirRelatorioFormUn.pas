@@ -69,7 +69,7 @@ var
   config: TConfigImpressao;
   sql, extensao: string;
   FTextFileName: string;
-  where: string;
+  where, order: string; 
 begin
   config.orientation := -1;
   config.larguraPapel := -1;
@@ -80,6 +80,7 @@ begin
   config.margemDireita := -1;
   config.tipoSaida := 'T';
   FTextFileName := '';
+  
   //buscar informações no catálogo de relatórios
   qry := acCustomSQLMainData.GetQuery;
   try
@@ -139,6 +140,8 @@ begin
       srchForm.DataProvider := acCustomSQLMainData.prvFilter;
       Execute('',3,toRetornarQuery);
       where := GetExpressions;
+      order := getOrder;
+
       if ConsultaCombo.GetExprList(ConsultaCombo.Items.IndexOf(ConsultaCombo.Text)).Text <> '' then
       begin
         if where = '' then
@@ -146,8 +149,9 @@ begin
         else
           where := where + ' AND ' +
             ConsultaCombo.GetExprList(ConsultaCombo.Items.IndexOf(ConsultaCombo.Text)).Text;
+
       end;
-      replaceReportSQLAddParam(report, stream, sqlResult.Text, Trim(where));
+      replaceReportSQLAddParam(report, stream, sqlResult.Text, Trim(where), Trim(order));
       free;
     end;
   end
