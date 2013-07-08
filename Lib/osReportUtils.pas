@@ -35,7 +35,7 @@ uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDat
 
   procedure replaceReportSQL(report: TppReport; template: TMemoryStream; strSQL: String);
   procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream;
-    strSelect: String; strWhere: String; strOrder: string = ''; AscendingSort: Boolean = True);
+    strSelect: String; strWhere: String; strOrder: string = '');
 
   procedure replaceReportSQLAddWhere(report: TppReport; template: TMemoryStream;
     strWHERE: String);
@@ -522,7 +522,7 @@ begin
 end;
 
 procedure replaceReportSQLAddParam(report: TppReport; template: TMemoryStream;
-  strSelect: String; strWhere: String; strOrder: string; AscendingSort: Boolean);
+  strSelect: String; strWhere: String; strOrder: string);
 var
   liIndex, i, y: Integer;
   lDataModule: TdaDataModule;
@@ -577,7 +577,8 @@ begin
                   criterios := TStringList.Create;
 
                   criterios.Delimiter := ',';
-                  criterios.DelimitedText := strOrder;
+                  criterios.DelimitedText :=
+                    '"' + StringReplace(strOrder, ',', '"' + ',' + '"', [rfReplaceAll]) + '"';
 
                   for y := 0 to criterios.Count -1 do
                   begin
@@ -594,8 +595,11 @@ begin
                       ord.SQLFieldName := item.Strings[1];
                       ord.TableAlias := nomePipeline;
                       ord.TableSQLAlias := item.Strings[0];
-                      
-                      aSQL.AddOrderByField(ord,AscendingSort);
+
+                      if (item.Count = 3) and (UpperCase(item.Strings[2]) = 'DESC') then
+                        aSQL.AddOrderByField(ord,False)
+                      else
+                        aSQL.AddOrderByField(ord,True);
                     finally
                       FreeAndNil(ord);
                       FreeAndNil(item);
@@ -605,6 +609,7 @@ begin
                   FreeAndNil(criterios);
                 end;
               end;
+              ShowMessage(aSQL.SQLText.Text);
             end;
           end;
         end;
