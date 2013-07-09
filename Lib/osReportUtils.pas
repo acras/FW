@@ -596,6 +596,8 @@ begin
                       ord.TableAlias := nomePipeline;
                       ord.TableSQLAlias := item.Strings[0];
 
+                      // na migração para o XE o comportamento da string list pode mudar
+                      // atualmente independente do caracter de quebra o espaço tbm é quebrado
                       if (item.Count = 3) and (UpperCase(item.Strings[2]) = 'DESC') then
                         aSQL.AddOrderByField(ord,False)
                       else
@@ -609,7 +611,6 @@ begin
                   FreeAndNil(criterios);
                 end;
               end;
-              ShowMessage(aSQL.SQLText.Text);
             end;
           end;
         end;
