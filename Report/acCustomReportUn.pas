@@ -9,7 +9,7 @@ uses
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
   daDataModule, daQueryDataView, TypInfo, Printers,
-  ppPDFDevice, ppPrintr;
+  ppPDFDevice, ppPrintr, ppParameter;
 
 type
   TTipoAdendo = (taWHERE, taORDER);
@@ -55,7 +55,7 @@ type
     procedure DataModuleCreate(Sender: TObject);
     procedure ReportPreviewFormCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
-  private
+  protected
     FPrintToFile: boolean;
     FTextFileName: string;
     FDeviceType: string;
@@ -66,8 +66,7 @@ type
     FPDFStream: TMemoryStream;
     FPDFDevice: TppPDFDevice;
     FPrintToStream: Boolean;
-
-
+  private
     procedure replaceReportSQLAddWhere(report: TppReport;
       template: TMemoryStream; id:integer);
     function replaceId(str: string; id: integer): string;
@@ -204,18 +203,25 @@ begin
 
     if FPrintToFile then
     begin
-      report.AllowPrintToFile := True;
+      {report.AllowPrintToFile := True;
       report.DeviceType := FDeviceType;
       report.TextFileName := FTextFileName;
-      report.ShowPrintDialog := false;
+      report.ShowPrintDialog := false;}
+
+      if FPDFDevice = nil then
+      begin
+        FPDFDevice := TppPDFDevice.Create(Self);
+      end;
+      FPDFDevice.FileName := FTextFileName;
+      FPDFDevice.Publisher := Report.Publisher;
+      FPDFDevice.PDFSettings := Report.PDFSettings;
     end
     else if FPrintToStream then
     begin
-      if FPDFDevice <> nil then
+      if FPDFDevice = nil then
       begin
-        FreeAndNil(FPDFDevice);
+        FPDFDevice := TppPDFDevice.Create(Self);
       end;
-      FPDFDevice := TppPDFDevice.Create(Self);
       if FPDFStream <> nil then
       begin
         FreeAndNil(FPDFStream);
@@ -291,7 +297,7 @@ begin
       report.DeviceType := 'Screen';
     end;
 
-    if PrintToStream then
+    if PrintToStream or FPrintToFile then
       Report.PrintToDevices
     else
       Report.Print;
