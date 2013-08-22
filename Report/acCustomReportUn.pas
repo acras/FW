@@ -9,7 +9,7 @@ uses
   ppModule, raCodMod, ppMemo, ppVar, ppBands, ppStrtch, ppSubRpt, ppCtrls,
   ppPrnabl, ppCache, ppDB, ppDBPipe, ppTypes, Forms, ppViewr, daSQl,
   daDataModule, daQueryDataView, TypInfo, Printers,
-  ppPDFDevice, ppPrintr, ppParameter;
+  ppPDFDevice, ppPrintr, ppParameter, ppArchiv;
 
 type
   TTipoAdendo = (taWHERE, taORDER);
@@ -203,11 +203,6 @@ begin
 
     if FPrintToFile then
     begin
-      {report.AllowPrintToFile := True;
-      report.DeviceType := FDeviceType;
-      report.TextFileName := FTextFileName;
-      report.ShowPrintDialog := false;}
-
       if FPDFDevice = nil then
       begin
         FPDFDevice := TppPDFDevice.Create(Self);
@@ -298,7 +293,10 @@ begin
     end;
 
     if PrintToStream or FPrintToFile then
+    begin
+      Report.InitializeParameters;
       Report.PrintToDevices
+    end
     else
       Report.Print;
   finally

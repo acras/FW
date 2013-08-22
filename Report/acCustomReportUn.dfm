@@ -40,16 +40,21 @@ object acCustomReport: TacCustomReport
     EmailSettings.ReportFormat = 'PDF'
     LanguageID = 'Default'
     OnPreviewFormCreate = ReportPreviewFormCreate
+    OpenFile = False
     OutlineSettings.CreateNode = True
     OutlineSettings.CreatePageNodes = True
     OutlineSettings.Enabled = False
     OutlineSettings.Visible = False
+    ThumbnailSettings.Enabled = True
+    ThumbnailSettings.Visible = True
+    ThumbnailSettings.DeadSpace = 30
     PDFSettings.EmbedFontOptions = [efUseSubset]
     PDFSettings.EncryptSettings.AllowCopy = True
     PDFSettings.EncryptSettings.AllowInteract = True
     PDFSettings.EncryptSettings.AllowModify = True
     PDFSettings.EncryptSettings.AllowPrint = True
     PDFSettings.EncryptSettings.Enabled = False
+    PDFSettings.EncryptSettings.KeyLength = kl40Bit
     PDFSettings.FontEncoding = feAnsi
     PDFSettings.ImageCompressionLevel = 25
     PreviewFormSettings.WindowState = wsMaximized
@@ -68,7 +73,7 @@ object acCustomReport: TacCustomReport
     XLSSettings.Title = 'Report'
     Left = 128
     Top = 96
-    Version = '14.07'
+    Version = '15.0'
     mmColumnWidth = 188914
     object Detail: TppDetailBand
       Background1.Brush.Style = bsClear
