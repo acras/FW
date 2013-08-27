@@ -67,8 +67,6 @@ type
     FPDFDevice: TppPDFDevice;
     FPrintToStream: Boolean;
   private
-    procedure replaceReportSQLAddWhere(report: TppReport;
-      template: TMemoryStream; id:integer);
     function replaceId(str: string; id: integer): string;
     function getPaperName(printerName: String): String;
 
@@ -85,7 +83,8 @@ type
     procedure ajustarAdendos; virtual;
     function replaceParamId(str: string; id: integer): string; virtual;
   public
-    { Public declarations }
+    procedure replaceReportSQLAddWhere(report: TppReport;
+      template: TMemoryStream; id:integer);
     property forcePrintWithoutDialog: Boolean read FForcePrintWithoutDialog
       write setForcePrintWithoutDialog;
     property forcePreview: Boolean read FForcePreview write setForcePreview;
