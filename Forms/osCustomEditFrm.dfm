@@ -6,6 +6,7 @@ inherited osCustomEditForm: TosCustomEditForm
   Caption = 'osCustomEditForm'
   Menu = MainMenu
   OldCreateOrder = True
+  OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   PixelsPerInch = 96
   TextHeight = 13

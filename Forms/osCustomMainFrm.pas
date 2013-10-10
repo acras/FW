@@ -363,18 +363,22 @@ begin
   Form := FCurrentEditForm;
   if Assigned(Form) then
   begin
-    iID := FIDField.AsInteger;
-    Form.VisibleButtons := [vbSalvarFechar, vbFechar];
-    if PrintAction.Enabled then
-      Form.VisibleButtons := Form.VisibleButtons + [vbImprimir];
-    Form.Edit('ID', iID);
-    if Form.IsModified then
+    if not Form.IsOpen then
     begin
-      FModifiedList.Add(FilterDatasource.DataSet.fieldByName('id').AsString);
-      if false then //TODO: trocar pela lógica de forçar a reexecução de filtro
+      Form.IsOpen := True;
+      iID := FIDField.AsInteger;
+      Form.VisibleButtons := [vbSalvarFechar, vbFechar];
+      if PrintAction.Enabled then
+        Form.VisibleButtons := Form.VisibleButtons + [vbImprimir];
+      Form.Edit('ID', iID);
+      if Form.IsModified then
       begin
-        ExecLastFilter;
-        FilterDataset.Locate('ID', iID, []);
+        FModifiedList.Add(FilterDatasource.DataSet.fieldByName('id').AsString);
+        if false then //TODO: trocar pela lógica de forçar a reexecução de filtro
+        begin
+          ExecLastFilter;
+          FilterDataset.Locate('ID', iID, []);
+        end;
       end;
     end;
   end;
