@@ -465,7 +465,7 @@ begin
     if numDias>1 then
       result := result+'s';
   end;
-  if (Fdias>=limiarDias-1) AND (Fdias<limiarMeses) then
+  if (Fdias>=limiarDias) AND (Fdias<limiarMeses) then
   begin
     if difMeses>1 then
       result := intToStr(difMeses) + ' meses'
