@@ -388,7 +388,10 @@ begin
               if aSQL.Criteria[iCriteria-1].Value = '-1' then
                 aSQL.Criteria[iCriteria-1].Value := IntToStr(id)
               else
-                aSQL.Criteria[iCriteria-1].Value := casosEspeciais(aSQL.Criteria[iCriteria-1].Value);
+              begin
+                if aSQL.Criteria[iCriteria-1].Value <> casosEspeciais(aSQL.Criteria[iCriteria-1].Value) then
+                  aSQL.Criteria[iCriteria-1].Value := casosEspeciais(aSQL.Criteria[iCriteria-1].Value);
+              end
             end;
           end;
 
