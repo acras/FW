@@ -23,7 +23,7 @@ object acCustomReport: TacCustomReport
     PassSetting = psTwoPass
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 14552
@@ -73,7 +73,7 @@ object acCustomReport: TacCustomReport
     XLSSettings.Title = 'Report'
     Left = 128
     Top = 96
-    Version = '15.0'
+    Version = '15.01'
     mmColumnWidth = 188914
     object Detail: TppDetailBand
       Background1.Brush.Style = bsClear

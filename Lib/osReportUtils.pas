@@ -452,13 +452,12 @@ var
   iTemp: integer;
   strMes: string;
 begin
-  numAnos := getAnos;
-  difMeses := getMeses mod 12;
-  //pegar a diferença em dias
-  dataNascimento := IncDay(dataReferencia, Fdias * -1);
-  dataCalculo1 := IncYear(dataNascimento, numAnos);
-  dataCalculo2 := IncMonth(dataCalculo1, difMeses);
-  numDias := trunc(dataReferencia)-trunc(dataCalculo2);
+  numAnos := Fdias div 365;
+  if (Fdias mod 365) >= 360 then
+    difMeses := 11
+  else
+    difMeses := (Fdias mod 365) div 30;
+  numDias := (Fdias mod 365) mod 30;
   if Fdias<limiarDias then
   begin
     result := inttoStr(numDias) + ' dia';
