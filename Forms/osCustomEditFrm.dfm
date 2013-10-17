@@ -1,13 +1,15 @@
 inherited osCustomEditForm: TosCustomEditForm
   Left = 40
   Top = 351
-  Width = 502
-  Height = 335
   Caption = 'osCustomEditForm'
+  ClientHeight = 297
+  ClientWidth = 486
   Menu = MainMenu
   OldCreateOrder = True
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
+  ExplicitWidth = 502
+  ExplicitHeight = 335
   PixelsPerInch = 96
   TextHeight = 13
   object MainControlBar: TControlBar [0]
@@ -167,7 +169,7 @@ inherited osCustomEditForm: TosCustomEditForm
     Left = 216
     Top = 40
     Bitmap = {
-      494C010101000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000400080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

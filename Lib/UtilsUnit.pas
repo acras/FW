@@ -161,7 +161,8 @@ begin
     Zipper.AddFiles(ExtractFilePath(Application.ExeName) + 'tmp.gbk',0);
     Zipper.CloseArchive;
     deleteFile(PCHAR(ExtractFilePath(Application.ExeName) + '..\backups\ultimoBackup.bkp'));
-    CopyFile(PAnsiChar(ExtractFilePath(Application.ExeName) + 'tmp.zip'), PAnsiChar(ExtractFilePath(Application.ExeName) + '..\backups\ultimoBackup.bkp'),false);
+    CopyFile(PWideChar(ExtractFilePath(Application.ExeName) + 'tmp.zip'),
+      PWideChar(ExtractFilePath(Application.ExeName) + '..\backups\ultimoBackup.bkp'),false);
     RenameFile(ExtractFilePath(Application.ExeName) + 'tmp.zip', nomeArq);
     DeleteFile(PCHAR(ExtractFilePath(Application.ExeName) + 'tmp.gbk'));
     DeleteFile(PCHAR(ExtractFilePath(Application.ExeName) + 'tmp.zip'))
@@ -878,7 +879,7 @@ end;
 
 function GetIPAddress: string;
 var
-  Buffer: array[0..255] of Char;
+  Buffer: PAnsiChar;
   RemoteHost: PHostEnt;
   tempAddress: Integer;
   BufferR: array[0..3] of Byte absolute tempAddress;

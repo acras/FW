@@ -8,7 +8,8 @@ uses
   Wwintl, osFrm, ImgList, Menus, Buttons, ComCtrls,
   ToolWin, ExtCtrls, osActionList, osClientDataset, provider, osUtils,
   Grids, Wwdbigrd, Wwdbgrid, wwdbdatetimepicker, wwrcdpnl, Mask, wwdbedit, wwriched,
-  osComboSearch, osDBDualTree, wwDBSpin, wwDBNavigator, wwDBcomb, wwDBlook, DBGrids;
+  osComboSearch, osDBDualTree, wwDBSpin, wwDBNavigator, wwDBcomb, wwDBlook, DBGrids,
+  System.Actions;
 
 type
   TFormMode      = (fmEdit, fmInsert, fmView, fmDelete);

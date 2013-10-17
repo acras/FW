@@ -1,8 +1,6 @@
 object acCustomSQLMainData: TacCustomSQLMainData
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 552
-  Top = 132
   Height = 365
   Width = 631
   object spGetNewSequence: TStoredProc
@@ -35,8 +33,6 @@ object acCustomSQLMainData: TacCustomSQLMainData
   object SQLConnection: TosSQLConnection
     ConnectionName = 'IBLocal'
     DriverName = 'Interbase'
-    GetDriverFunc = 'getSQLDriverINTERBASE'
-    LibraryName = 'dbexpint.dll'
     LoginPrompt = False
     Params.Strings = (
       'BlobSize=32'
@@ -54,7 +50,6 @@ object acCustomSQLMainData: TacCustomSQLMainData
       'Interbase TransIsolation='
       'User_Name=SYSDBA'
       'WaitOnLocks=')
-    VendorLib = 'GDS32.dll'
     Left = 100
     Top = 80
   end
@@ -74,8 +69,6 @@ object acCustomSQLMainData: TacCustomSQLMainData
   object SQLConnectionMeta: TosSQLConnection
     ConnectionName = 'IBLocal'
     DriverName = 'Interbase'
-    GetDriverFunc = 'getSQLDriverINTERBASE'
-    LibraryName = 'dbexpint.dll'
     LoginPrompt = False
     Params.Strings = (
       'BlobSize=32'
@@ -93,7 +86,6 @@ object acCustomSQLMainData: TacCustomSQLMainData
       'Interbase TransIsolation='
       'User_Name=SYSDBA'
       'WaitOnLocks=')
-    VendorLib = 'GDS32.dll'
     Left = 100
     Top = 152
   end

@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ActnList, osUtils, ImgList, osActionList;
+  ActnList, osUtils, ImgList, osActionList, System.Actions;
 
 type
   TOperacao  = (oInserir, oEditar, oExcluir, oVisualizar, oImprimir);

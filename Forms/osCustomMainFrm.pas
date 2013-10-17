@@ -8,15 +8,15 @@ uses
   ToolWin, ActnList, Db, DBClient, MConnect, SConnect,
   osCustomEditFrm, Mask, wwdbedit, Wwdotdot, Wwdbcomb,
   osComboFilter, contnrs, printers, Wwintl, Wwdbigrd, Wwdbgrid,
-  ADODB, Provider, osFrm, mxOutlookBar, osAppResources, ppViewr, ppClass,
+  ADODB, Provider, osFrm, osAppResources, ppViewr, ppClass,
   ppReport, ppComm, ppRelatv, ppDB, ppDBPipe, ppBands, ppCache, ppVar, ppCtrls,
   ppProd, ppPrnabl, osActionList, osClientDataset, osMD5,
   osUtils, OleCtrls, SHDocVw, ppTmplat, osSQLDataSet, dbTables,
-  SqlExpr, DBXpress, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
+  SqlExpr, Data.DBXFirebird, daIDE, daDBExpress, ppCTDsgn, raIDE, myChkBox,
   ppModule, daDataModule, FMTBcd, osCustomDataSetProvider,
   osSQLDataSetProvider, daSQl, daQueryDataView, ppTypes, acCustomReportUn,
   osSQLQuery, acFilterController, CommCtrl, clipbrd, osCustomLoginFormUn,
-  acReportContainer, ppParameter;//ppWWRichEd;
+  acReportContainer, ppParameter, Data.DBXInterBase, System.Actions;//ppWWRichEd;
 
 type
   TDatamoduleClass = class of TDatamodule;
@@ -58,7 +58,6 @@ type
     N2: TMenuItem;
     ShowQueryAction: TAction;
     MostrarQuery: TMenuItem;
-    OutlookBar: TmxOutlookBar;
     PrintAction: TAction;
     Novo: TMenuItem;
     Alterar: TMenuItem;
@@ -230,7 +229,7 @@ type
     function CreateCurrentDatamodule: TDatamodule;
     function CreateCurrentReport: TacCustomReport;
 
-    procedure LoadOutlookBar;
+    procedure LoadTreeView;
     procedure checkOperations;
 
     procedure adjustReportZoom;
@@ -747,24 +746,16 @@ procedure TosCustomMainForm.ShowQueryActionExecute(Sender: TObject);
 begin
   inherited;
   ShowQueryAction.Checked := not ShowQueryAction.Checked;
-//  FShowQuery := actShowQuery.Checked;
 end;
 
-{-------------------------------------------------------------------------
- Objetivo   > Tratamento do momento do click em um recurso 
- Parâmetros > Conforme documentação
- Retorno    >
- Criação    >
- Observações> Documentação iniciada em 17/03/2006 por Ricardo N. Acras
- Atualização>
- ------------------------------------------------------------------------}
 procedure TosCustomMainForm.ResourceClick(Sender: TObject);
 var
   NewResource: TosAppResource;
 begin
   FModifiedList.Clear;
   FNewFilter := false;
-  NewResource := TosAppResource(Manager.Resources.FindItemID(TOutlookButton(Sender).Tag));
+  NewResource :=
+    TosAppResource(Manager.Resources.FindItemID(TTreeNode(Sender).SelectedIndex));
   if FCurrentResource <> NewResource then
   begin
     FCurrentResource := NewResource;
@@ -1213,7 +1204,7 @@ begin
       else
         ActionDataSet.Params.ParamByName('UserName').Value := FUserName;
 
-      LoadOutlookBar;
+      LoadTreeView  ;
     end;
   finally
     cds.Free;
@@ -1229,9 +1220,6 @@ var
   i: integer;
 begin
   FilterDataSet.Close;
-
-  for i := 0 to OutlookBar.GetHeaderCount - 1 do
-    OutlookBar.DeleteHeader(0);
 
   TreeView1.Items.Clear;
 
@@ -1268,11 +1256,10 @@ begin
   LoginAction.Caption := 'Login';
 end;
 
-procedure TosCustomMainForm.LoadOutlookBar;
+procedure TosCustomMainForm.LoadTreeView;
 var
   i: integer;
   sDomain: string;
-  Button: TOutlookButton;
   noPai, no: TTreeNode;
 begin
   sDomain := '';
@@ -1283,24 +1270,15 @@ begin
       if DomainName <> sDomain then
       begin
         sDomain := DomainName;
-        OutlookBar.CreateHeader(sDomain);
         noPai := TreeView1.Items.Add(nil, sDomain);
       end;
       // Cria o botão
-      Button := OutlookBar.ActiveHeader.CreateButton(Name);
       no := TreeView1.Items.AddChild(noPai, name);
-      Button.ImageIndex := ImageIndex;
       no.ImageIndex := ImageIndex;
       no.SelectedIndex := Manager.Resources[i].ID;
-      Button.Font.Color := clWhite;
-      Button.LargeImages := BarLargeImages;
-      Button.SmallImages := BarSmallImages;
-      Button.OnClick := ResourceClick;
-      Button.Tag := Manager.Resources[i].ID;
       SetNodeState(no, TVIS_BOLD)
     end;
   end;
-  OutlookBar.ActiveHeader := OutlookBar.GetHeaderByIndex(0);
 end;
 
 procedure TosCustomMainForm.GridKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1733,10 +1711,8 @@ procedure TosCustomMainForm.TreeView1AdvancedCustomDrawItem(
   Stage: TCustomDrawStage; var PaintImages, DefaultDraw: Boolean);
 begin
   inherited;
-  with Node.DisplayRect(true) do
-  begin
-    Bottom := Bottom+10;
-  end;
+  // TODO: ver depois
+  //  Node.DisplayRect(true).Height := 10;
 end;
 
 procedure TosCustomMainForm.GridCalcCellColors(Sender: TObject;
@@ -1762,7 +1738,7 @@ begin
 end;
 
 initialization
-  ShortDateFormat := 'dd/mm/yyyy';
+  FormatSettings.ShortDateFormat := 'dd/mm/yyyy';
 
 
 end.

@@ -1,6 +1,7 @@
 package fw;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -11,17 +12,19 @@ package fw;
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -30,7 +33,6 @@ requires
   vclie,
   ibxpress,
   dbdltree,
-  mxOutlookBar_D7,
   adortl,
   tee,
   rtl,
@@ -42,25 +44,25 @@ requires
   vcl,
   acControls,
   dsnapcon,
-  ip4000v7,
+  ipstudiowin,
   bdertl,
-  vclx,
-  visualclx,
-  rbDIDE157,
-  rbDAD157,
-  rbUSERDesign157,
-  rbUSER157,
-  rbRCL157,
-  rbDBDE157,
-  rbBDE157,
-  rbDB157,
-  rbADO157,
-  rbDBE157,
-  rbIDE157,
-  rbCIDE157,
-  rbRIDE157,
-  rbRAP157,
-  Abbrevia;
+  rbDIDE1518,
+  rbDAD1518,
+  rbUSERDesign1518,
+  rbUSER1518,
+  rbRCL1518,
+  rbDBDE1518,
+  rbBDE1518,
+  rbDB1518,
+  rbADO1518,
+  rbDBE1518,
+  rbIDE1518,
+  rbCIDE1518,
+  rbRIDE1518,
+  rbRAP1518,
+  Abbrevia,
+  DBXInterBaseDriver,
+  DBXFirebirdDriver;
 
 contains
   osFrm in '..\Forms\osFrm.pas' {osForm},

@@ -1,9 +1,9 @@
 object osForm: TosForm
   Left = 259
   Top = 277
-  Width = 401
-  Height = 278
   Caption = 'osForm'
+  ClientHeight = 240
+  ClientWidth = 385
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

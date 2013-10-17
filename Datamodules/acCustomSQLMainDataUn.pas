@@ -3,9 +3,10 @@ unit acCustomSQLMainDataUn;
 interface
 
 uses
-  SysUtils, Classes, DBXpress, FMTBcd, SqlExpr, osSQLDataSet, DB,
+  SysUtils, Classes, Data.DBXFirebird, FMTBcd, SqlExpr, osSQLDataSet, DB,
   osSQLConnection, Provider, osCustomDataSetProvider, osSQLDataSetProvider,
-  DBTables, osClientDataSet, Contnrs, osSQLQuery, Forms, Types, Variants;
+  DBTables, osClientDataSet, Contnrs, osSQLQuery, Forms, Types, Variants,
+  Data.DBXInterBase;
 
 const
 
