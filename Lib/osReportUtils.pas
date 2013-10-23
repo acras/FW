@@ -30,7 +30,7 @@ uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDat
 
   function getIdadeDias(idade: string): integer;
   function getTemplateByName(name: string; stream: TStream): boolean;
-  function getTemplateByID(id: integer; stream: TStream): boolean;
+  function getTemplateByID(id: integer; stream: TMemoryStream): boolean;
   function getTemplateIDByName(name: string): integer;
 
   procedure replaceReportSQL(report: TppReport; template: TMemoryStream; strSQL: String);
@@ -123,17 +123,19 @@ begin
 end;
 
 
-function getTemplateById(id: integer; stream: TStream): boolean;
+function getTemplateById(id: integer; stream: TMemoryStream): boolean;
 var
   query: TosSQLDataset;
   report: string;
+  ss: TStringStream;
 begin
   Result := false;
   report := TacReportContainer(Application.MainForm.FindComponent('FReportDepot')).
     findReportById(id);
   if Length(report) > 0 then
   begin
-    stream.Write(report[1],Length(report));
+    ss := TStringStream.Create(report);
+    stream.LoadFromStream(ss);
     Result := True;
   end
   else
