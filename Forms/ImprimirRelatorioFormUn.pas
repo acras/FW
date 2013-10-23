@@ -25,8 +25,6 @@ type
     procedure ImprimirTemplate(templateName: string);
     procedure afterLoadStream; virtual;
     function findPipeline(name: string): TppDataPipeline;
-
-    { Private declarations }
   public
     function Edit(const KeyFields: string; const KeyValues: Variant): boolean; override;
   end;
@@ -50,16 +48,6 @@ begin
   result := true;
 end;
 
-{-------------------------------------------------------------------------
- Objetivo   > 
- Parâmetros > Conforme documentação
- Retorno    >
- Criação    >
- Observações> Documentação iniciada em 20.06.2006 por Ricardo N. Acras
- Atualização> 20.06.2006 Ricardo N. Acras
-                Melhorias na forma de execução dos filtros. Inserida decisão
-                  se mostra o form com as restrições ao usuário ou não.
- ------------------------------------------------------------------------}
 procedure TImprimirRelatorioForm.ImprimirRelatorioComFiltro(idRelatorio: integer);
 var
   stream: TMemoryStream;
@@ -204,14 +192,6 @@ begin
   report.Print;
 end;
 
-{-------------------------------------------------------------------------
- Objetivo   > Imprimir um template 
- Parâmetros > templateName: nome do template a ser impresso
- Retorno    >
- Criação    > 24.03.2006 - Ricardo N. Acras
- Observações>
- Atualização>
- ------------------------------------------------------------------------}
 procedure TImprimirRelatorioForm.ImprimirTemplate(templateName: string);
 var
   stream: TMemoryStream;

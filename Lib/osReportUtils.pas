@@ -29,7 +29,7 @@ uses Classes, acCustomSQLMainDataUn, osSQLDataSet, SysUtils, DB, ppReport, daDat
 
 
   function getIdadeDias(idade: string): integer;
-  function getTemplateByName(name: string; stream: TStream): boolean;
+  function getTemplateByName(name: string; stream: TMemoryStream): boolean;
   function getTemplateByID(id: integer; stream: TMemoryStream): boolean;
   function getTemplateIDByName(name: string): integer;
 
@@ -49,10 +49,11 @@ implementation
 
 uses daDataView, ppClass, FwConstants, DateUtils, Dialogs; // RelatorioEditFormUn
 
-function getTemplateByName(name: string; stream: TStream): boolean;
+function getTemplateByName(name: string; stream: TMemoryStream): boolean;
 var
   query: TosSQLDataset;
   report: string;
+  ss: TStringStream;
 begin
   name := UpperCase(Name);
   Result := false;
@@ -60,7 +61,8 @@ begin
     findReportByName(name); 
   if Length(report) > 0 then
   begin
-    stream.Write(report[1],Length(report));
+    ss := TStringStream.Create(report);
+    stream.LoadFromStream(ss);
     Result := True;
   end
   else

@@ -262,7 +262,7 @@ type
     property UserName: string read FUserName;
     property ActionDblClick: TAction read FActionDblClick write SetActionDblClick;
     procedure ExecLastFilter;
-    function getReportByResource(name: string; stream: TStream): boolean;
+    function getReportByResource(name: string; stream: TMemoryStream): boolean;
   published
     property EditForm: TosCustomEditForm read FEditForm write SetEditForm;
     property SelectedList: TStringList read GetSelectedList;
@@ -362,9 +362,8 @@ begin
   Form := FCurrentEditForm;
   if Assigned(Form) then
   begin
-    if not Form.IsOpen then
+    if not Form.Showing then
     begin
-      Form.IsOpen := True;
       iID := FIDField.AsInteger;
       Form.VisibleButtons := [vbSalvarFechar, vbFechar];
       if PrintAction.Enabled then
@@ -1478,7 +1477,7 @@ begin
   pnlStatusBar.Caption := ReportViewer.Status;
 end;
 
-function TosCustomMainForm.getReportByResource(name: string; stream: TStream): boolean;
+function TosCustomMainForm.getReportByResource(name: string; stream: TMemoryStream): boolean;
 begin
   result := getTemplateByName(name, stream);
 end;
