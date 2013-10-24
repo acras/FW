@@ -879,7 +879,7 @@ end;
 
 function GetIPAddress: string;
 var
-  Buffer: PAnsiChar;
+  Buffer: array[0..255] of AnsiChar;
   RemoteHost: PHostEnt;
   tempAddress: Integer;
   BufferR: array[0..3] of Byte absolute tempAddress;
