@@ -363,9 +363,8 @@ begin
   Form := FCurrentEditForm;
   if Assigned(Form) then
   begin
-    if not Form.IsOpen then
+    if not Form.Showing then
     begin
-      Form.IsOpen := True;
       iID := FIDField.AsInteger;
       Form.VisibleButtons := [vbSalvarFechar, vbFechar];
       if PrintAction.Enabled then

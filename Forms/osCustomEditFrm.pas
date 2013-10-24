@@ -64,7 +64,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure PararButtonClick(Sender: TObject);
     procedure MasterDataSourceDataChange(Sender: TObject; Field: TField);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FDatamodule: TDatamodule;
     FInitialControl: TWinControl;
@@ -79,7 +78,6 @@ type
     FFormMode: TFormMode;
     FExternalCDS: TosClientDataset;
     FIsModified: boolean;
-    FIsOpen: Boolean;
     procedure MasterDatasetAfterEdit(DataSet: TDataSet); virtual;
     procedure CheckMasterDataset;
     procedure Loaded; override;
@@ -101,7 +99,6 @@ type
     property IsModified: boolean read FIsModified;
     property Datamodule: TDatamodule read FDatamodule write SetDatamodule;
     property VisibleButtons: TVisibleButtons read FVisibleButtons write FVisibleButtons;
-    property IsOpen: Boolean read FIsOpen write FIsOpen;
     function canInsert: boolean; virtual;
   end;
 
@@ -522,13 +519,6 @@ procedure TosCustomEditForm.MasterDataSourceDataChange(Sender: TObject;
 begin
   inherited;
   CancelUpdatesAction.Enabled := true;
-end;
-
-procedure TosCustomEditForm.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
-  inherited;
-  IsOpen := False;
 end;
 
 end.
