@@ -95,6 +95,7 @@ procedure TRelatorioEditForm.RelatorioClientDataSetBeforePost(DataSet: TDataSet)
 begin
   inherited;
   RelatorioData.Validate(DataSet);
+  TStringList
 end;
 
 procedure TRelatorioEditForm.FormShow(Sender: TObject);

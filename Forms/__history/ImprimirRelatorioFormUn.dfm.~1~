@@ -1,6 +1,6 @@
 inherited ImprimirRelatorioForm: TImprimirRelatorioForm
   Caption = 'ImprimirRelatorioForm'
-  ExplicitWidth = 320
+  ExplicitHeight = 355
   PixelsPerInch = 96
   TextHeight = 13
   object ComboFilter: TosComboFilter [1]
@@ -28,7 +28,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
   end
   inherited ImageList: TImageList
     Bitmap = {
-      494C010101000400140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010101000400100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -220,7 +220,7 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = False
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -228,15 +228,8 @@ inherited ImprimirRelatorioForm: TImprimirRelatorioForm
     XLSSettings.Title = 'Report'
     Left = 200
     Top = 104
-    Version = '15.05'
+    Version = '15.0'
     mmColumnWidth = 0
-    object ppDesignLayers1: TppDesignLayers
-      object ppDesignLayer1: TppDesignLayer
-        UserName = 'Foreground'
-        LayerType = ltBanded
-        Index = 0
-      end
-    end
     object ppParameterList1: TppParameterList
     end
   end
